@@ -1,146 +1,174 @@
-﻿//Raimundo Fenoll Albaladejo. Consulta Visual Controladores Srcipt 
-
-//Configuracion del app angular
-
-//var app = angular.module('VisualangularApp', ['consVisualModule']);
-
-//app.factory("ParamBusqStockVisual", function () {
-//    //return {
-//    //    data: {}
-//    //};
-//    var ret = function(){}
-//    ret.almacen = "";
-//    ret.familia = "";
-//    ret.material = "";
-//    ret.articulosLote = "";
-//    ret.lote = "";
-//});
-
+﻿//Raimundo Fenoll Albaladejo. Consulta Visual Controladores Script
 
 //Almacenes Ctrl
-app.controller('AlmacenesCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+app.controller('AlmacenesCtrl', ['$scope', '$rootScope', '$http', '$location', '$window', '$timeout', function ($scope, $rootScope, $http, $location, $window, $timeout) {
 
     //Atributos de momento
     $scope.myobj;
     $scope.almacenes;
+    $scope.almacenesAux;
+    $scope.urlImageAux;
     $scope.AlmacenSeleccionado;
     $scope.AlmacenDescripcion;
     $scope.AlmacenId;
+    $scope.urlToFamilias;
+    $scope.urlToGetAlmacenes;
+    $scope.modelo;
+    $scope.ordena;
 
-    $scope.init = function (urlBase) {
-        
-        $scope.urlBase = urlBase;
-        comprobarAlmacenesBD(urlBase);
-
-        //ParamBusqStockVisual.almacen = "";
-        //ParamBusqStockVisual.familia = "";
-        //ParamBusqStockVisual.material = "";
-        //ParamBusqStockVisual.articulosLote = "";
-        //ParamBusqStockVisual.lote = "";
+    function sensitiveCompare(input, search) {
+        return ('' + input).indexOf('' + search) > -1;
     }
 
-    //Almacenes
-    function comprobarAlmacenesBD(url) {
+    $scope.init = function (urlImagenDefecto, urlfamilias, urlalmacenes) {
+        $scope.urlImageAux = urlImagenDefecto;
+        $scope.urlToFamilias = urlfamilias;
+        $scope.urlToGetAlmacenes = urlalmacenes;
+        comprobarAlmacenesBD();    
+    }
 
-        var URL = url + "/getAlmacenes";
-        console.log(URL);
+    $scope.compruebaCheck = function (almacen) {
+        if ($scope.ordena == true) {
+            console.log("si");
+            return -almacen.numFamilias;
+        }
+    }
 
-        $http.get(URL).success(function (data) {
+    //obtener almacenes
+    function comprobarAlmacenesBD() {
+
+        $scope.modelo = modeloalmacen;
+
+        $http.get($scope.urlToGetAlmacenes + "?seleccion=" + JSON.stringify($scope.modelo)).success(function (data) {
             $scope.almacenes = JSON.parse(data);
+            $scope.almacenesAux = JSON.parse(data);
         }).error(function (error) {
             console.log(error);
         });
     }
 
-    
-    
+    //Seleccionar Almacen
+    $scope.seleccionar = function(id,desc) {
+        modeloalmacen.idAlmacen = id;
+        modeloalmacen.DescAlmacen = desc;
+        $scope.modelo = modeloalmacen;
+        almacenes = $scope;
+        window.location.href = $scope.urlToFamilias + "?seleccion=" + JSON.stringify($scope.modelo);
+    }
+
+    $scope.Getsrc = function (url, item) {
+
+        console.log("url: " + url);
+        console.log("id: " + item[0]);
+
+        if (Array.isArray(item)) {
+
+            if (item.length > 0) {
+                console.log("id: " + item[0].Id);
+                return url + item[0].Id;
+            }
+            else {
+                return $scope.urlImageAux;
+                console.log("img aux: " + $scope.urlImageAux);
+            }
+        }
+    }
 }]);
 
 
 //Familias Ctrl
-app.controller('FamiliasCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+app.controller('FamiliasCtrl', ['$scope', '$rootScope', '$http', '$location', '$window', '$timeout', function ($scope, $rootScope, $http, $location, $window, $timeout) {
 
     //Atributos de momento
     $scope.idAlmacen;
     $scope.familias;
     $scope.DescripcionAlmacen;
     $scope.myobj;
+    $scope.urlToGruposMateriales;
+    $scope.urlToGetFamilias;
+    $scope.modelo;
+    $scope.ordena;
+    $scope.urlImageAux;
+   
 
     //init
-    $scope.init = function (urlBase) {
+    $scope.init = function (urlImagenDefecto,urlToMateriales, urlToGetFamilias) {
+        $scope.urlImageAux = urlImagenDefecto;
+        $scope.urlToGruposMateriales = urlToMateriales;
+        $scope.urlToGetFamilias = urlToGetFamilias;
+        comprobarFamiliasBD();
+    }
 
-        $scope.urlBase = urlBase;
-
-        var urlAlmacenes = window.location.pathname;
-        var array = urlAlmacenes.split('/');
-        $scope.idAlmacen = array[array.length-1];
-        //ParamBusqStockVisual.almacen = $scope.idAlmacen;
-        //ParamBusqStockVisual.familia = "";
-        //ParamBusqStockVisual.material = "";
-        //ParamBusqStockVisual.articulosLote = "";
-        //ParamBusqStockVisual.lote = "";
-        
-        console.log($routeParams);
-        comprobarFamiliasBD(urlBase);
-        MostrarDescripcionAlmacen(urlBase);
-
-        
+    function sensitiveCompare(input, search) {
+        return ('' + input).indexOf('' + search) > -1;
     }
 
     //Familias asociadas a ese almacen
-    function comprobarFamiliasBD(previousPaths) {
+    function comprobarFamiliasBD() {
 
-        var URL = previousPaths + "/ConsultaVisual/getFamilias";
-        console.log(URL);
-        //console.log("idalmacen: " + ParamBusqStockVisual.almacen);
-        $http.get(URL+"?idAlmacen=" + $scope.idAlmacen).success(function (data) {
+        $scope.modelo = modelofamilias;
+
+        var numCuenta = $.val//numerocuentacliente
+
+        $http.get($scope.urlToGetFamilias + "?seleccion=" + JSON.stringify($scope.modelo)).success(function (data) {
             $scope.familias = JSON.parse(data);
         }).error(function (error) {
             console.log(error);
         });
     }
 
-    //Familias asociadas a ese almacen
-    function MostrarDescripcionAlmacen(previousPaths) {
+    //Seleccionar familia
+    $scope.seleccionar = function (id,desc) {
+        modelofamilias.idFamilia = id;
+        modelofamilias.DescFamilia = desc;
+        $scope.modelo = modelofamilias;
+        window.location.href = $scope.urlToGruposMateriales + "?seleccion=" + JSON.stringify($scope.modelo);
+    }
 
-        var URL = previousPaths + "/ConsultaVisual/getDescripcionAlmacen";
-        console.log(URL);
+    $scope.Getsrc = function (url, item) {
 
-        $http.get(URL + "?idAlmacen=" + $scope.idAlmacen).success(function (data) {
-            $scope.DescripcionAlmacen = data;
-        }).error(function (error) {
-            console.log(error);
-        });
+        console.log("url: " + url);
+        console.log("id: " + item[0]);
+
+        if (Array.isArray(item)) {
+
+            if (item.length > 0) {
+                console.log("id: " + item[0].Id);
+                return url + item[0].Id;
+            }
+            else {
+                return $scope.urlImageAux;
+                console.log("img aux: " + $scope.urlImageAux);
+            }
+        }
     }
 }]);
 
 //Grupo Materiales Ctrl
-app.controller('GrupoMaterialesCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+app.controller('GrupoMaterialesCtrl', ['$scope', '$rootScope', '$http', '$location', '$window', '$timeout', function ($scope, $rootScope, $http, $location, $window, $timeout) {
 
     //Atributos de momento
     $scope.myobj;
     $scope.FamiliaSeleccionada;
     $scope.DescripcionFamilia;
     $scope.grupoMateriales;
-    //$scope.urlImageAux;
+    $scope.urlImageAux;
+    $scope.urlToMateriales;
+    $scope.urlToGetMateriales;
+    $scope.modelo;
 
     //init
-    $scope.init = function (urlBase, urlImagenDefecto) {
+    $scope.init = function (urlImagenDefecto, urlToProductos, urlToGetMateriales) {
+        $scope.urlImageAux = urlImagenDefecto;
+        $scope.urlToMateriales = urlToProductos;
+        $scope.urlToGetMateriales = urlToGetMateriales;
+        comprobarGruposMaterialesBD();
+    }
 
-        $scope.urlBase = urlBase;
-            var urlGrupo = window.location.pathname;
-            var array = urlGrupo.split('/');
-            $scope.FamiliaSeleccionada = array[array.length - 1];
-            $scope.PathPage = "/ConsultaVisual/ViewMateriales";
-            $scope.urlImageAux = urlImagenDefecto;
-            comprobarDescripcionFamilia(getUrl($scope.PathPage, $scope.FamiliaSeleccionada));
-            comprobarGruposMaterialesBD(getUrl($scope.PathPage, $scope.FamiliaSeleccionada), $scope.FamiliaSeleccionada);
+    function sensitiveCompare(input, search) {
+        return ('' + input).indexOf('' + search) > -1;
+    }
 
-
-            //ParamBusqStockVisual.material = "";
-            //ParamBusqStockVisual.articulosLote = "";
-            //ParamBusqStockVisual.lote = "";
-    }   
     
     $scope.Getsrc = function (url, ficheros) {
 
@@ -159,69 +187,59 @@ app.controller('GrupoMaterialesCtrl', ['$scope', '$http', '$location', '$window'
         }
     }
 
-    $scope.ViewProd = function(idMat)
-    {
+    //Grupos de materiales
+    function comprobarGruposMaterialesBD() {
 
-    }
-    //Familias asociadas a ese almacen
-    function comprobarGruposMaterialesBD(previousPaths, familia) {
+        $scope.modelo = modelomateriales;
 
-        var URL = previousPaths + "/ConsultaVisual/getGruposMateriales";
-
-        $http.get(URL + "?idFamilia=" + $scope.FamiliaSeleccionada).success(function (data) {
-
-            //JSON parse data para evitar el error del ng-repeat
+        $http.get($scope.urlToGetMateriales + "?seleccion=" + JSON.stringify($scope.modelo)).success(function (data) {
             $scope.grupoMateriales = JSON.parse(data);
-
-            console.log("data: " + data);
-
-            $scope.grupoMateriales.forEach(function (pieza) {
-                console.log(pieza.Empresa);
-            });
-
         }).error(function (error) {
             console.log(error);
         });
     }
 
-    //Familias asociadas a ese almacen
-    function comprobarDescripcionFamilia(previousPaths) {
-
-        var URL = previousPaths + "/ConsultaVisual/getDescripcionFamilia";
-
-        $http.get(URL + "?idFamilia=" + $scope.FamiliaSeleccionada).success(function (data) {
-            $scope.DescripcionFamilia = data;
-        }).error(function (error) {
-            console.log(error);
-        });
+    //Seleccionar Almacen
+    $scope.seleccionar = function (id,desc) {
+        modelomateriales.idGrupoMateriales = id;
+        modelomateriales.DescGrupoMateriales = desc;
+        $scope.modelo = modelomateriales;
+        window.location.href = $scope.urlToMateriales + "?seleccion=" + JSON.stringify($scope.modelo);
     }
 }]);
 
 
 //Productos Ctrl
-app.controller('ProductosCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+app.controller('MaterialesCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
 
     //Atributos de momento
     $scope.myobj;
     $scope.GrupoMaterialSeleccionado;
     $scope.DescripcionGrupo;
     $scope.productos;
+    $scope.urlImageAux;
+    $scope.urlToLotes;
+    $scope.urlToGetProductos;
+    $scope.modelo;
+    $scope.ordena;
 
     //init
-    $scope.init = function (urlBase, urlImagenDefecto) {
-        $scope.urlBase = urlBase;
-
+    $scope.init = function (urlImagenDefecto, urlToProducto, urlToGetProductos) {
         $scope.urlImageAux = urlImagenDefecto;
-        var urlGrupo = window.location.pathname;
-        var array = urlGrupo.split('/');
-        $scope.GrupoMaterialSeleccionado = array[array.length - 1];
-        console.log("grupo material: " + $scope.GrupoMaterialSeleccionado);
-        $scope.PathPage = "/ConsultaVisual/ViewProductos";
-        comprobarProductos(getUrl($scope.PathPage, $scope.GrupoMaterialSeleccionado), $scope.GrupoMaterialSeleccionado);
-        comprobarDescripcionGrupoMaterial(getUrl($scope.PathPage, $scope.GrupoMaterialSeleccionado));
+        $scope.urlToLotes = urlToProducto;
+        $scope.urlToGetProductos = urlToGetProductos;
+        comprobarProductos();
+    }
 
-        ParamBusqStockVisual.articulosLote = "";
-        ParamBusqStockVisual.lote = "";
+    function sensitiveCompare(input, search) {
+        return ('' + input).indexOf('' + search) > -1;
+    }
+
+    $scope.compruebaCheck = function (articulos) {
+        if ($scope.ordena == true) {
+            console.log("si");
+            return -articulos.numLotes;
+        }
     }
 
     $scope.Getsrc = function (url, item) {
@@ -243,55 +261,50 @@ app.controller('ProductosCtrl', ['$scope', '$http', '$location', '$window', '$ti
     }
 
     //Comprobamos los productos
-    function comprobarProductos(previousPaths) {
+    function comprobarProductos() {
 
-        var URL = previousPaths + "/ConsultaVisual/getMateriales";
-        console.log("URl: " + URL);
+        $scope.modelo = modeloproductos;
 
-        $http.get(URL + "?CodMaterial=" + $scope.GrupoMaterialSeleccionado).success(function (data) {
+        $http.get($scope.urlToGetProductos + "?seleccion=" + JSON.stringify($scope.modelo)).success(function (data) {
             $scope.productos = JSON.parse(data);
-            console.log($scope.productos);
+            console.log("data: " + data);
         }).error(function (error) {
             console.log(error);
         });
     }
 
-    function comprobarDescripcionGrupoMaterial(previousPaths) {
-
-        var URL = previousPaths + "/ConsultaVisual/getDescripcionGrupoMaterial";
-        console.log("URl: " + URL);
-
-        $http.get(URL + "?CodGrupoMaterial=" + $scope.GrupoMaterialSeleccionado).success(function (data) {
-            $scope.DescripcionGrupo = data;
-        }).error(function (error) {
-            console.log(error);
-        });
+    //Seleccionar articulos
+    $scope.seleccionar = function (id, desc) {
+        console.log("productos es: " + $scope.productos);
+        modeloproductos.idMaterial = id;
+        modeloproductos.DescMaterial = desc;
+        $scope.modelo = modeloproductos;
+        window.location.href = $scope.urlToLotes + "?seleccion=" + JSON.stringify($scope.modelo);
     }
 }]);
 
 
 //Articulos Ctrl
-app.controller('ArticulosCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+app.controller('LotesCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
 
     //Atributos de momento
     $scope.myobj;
     $scope.ArticuloSeleccionado;
     $scope.DescripcionArticulo;
     $scope.articulos;
+    $scope.modelo;
+    $scope.url;
 
     //init
-    $scope.init = function (urlBase, urlImagenDefecto) {
-        $scope.urlBase = urlBase;
-        $scope.urlImageAux = urlImagenDefecto;
-        var urlGrupo = window.location.pathname;
-        var array = urlGrupo.split('/');
-        $scope.ArticuloSeleccionado = array[array.length - 1];
-        $scope.PathPage = "/ConsultaVisual/ViewProducto";
-        console.log("articulo: " + $scope.ArticuloSeleccionado);
-        comprobarArticulos(getUrl($scope.PathPage, $scope.ArticuloSeleccionado), $scope.ArticuloSeleccionado);
-        comprobarDescripcionArticulo(getUrl($scope.PathPage, $scope.ArticuloSeleccionado));
+    $scope.init = function (urlImagenDefecto,urlToGetLotes) {
 
-        ParamBusqStockVisual.lote = "";
+        $scope.urlImageAux = urlImagenDefecto;
+        $scope.url = urlToGetLotes;
+        comprobarArticulos();
+    }
+
+    function sensitiveCompare(input, search) {
+        return ('' + input).indexOf('' + search) > -1;
     }
 
     $scope.Getsrc = function (url, item) {
@@ -311,26 +324,12 @@ app.controller('ArticulosCtrl', ['$scope', '$http', '$location', '$window', '$ti
     }
 
     //Comprobamos los productos
-    function comprobarArticulos(previousPaths) {
+    function comprobarArticulos() {
 
-        var URL = previousPaths + "/ConsultaVisual/getMaterial";
-        console.log("URl: " + URL);
+        $scope.modelo = modeloproducto;
 
-        $http.get(URL + "?IdArticulo=" + $scope.ArticuloSeleccionado).success(function (data) {
+        $http.get($scope.url + "?seleccion=" + JSON.stringify($scope.modelo)).success(function (data) {
             $scope.articulos = JSON.parse(data);
-            $scope.DescripcionArticulo = $scope.ArticuloSeleccionado;
-        }).error(function (error) {
-            console.log(error);
-        });
-    }
-
-    function comprobarDescripcionArticulo(previousPaths) {
-
-        var URL = previousPaths + "/ConsultaVisual/getDescripcionArticulo";
-        console.log("URl: " + URL);
-
-        $http.get(URL + "?IdArticulo=" + $scope.ArticuloSeleccionado).success(function (data) {
-            $scope.DescripcionArticulo = data;
         }).error(function (error) {
             console.log(error);
         });

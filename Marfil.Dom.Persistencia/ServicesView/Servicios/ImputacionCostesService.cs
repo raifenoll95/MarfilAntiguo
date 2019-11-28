@@ -180,7 +180,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     validation.EjercicioId = EjercicioId;
 
                     var estadosService = FService.Instance.GetService(typeof(EstadosModel), _context, _db) as EstadosService;
-                    var listestados = estadosService.GetStates(DocumentoEstado.ImputacionCostes); //Lista de estados
+                    var listestados = estadosService.GetStates(DocumentoEstado.DivisionesLotes); //Lista de estados
                     var estadoFinalizado = listestados.First(f => f.Tipoestado == TipoEstado.Finalizado);
 
                     //Repartimos costes lineas y actualizamos las tablas del stock
@@ -478,11 +478,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 item.Costeadicionalvariable = 0;
                 item.Flagidentifier = Guid.NewGuid();
             }
-            
             var costesGrupo = costes.GroupBy(f => new { f.Tipocoste, f.Tiporeparto });
             foreach (var item in costesGrupo)
             {
-                //recuperar datos metros, alto, largo, grueso, peso, etc de entrada.
                 ReparteCoste(lineas, costes, item.Key);
             }
         }

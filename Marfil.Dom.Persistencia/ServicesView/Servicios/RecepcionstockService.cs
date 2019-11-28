@@ -1280,6 +1280,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 // Calcular costesadicionales costexm2 o costexm3
                 CalcularCosteTotalMetros(editado.Lineas, editado.Costes);
+
                 RepartirCostesLineas(editado.Lineas, editado.Costes, original.Costes);
 
                 base.edit(model);
