@@ -1,0 +1,16 @@
+﻿@using Resources
+@model Marfil.Dom.Persistencia.Model.Graficaslistados.PanelcontrolModel
+@{
+    ViewBag.Title = General.LblInicio;
+}
+@if (Model.Paneles?.Any()??false)
+{
+@Html.Partial("_panelcontrol", Model)
+}
+
+
+
+
+
+
+@Html.Partial("_modalconfigurarpanel")
