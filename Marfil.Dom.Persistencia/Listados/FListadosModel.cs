@@ -117,7 +117,7 @@ namespace Marfil.Dom.Persistencia.Listados
         //public const string IvaRepercutido = "IVA Repercutido";
         //public const string PrevisionCobros = "Previsión cobros";
         //public const string PrevisionPagos = "Previsión pagos";
-
+        public const string ListadoGuiasBalances = "GuiasBalances";
         // CRM
         public const string ListadoCrm = "ListadoCrm";
 
@@ -177,7 +177,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(DiarioContable, typeof(ListadosDiarioContable));
             _dictionary.Add(Mayor, typeof(ListadosMayor));
             _dictionary.Add(SumasYSaldos, typeof(ListadosBalanceSumasYSaldos));
-
+            _dictionary.Add(ListadoGuiasBalances, typeof(ListadoGuiasBalances));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));
@@ -235,6 +235,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(DiarioContable, "ListadosDiarioContable");
             _dictionaryController.Add(Mayor, "ListadosMayor");
             _dictionaryController.Add(SumasYSaldos, "ListadosBalanceSumasYSaldos");
+            _dictionaryController.Add(ListadoGuiasBalances, "GuiasBalances");
 
             // CRM
             _dictionaryController.Add(ListadoCrm, "ListadoCrm");

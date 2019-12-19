@@ -22,6 +22,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
 using Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras;
 using Marfil.Dom.Persistencia.Model.Documentos.Inventarios;
 using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras;
 using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos;
 using Marfil.Dom.Persistencia.Model.Documentos.PresupuestosCompras;
@@ -1126,6 +1127,11 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if(typeof(GuiasBalancesModel) == typeof(T))
+            {
+                var result = new GuiasBalancesModel(context);
+                return result as T;
+            }
             //else if (typeof(CarteraModel) == typeof(T))
             //{
             //    var result = new CarteraModel(context);
@@ -1140,6 +1146,7 @@ namespace Marfil.Dom.Persistencia.Model
             //    result.Empresa = empresa.Id;
             //    return result as T;
             //}
+
             var ctor = typeof(T).GetConstructor(new[] { typeof(IContextService) });
             return ctor.Invoke(new object[] { context }) as T;
 

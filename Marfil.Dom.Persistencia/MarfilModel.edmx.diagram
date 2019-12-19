@@ -232,6 +232,9 @@
         <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="30.375" PointY="23.75" />
         <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
         <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="34.375" PointY="23.75" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="38.375" PointY="15" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="40.625" PointY="15.25" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

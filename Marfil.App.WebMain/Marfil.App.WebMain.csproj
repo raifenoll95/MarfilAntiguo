@@ -42,6 +42,7 @@
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
     <PrimaryVersionType>AssemblyFileVersionAttribute</PrimaryVersionType>
     <AssemblyVersion>2019.8.130.0</AssemblyVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -278,6 +279,7 @@
     <Compile Include="Controllers\CuentasApiController.cs" />
     <Compile Include="Controllers\DivisionLotesController.cs" />
     <Compile Include="Controllers\ExportarController.cs" />
+    <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -1268,9 +1270,6 @@
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="assets\css\less\ace-angular.less" />
     <Content Include="assets\css\less\ace-extra.less" />
     <Content Include="assets\css\less\ace-features.less" />
@@ -1823,7 +1822,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Marfil.App.WebMain.csproj.bak" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -3433,6 +3431,10 @@
     <Content Include="Views\CarteraVencimientos\Details.cshtml" />
     <Content Include="Views\CarteraVencimientos\Edit.cshtml" />
     <Content Include="Views\CarteraVencimientos\Index.cshtml" />
+    <Content Include="Views\GuiasBalances\Index.cshtml" />
+    <Content Include="Views\GuiasBalances\_general.cshtml" />
+    <Content Include="Views\GuiasBalances\Edit.cshtml" />
+    <Content Include="Views\GuiasBalances\_GuiasBalances.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

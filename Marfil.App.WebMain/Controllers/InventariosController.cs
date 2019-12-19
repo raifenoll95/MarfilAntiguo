@@ -11,7 +11,6 @@ using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Documentos.Inventarios;
-using Marfil.Dom.Persistencia.Model.Documentos.Inventarios;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;

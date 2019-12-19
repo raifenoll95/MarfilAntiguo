@@ -1913,6 +1913,35 @@
           <Property Name="fktiposivaconrecargo" Type="varchar" MaxLength="3" />
           <Property Name="fktiposivaexentoiva" Type="varchar" MaxLength="3" />
         </EntityType>
+        <EntityType Name="GuiasBalances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="informe" Type="nvarchar" MaxLength="255" />
+          <Property Name="guia" Type="nvarchar" MaxLength="255" />
+          <Property Name="textogrupo" Type="nvarchar" MaxLength="255" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="actpas" Type="nvarchar" MaxLength="255" />
+          <Property Name="detfor" Type="nvarchar" MaxLength="255" />
+          <Property Name="formula" Type="nvarchar" MaxLength="255" />
+          <Property Name="regdig" Type="nvarchar" MaxLength="255" />
+          <Property Name="descrip" Type="nvarchar" MaxLength="255" />
+          <Property Name="listado" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="GuiasBalancesLineas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="informe" Type="nvarchar" MaxLength="255" />
+          <Property Name="guia" Type="nvarchar" MaxLength="255" />
+          <Property Name="GuiasBalancesId" Type="int" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="cuenta" Type="nvarchar" MaxLength="255" />
+          <Property Name="signo" Type="nvarchar" MaxLength="255" />
+          <Property Name="signoea" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="Guiascontables">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4296,8 +4325,8 @@
           <Property Name="comentario" Type="ntext" />
           <Property Name="fkformaspago" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.Diariostock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.Diariostock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Diariostock">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4358,8 +4387,8 @@ warning 6002: The table/view 'marfilestable.dbo.Diariostock' does not have a pri
           <Property Name="Documentoreferencia" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.ListadoStockValorado' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.ListadoStockValorado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ListadoStockValorado">
           <Key>
             <PropertyRef Name="Cod. Artículo" />
@@ -4395,8 +4424,8 @@ warning 6002: The table/view 'marfilestable.dbo.ListadoStockValorado' does not h
           <Property Name="PrecioNetoCompraUM" Type="float" Nullable="false" />
           <Property Name="CosteTotalUM" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Lotes">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4451,7 +4480,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="EnStock" Type="int" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="int" />
         </EntityType>
-        <Association Name="FK__ArticulosCompone__2552576E">
+        <Association Name="FK__ArticulosCompone__090A5324">
           <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
           <End Role="ArticulosComponentes" Type="Self.ArticulosComponentes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4465,7 +4494,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ArticulosTercero__2275EAC3">
+        <Association Name="FK__ArticulosTercero__09FE775D">
           <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
           <End Role="ArticulosTercero" Type="Self.ArticulosTercero" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4479,7 +4508,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CampañasTercero__1A6AB4A7">
+        <Association Name="FK__CampañasTercero__0BE6BFCF">
           <End Role="Campañas" Type="Self.Campañas" Multiplicity="1" />
           <End Role="CampañasTercero" Type="Self.CampañasTercero" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4493,7 +4522,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotescos__37A611D3">
+        <Association Name="FK__DivisionLotescos__1387E197">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotescostesadicionales" Type="Self.DivisionLotescostesadicionales" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4507,7 +4536,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotesent__31ED387D">
+        <Association Name="FK__DivisionLotesent__147C05D0">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotesentradalin" Type="Self.DivisionLotesentradalin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4521,7 +4550,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotessal__34C9A528">
+        <Association Name="FK__DivisionLotessal__15702A09">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotessalidalin" Type="Self.DivisionLotessalidalin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4535,21 +4564,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImputacionCostes__377107A9">
-          <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
-          <End Role="ImputacionCostesLin" Type="Self.ImputacionCostesLin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImputacionCostes">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ImputacionCostesLin">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkimputacioncostes" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ImputacionCostes__489B93AB">
+        <Association Name="FK__ImputacionCostes__1FEDB87C">
           <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
           <End Role="ImputacionCostescostesadicionales" Type="Self.ImputacionCostescostesadicionales" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4563,7 +4578,21 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PedidosCostesFab__7953D99F">
+        <Association Name="FK__ImputacionCostes__20E1DCB5">
+          <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
+          <End Role="ImputacionCostesLin" Type="Self.ImputacionCostesLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImputacionCostes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImputacionCostesLin">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkimputacioncostes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidosCostesFab__297722B6">
           <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
           <End Role="PedidosCostesFabricacion" Type="Self.PedidosCostesFabricacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4577,7 +4606,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SeguimientosCorr__65C1E23E">
+        <Association Name="FK__SeguimientosCorr__35DCF99B">
           <End Role="Seguimientos" Type="Self.Seguimientos" Multiplicity="1" />
           <End Role="SeguimientosCorreo" Type="Self.SeguimientosCorreo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4593,7 +4622,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TareasLin__15F0184D">
+        <Association Name="FK__TareasLin__37C5420D">
           <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
           <End Role="TareasLin" Type="Self.TareasLin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4607,7 +4636,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TrabajosLin__5BAE681F">
+        <Association Name="FK__TrabajosLin__3AA1AEB8">
           <End Role="Trabajos" Type="Self.Trabajos" Multiplicity="1" />
           <End Role="TrabajosLin" Type="Self.TrabajosLin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4986,6 +5015,18 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             <Dependent Role="GruposIvaLin">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkgruposiva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuiasBalances">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiasBalancesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5418,7 +5459,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
         <Function Name="f_fn_enum_TipoAlmacenlote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_fn_enum_TipoAlmacenlote" ReturnType="varchar(max)">
           <Parameter Name="Codigo" Type="int" Mode="In" />
         </Function>
-        <Function Name="spLotes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MarfilModelStoreContainer">
           <EntitySet Name="Acabados" EntityType="Self.Acabados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Acreedores" EntityType="Self.Acreedores" Schema="dbo" store:Type="Tables" />
@@ -5494,6 +5534,8 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="GrupoMateriales" EntityType="Self.GrupoMateriales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GruposIva" EntityType="Self.GruposIva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GruposIvaLin" EntityType="Self.GruposIvaLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GuiasBalances" EntityType="Self.GuiasBalances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GuiasBalancesLineas" EntityType="Self.GuiasBalancesLineas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Guiascontables" EntityType="Self.Guiascontables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GuiascontablesLin" EntityType="Self.GuiascontablesLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImputacionCostes" EntityType="Self.ImputacionCostes" Schema="dbo" store:Type="Tables" />
@@ -5691,51 +5733,51 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
     [Lotes].[tipoalmacenlote] AS [tipoalmacenlote]
     FROM [dbo].[Lotes] AS [Lotes]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__ArticulosCompone__2552576E" Association="Self.FK__ArticulosCompone__2552576E">
+          <AssociationSet Name="FK__ArticulosCompone__090A5324" Association="Self.FK__ArticulosCompone__090A5324">
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosComponentes" EntitySet="ArticulosComponentes" />
           </AssociationSet>
-          <AssociationSet Name="FK__ArticulosTercero__2275EAC3" Association="Self.FK__ArticulosTercero__2275EAC3">
+          <AssociationSet Name="FK__ArticulosTercero__09FE775D" Association="Self.FK__ArticulosTercero__09FE775D">
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosTercero" EntitySet="ArticulosTercero" />
           </AssociationSet>
-          <AssociationSet Name="FK__CampañasTercero__1A6AB4A7" Association="Self.FK__CampañasTercero__1A6AB4A7">
+          <AssociationSet Name="FK__CampañasTercero__0BE6BFCF" Association="Self.FK__CampañasTercero__0BE6BFCF">
             <End Role="Campañas" EntitySet="Campañas" />
             <End Role="CampañasTercero" EntitySet="CampañasTercero" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotescos__37A611D3" Association="Self.FK__DivisionLotescos__37A611D3">
+          <AssociationSet Name="FK__DivisionLotescos__1387E197" Association="Self.FK__DivisionLotescos__1387E197">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotescostesadicionales" EntitySet="DivisionLotescostesadicionales" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotesent__31ED387D" Association="Self.FK__DivisionLotesent__31ED387D">
+          <AssociationSet Name="FK__DivisionLotesent__147C05D0" Association="Self.FK__DivisionLotesent__147C05D0">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotesentradalin" EntitySet="DivisionLotesentradalin" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotessal__34C9A528" Association="Self.FK__DivisionLotessal__34C9A528">
+          <AssociationSet Name="FK__DivisionLotessal__15702A09" Association="Self.FK__DivisionLotessal__15702A09">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotessalidalin" EntitySet="DivisionLotessalidalin" />
           </AssociationSet>
-          <AssociationSet Name="FK__ImputacionCostes__377107A9" Association="Self.FK__ImputacionCostes__377107A9">
-            <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
-            <End Role="ImputacionCostesLin" EntitySet="ImputacionCostesLin" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImputacionCostes__489B93AB" Association="Self.FK__ImputacionCostes__489B93AB">
+          <AssociationSet Name="FK__ImputacionCostes__1FEDB87C" Association="Self.FK__ImputacionCostes__1FEDB87C">
             <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
             <End Role="ImputacionCostescostesadicionales" EntitySet="ImputacionCostescostesadicionales" />
           </AssociationSet>
-          <AssociationSet Name="FK__PedidosCostesFab__7953D99F" Association="Self.FK__PedidosCostesFab__7953D99F">
+          <AssociationSet Name="FK__ImputacionCostes__20E1DCB5" Association="Self.FK__ImputacionCostes__20E1DCB5">
+            <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
+            <End Role="ImputacionCostesLin" EntitySet="ImputacionCostesLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidosCostesFab__297722B6" Association="Self.FK__PedidosCostesFab__297722B6">
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="PedidosCostesFabricacion" EntitySet="PedidosCostesFabricacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__SeguimientosCorr__65C1E23E" Association="Self.FK__SeguimientosCorr__65C1E23E">
+          <AssociationSet Name="FK__SeguimientosCorr__35DCF99B" Association="Self.FK__SeguimientosCorr__35DCF99B">
             <End Role="Seguimientos" EntitySet="Seguimientos" />
             <End Role="SeguimientosCorreo" EntitySet="SeguimientosCorreo" />
           </AssociationSet>
-          <AssociationSet Name="FK__TareasLin__15F0184D" Association="Self.FK__TareasLin__15F0184D">
+          <AssociationSet Name="FK__TareasLin__37C5420D" Association="Self.FK__TareasLin__37C5420D">
             <End Role="Tareas" EntitySet="Tareas" />
             <End Role="TareasLin" EntitySet="TareasLin" />
           </AssociationSet>
-          <AssociationSet Name="FK__TrabajosLin__5BAE681F" Association="Self.FK__TrabajosLin__5BAE681F">
+          <AssociationSet Name="FK__TrabajosLin__3AA1AEB8" Association="Self.FK__TrabajosLin__3AA1AEB8">
             <End Role="Trabajos" EntitySet="Trabajos" />
             <End Role="TrabajosLin" EntitySet="TrabajosLin" />
           </AssociationSet>
@@ -5846,6 +5888,10 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <AssociationSet Name="FK_GruposIvaLin_GruposIva" Association="Self.FK_GruposIvaLin_GruposIva">
             <End Role="GruposIva" EntitySet="GruposIva" />
             <End Role="GruposIvaLin" EntitySet="GruposIvaLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="Self.FK_GuiasBalancesLineas_GuiasBalances">
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
           <AssociationSet Name="FK_GuiascontablesLin_Guiascontables" Association="Self.FK_GuiascontablesLin_Guiascontables">
             <End Role="Guiascontables" EntitySet="Guiascontables" />
@@ -6406,6 +6452,12 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="Vencimientos" EntityType="MarfilModel.Vencimientos" />
           <EntitySet Name="CircuitosTesoreriaCobros" EntityType="MarfilModel.CircuitosTesoreriaCobros" />
           <EntitySet Name="CarteraVencimientos" EntityType="MarfilModel.CarteraVencimientos" />
+          <EntitySet Name="GuiasBalances" EntityType="MarfilModel.GuiasBalances" />
+          <EntitySet Name="GuiasBalancesLineas" EntityType="MarfilModel.GuiasBalancesLineas" />
+          <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances">
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -11892,6 +11944,49 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="codigoremesa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="tiponumerofactura" Type="Int32" />
         </EntityType>
+        <EntityType Name="GuiasBalances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="informe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="guia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="textogrupo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="actpas" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="detfor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="formula" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="regdig" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="listado" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalances" ToRole="GuiasBalancesLineas" />
+        </EntityType>
+        <EntityType Name="GuiasBalancesLineas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="informe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="guia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GuiasBalancesId" Type="Int32" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cuenta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signoea" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalancesLineas" ToRole="GuiasBalances" />
+        </EntityType>
+        <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuiasBalances">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16141,41 +16236,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spLotes" FunctionName="MarfilModel.Store.spLotes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MarfilModel.spLotes_Result">
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Articulo" ColumnName="Articulo" />
-                <ScalarProperty Name="Codarticulo" ColumnName="Codarticulo" />
-                <ScalarProperty Name="lote" ColumnName="lote" />
-                <ScalarProperty Name="loteid" ColumnName="loteid" />
-                <ScalarProperty Name="CantidadProduccion" ColumnName="CantidadProduccion" />
-                <ScalarProperty Name="LargoProduccion" ColumnName="LargoProduccion" />
-                <ScalarProperty Name="AnchoProduccion" ColumnName="AnchoProduccion" />
-                <ScalarProperty Name="GruesoProduccion" ColumnName="GruesoProduccion" />
-                <ScalarProperty Name="MetrosProduccion" ColumnName="MetrosProduccion" />
-                <ScalarProperty Name="CantidadEntrada" ColumnName="CantidadEntrada" />
-                <ScalarProperty Name="LargoEntrada" ColumnName="LargoEntrada" />
-                <ScalarProperty Name="AnchoEntrada" ColumnName="AnchoEntrada" />
-                <ScalarProperty Name="GruesoEntrada" ColumnName="GruesoEntrada" />
-                <ScalarProperty Name="MetrosEntrada" ColumnName="MetrosEntrada" />
-                <ScalarProperty Name="CantidadSalida" ColumnName="CantidadSalida" />
-                <ScalarProperty Name="LargoSalida" ColumnName="LargoSalida" />
-                <ScalarProperty Name="AnchoSalida" ColumnName="AnchoSalida" />
-                <ScalarProperty Name="GruesoSalida" ColumnName="GruesoSalida" />
-                <ScalarProperty Name="MetrosSalida" ColumnName="MetrosSalida" />
-                <ScalarProperty Name="Unidades" ColumnName="Unidades" />
-                <ScalarProperty Name="Decimales" ColumnName="Decimales" />
-                <ScalarProperty Name="Kit" ColumnName="Kit" />
-                <ScalarProperty Name="Bundle" ColumnName="Bundle" />
-                <ScalarProperty Name="EnStock" ColumnName="EnStock" />
-                <ScalarProperty Name="tipoalmacenlote" ColumnName="tipoalmacenlote" />
-                <ScalarProperty Name="CantidadDisponible" ColumnName="CantidadDisponible" />
-                <ScalarProperty Name="MetrosDisponibles" ColumnName="MetrosDisponibles" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Cartera">
             <EntityTypeMapping TypeName="MarfilModel.Cartera">
               <MappingFragment StoreEntitySet="Cartera">
@@ -16280,6 +16340,37 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
                 <ScalarProperty Name="traza" ColumnName="traza" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuiasBalances">
+            <EntityTypeMapping TypeName="MarfilModel.GuiasBalances">
+              <MappingFragment StoreEntitySet="GuiasBalances">
+                <ScalarProperty Name="listado" ColumnName="listado" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="regdig" ColumnName="regdig" />
+                <ScalarProperty Name="formula" ColumnName="formula" />
+                <ScalarProperty Name="detfor" ColumnName="detfor" />
+                <ScalarProperty Name="actpas" ColumnName="actpas" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="textogrupo" ColumnName="textogrupo" />
+                <ScalarProperty Name="guia" ColumnName="guia" />
+                <ScalarProperty Name="informe" ColumnName="informe" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuiasBalancesLineas">
+            <EntityTypeMapping TypeName="MarfilModel.GuiasBalancesLineas">
+              <MappingFragment StoreEntitySet="GuiasBalancesLineas">
+                <ScalarProperty Name="signoea" ColumnName="signoea" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="cuenta" ColumnName="cuenta" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="GuiasBalancesId" ColumnName="GuiasBalancesId" />
+                <ScalarProperty Name="guia" ColumnName="guia" />
+                <ScalarProperty Name="informe" ColumnName="informe" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

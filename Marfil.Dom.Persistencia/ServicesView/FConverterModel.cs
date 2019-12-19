@@ -117,6 +117,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             //contabilidad
             _converterServicesTypes.Add(typeof(Movs), typeof(MovsConverterService));
             _converterServicesTypes.Add(typeof(Maes), typeof(MaesConverterService));
+            _converterServicesTypes.Add(typeof(GuiasBalances), typeof(GuiasBalancesConvertService));
 
             _converterServicesTypes.Add(typeof(Vencimientos), typeof(VencimientosConverterService));
             _converterServicesTypes.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaConverterCobrosConverterService));

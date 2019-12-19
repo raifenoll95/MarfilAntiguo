@@ -1,0 +1,20 @@
+﻿@using Marfil.Dom.Persistencia.Model.Interfaces
+@using Marfil.Dom.Persistencia.Model.Contabilidad
+
+@model IModelView
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
