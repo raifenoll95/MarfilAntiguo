@@ -8,11 +8,12 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditOperacion", "GuiasBalances", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.AntiForgeryToken()
-
-    @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+    <div class="form-horizontal">
+        @Html.AntiForgeryToken()
+        @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+    </div>
 }
 
 <div>

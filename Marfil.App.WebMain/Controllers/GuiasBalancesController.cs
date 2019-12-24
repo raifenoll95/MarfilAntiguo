@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using Marfil.Dom.ControlsUI.Toolbar;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -15,15 +18,7 @@ namespace Marfil.App.WebMain.Controllers
         public GuiasBalancesController(IContextService context) : base(context)
         {
         }
-        public override ActionResult Edit(string id)
-        {
-            //var newModel = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService);
-            //using (var gestionService = createService(newModel))
-            //{
-            //    var model = gestionService.get(id);
-            //}
-            return View();
-        }
+        
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -39,5 +34,31 @@ namespace Marfil.App.WebMain.Controllers
             CanModificar = true;
             CanEliminar = true;
         }
+
+        #region Edit
+        public override ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (TempData["errors"] != null)
+                ModelState.AddModelError("", TempData["errors"].ToString());
+
+            var newModel = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService);
+            using (var gestionService = createService(newModel))
+            {
+                var model = TempData["model"] != null ? TempData["model"] as GuiasBalancesModel : gestionService.get(id);
+                if (model == null)
+                {
+                    return HttpNotFound();
+                }
+
+                ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
+                return View(model);
+            }
+        }
+        #endregion
     }
 }

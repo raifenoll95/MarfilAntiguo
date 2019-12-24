@@ -5,5 +5,21 @@
     ViewBag.Title = "_GuiasBalances";
 }
 
-@Html.Partial("_general", Model)
+<div>
+    <br />
+    <div id="tabs">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a data-toggle="tab" href="#general">General</a></li>
+            <li><a data-toggle="tab" href="#guiasbalanceslineas">Guias de Balances Lineas</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div id="general" class="tab-pane fade in active">
+            @Html.Partial("_general", Model)
+        </div>
 
+        <div id="guiasbalanceslineas" class="tab-pane fade margin-bottom">
+
+        </div>
+    </div>
+</div>
