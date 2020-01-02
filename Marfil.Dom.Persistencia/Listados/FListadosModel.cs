@@ -118,6 +118,7 @@ namespace Marfil.Dom.Persistencia.Listados
         //public const string PrevisionCobros = "Previsión cobros";
         //public const string PrevisionPagos = "Previsión pagos";
         public const string ListadoGuiasBalances = "GuiasBalances";
+        public const string ListadoGuiasBalancesLineas = "GuiasBalancesLineas";
         // CRM
         public const string ListadoCrm = "ListadoCrm";
 
@@ -178,6 +179,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(Mayor, typeof(ListadosMayor));
             _dictionary.Add(SumasYSaldos, typeof(ListadosBalanceSumasYSaldos));
             _dictionary.Add(ListadoGuiasBalances, typeof(ListadoGuiasBalances));
+            _dictionary.Add(ListadoGuiasBalancesLineas, typeof(ListadoGuiasBalancesLineas));
 
             // CRM
             _dictionary.Add(ListadoCrm, typeof(ListadoCrm));

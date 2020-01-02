@@ -2,7 +2,8 @@
 @model GuiasBalancesModel
 
 @{
-    ViewBag.Title = "_GuiasBalances";
+    var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
 }
 
 <div>
@@ -19,7 +20,7 @@
         </div>
 
         <div id="guiasbalanceslineas" class="tab-pane fade margin-bottom">
-
+            @Html.Partial("_GuiasBalancesLineas",Model.GuiasBalancesLineas)
         </div>
     </div>
 </div>

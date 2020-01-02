@@ -1130,6 +1130,7 @@ namespace Marfil.Dom.Persistencia.Model
             else if(typeof(GuiasBalancesModel) == typeof(T))
             {
                 var result = new GuiasBalancesModel(context);
+                var empresa = appService.GetCurrentEmpresa();
                 return result as T;
             }
             //else if (typeof(CarteraModel) == typeof(T))

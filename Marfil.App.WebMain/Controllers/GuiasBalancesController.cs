@@ -59,6 +59,33 @@ namespace Marfil.App.WebMain.Controllers
                 return View(model);
             }
         }
+        public override ActionResult EditOperacion(GuiasBalancesModel model)
+        {
+            return base.EditOperacion(model);
+        }
+        #endregion
+        #region Details
+        public override ActionResult Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var newModel = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService);
+            using (var gestionService = createService(newModel))
+            {
+
+                var model = gestionService.get(id);
+                if (model == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.ReadOnly = true;
+                ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
+                return View(model);
+            }
+        }
         #endregion
     }
 }

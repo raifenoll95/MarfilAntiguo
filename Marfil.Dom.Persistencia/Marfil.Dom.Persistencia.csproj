@@ -436,6 +436,7 @@
     <Compile Include="Listados\FListadosModel.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
+    <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
     <Compile Include="Listados\ListadosMayor.cs" />
@@ -525,6 +526,7 @@
     <Compile Include="Model\Configuracion\Cuentas\GuiascontablesModel.cs" />
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasEstadosStock.cs" />
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
+    <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
     <Compile Include="Model\Contabilidad\SelectSumasYSaldos.cs" />
     <Compile Include="Model\CRM\CampañasModel.cs" />
@@ -826,6 +828,7 @@
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />
     <Compile Include="ServicesView\Servicios\ConsultaVisualService.cs" />
+    <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesLineasService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\IMaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MaesService.cs" />
@@ -834,6 +837,7 @@
     <Compile Include="ServicesView\Servicios\Converter\CircuitosTesoreriaCobrosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GrosoresConverterService.cs" />
@@ -861,6 +865,7 @@
     <Compile Include="ServicesView\Servicios\Validation\CarteraValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesLineasValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />

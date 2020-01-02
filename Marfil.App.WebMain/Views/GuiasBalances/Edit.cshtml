@@ -4,18 +4,23 @@
 @model IModelView
 
 @{
-    ViewBag.Title = "Edit";
+    ViewData["operacion"] = "Edit";
 }
 
 
 @using (Html.BeginForm("EditOperacion", "GuiasBalances", FormMethod.Post, new { @class = "form-horizontal" }))
 {
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        @Html.AntiForgeryToken()
         @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
+        <div class="form-group margin-top">
+            <div class="col-md-10">
+                <button class="btn btn-info" type="Submit" ng-disabled="!MainFormIsEnable">
+                    <i class="ace-icon fa fa-check bigger-110"></i>
+                    Guardar
+                </button>
+            </div>
+        </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

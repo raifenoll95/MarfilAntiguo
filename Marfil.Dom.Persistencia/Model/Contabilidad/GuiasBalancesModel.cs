@@ -22,7 +22,14 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public string RegDig { get; set; }
         public string Descrip { get; set; }
         public string Listado { get; set; }
-        //public List<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
+        private List<GuiasBalancesLineasModel> _GuiasBalancesLineas;
+
+        public List<GuiasBalancesLineasModel> GuiasBalancesLineas
+        {
+            get { return _GuiasBalancesLineas; }
+            set { _GuiasBalancesLineas = value; }
+        }
+
 
         public GuiasBalancesModel()
         {
