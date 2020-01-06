@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Net;
 using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using DevExpress.Web.Mvc;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -18,7 +19,8 @@ namespace Marfil.App.WebMain.Controllers
         public GuiasBalancesController(IContextService context) : base(context)
         {
         }
-        
+
+        string SessionGuiasBalancesLineas = "_SGuiasBalancesLineas";
         public override string MenuName { get; set; }
         public override bool IsActivado { get; set; }
         public override bool CanCrear { get; set; }
@@ -86,6 +88,81 @@ namespace Marfil.App.WebMain.Controllers
                 return View(model);
             }
         }
+        #endregion
+        #region Gias de Balances Lineas
+        [ValidateInput(false)]
+        public ActionResult GuiasBalancesLineas() => PartialView("_GuiasBalancesLineasGrid", GetListGuiasBalancesLineas);
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult GuiasBalancesLineasAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
+        {
+            var items = GetListGuiasBalancesLineas;
+            item.Id = items.Count() + 1;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    items.Add(item);
+                    SetListGuiasBalancesLineas(items);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return PartialView("_GuiasBalancesLineasGrid", items);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult GuiasBalancesLineasUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] GuiasBalancesLineasModel item)
+        {
+            var items = GetListGuiasBalancesLineas;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var EditItem = items.Single(s => s.Id == item.Id);
+                    EditItem.guia = item.guia;
+                    EditItem.GuiasBalancesId = item.GuiasBalancesId;
+                    EditItem.Id = item.Id;
+                    EditItem.informe = item.informe;
+                    EditItem.orden = item.orden;
+                    EditItem.signo = item.signo;
+                    EditItem.signoea = item.signoea;
+                    SetListGuiasBalancesLineas(items);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return PartialView("_GuiasBalancesLineasGrid", items);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult GuiasBalancesLineasDelete(int id)
+        {
+            var items = GetListGuiasBalancesLineas;
+            items.Remove(items.Single(s => s.Id == id));
+
+            //Ir actualizando los ID en caso de que sufran cambios (eliminacion de lineas) EN CASO DE QUE QUEDEN LINEAS
+            if (items.Count() >= 1)
+            {
+                int count = 1;
+                foreach (var linea in items)
+                {
+
+                    linea.Id = count;
+                    count++;
+                }
+            }
+
+            return PartialView("_GuiasBalancesLineasGrid", items);
+        }
+
+        void SetListGuiasBalancesLineas(List<GuiasBalancesLineasModel> guiasBalancesLineas) => Session[SessionGuiasBalancesLineas] = guiasBalancesLineas;
+        List<GuiasBalancesLineasModel> GetListGuiasBalancesLineas => Session[SessionGuiasBalancesLineas] as List<GuiasBalancesLineasModel>;
         #endregion
     }
 }
