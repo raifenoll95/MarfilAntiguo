@@ -3439,6 +3439,7 @@
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineas.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineasGrid.cshtml" />
     <Content Include="Views\GuiasBalances\Delete.cshtml" />
+    <Content Include="Views\GuiasBalances\Create.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

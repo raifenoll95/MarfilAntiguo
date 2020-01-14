@@ -10,6 +10,9 @@ using System.Net;
 using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using DevExpress.Web.Mvc;
+using Marfil.Dom.Persistencia.ServicesView;
+using Resources;
+using Marfil.App.WebMain.Misc;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -36,7 +39,55 @@ namespace Marfil.App.WebMain.Controllers
             CanModificar = true;
             CanEliminar = true;
         }
+        #region Create
+        public override ActionResult Create()
+        {
+            if (TempData["errors"] != null)
+                ModelState.AddModelError("", TempData["errors"].ToString());
 
+            using (var gestionService = FService.Instance.GetService(typeof(GuiasBalancesModel), ContextService))
+            {
+                var modelview = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService) as IModelView;
+                if (TempData["model"] != null)
+                    modelview = TempData["model"] as IModelView;
+                ((IToolbar)modelview).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, modelview);
+                return View(modelview);
+            }
+        }
+        public override ActionResult CreateOperacion(GuiasBalancesModel model)
+        {
+            try
+            {
+                var a = 3;
+
+                var modelview = Helper.fModel.GetModel<GuiasBalancesModel>(ContextService);
+                model.GuiasBalancesLineas = GetListGuiasBalancesLineas.ToList();
+
+                using (var gestionService = createService(modelview))
+                {
+                    ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
+                    if (ModelState.IsValid)
+                    {
+                        gestionService.create(model);
+                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        return RedirectToAction("Index");
+                    }
+                }
+                TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
+                   .SelectMany(x => x.Errors)
+                   .Select(x => x.ErrorMessage));
+                TempData["model"] = model;
+                return RedirectToAction("Create");
+            }
+            catch (Exception ex)
+            {
+                model.Context = ContextService;
+                TempData["errors"] = ex.Message;
+                TempData["model"] = model;
+                return RedirectToAction("Create");
+            }
+        }
+        #endregion
         #region Edit
         public override ActionResult Edit(string id)
         {
@@ -77,7 +128,7 @@ namespace Marfil.App.WebMain.Controllers
                     {
                         model.GuiasBalancesLineas = GetListGuiasBalancesLineas.ToList();
                         gestionService.edit(model);
-                        //TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
                     }
                 }
@@ -120,7 +171,6 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
         #endregion
-
         #region Delete
         public override ActionResult Delete(string id)
         {

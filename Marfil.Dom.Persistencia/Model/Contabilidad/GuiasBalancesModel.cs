@@ -37,7 +37,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         }
         public GuiasBalancesModel(IContextService context) : base(context)
         {
-
+            GuiasBalancesLineas = new List<GuiasBalancesLineasModel>();
         }
         public override object generateId(string id)
         {
