@@ -434,6 +434,7 @@
     <Compile Include="Listados\Base\ListadoResultado.cs" />
     <Compile Include="Listados\Base\ListadosModel.cs" />
     <Compile Include="Listados\FListadosModel.cs" />
+    <Compile Include="Listados\ListadoAcomuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
     <Compile Include="Listados\ListadoGuiasBalances.cs" />
     <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />

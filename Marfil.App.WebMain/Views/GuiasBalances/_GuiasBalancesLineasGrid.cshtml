@@ -11,8 +11,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-        //general
-        settings.Name = "GridViewGuiasBalancesLineas";
+//general
+settings.Name = "GridViewGuiasBalancesLineas";
         settings.KeyFieldName = "Id";
         settings.CallbackRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineas" };
         settings.EnableRowsCache = true;
@@ -20,8 +20,8 @@
         settings.Width = Unit.Percentage(100);
         settings.SettingsPager.Visible = true;
 
-        //edition
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasAddNew" };
+//edition
+settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasDelete" };
         settings.CustomActionRouteValues = new { Controller = "GuiasBalances", Action = "CustomGridViewEditingPartial" };
@@ -60,7 +60,7 @@
         settings.Columns.Add("signo");
         settings.Columns.Add("signoea");
 
-        settings.Columns["GuiasBalancesId"].Visible = true;
+        settings.Columns["GuiasBalancesId"].Visible = false;
         settings.Columns["informe"].Visible = true;
         settings.Columns["guia"].Visible = true;
         settings.Columns["orden"].Visible = true;
@@ -70,8 +70,8 @@
 
         settings.InitNewRow += (s, e) =>
         {
-            ////Si es un registro nuevo
-            e.NewValues["Id"] = "";
+    ////Si es un registro nuevo
+    e.NewValues["Id"] = "";
             e.NewValues["informe"] = "";
             e.NewValues["guia"] = 0;
             e.NewValues["GuiasBalancesId"] = 0;
@@ -109,14 +109,14 @@
             if (args.Column.FieldName == settings.KeyFieldName)
             {
                 ASPxTextBox tb = (ASPxTextBox)args.Editor;
-                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
-                tb.Focus();
+        //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+        tb.Focus();
             }
         };
 
         settings.ClientSideEvents.RowDblClick = "function(s,e) {s.StartEditRow(e.visibleIndex)} ";
         settings.ClientSideEvents.FocusedRowChanged = "function(s,e) { FunOnFocusedRowChanged(s, e);} ";
-        settings.ClientSideEvents.Init = "function(s,e) { GridViewComponente.Focus();}";
+        settings.ClientSideEvents.Init = "function(s,e) { GridViewGuiasBalancesLineas.Focus();}";
 
         if (ViewBag.ReadOnly != null && ViewBag.ReadOnly)
         {
@@ -124,8 +124,8 @@
             settings.ClientSideEvents.RowDblClick = null;
         }
 
-        //display
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+//display
+settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
         settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
         settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
@@ -160,26 +160,26 @@
 
                 switch (keycode) {
                     case 113://editar
-                        if (!GridViewComponente.IsEditing()) {
+                        if (!GridViewGuiasBalancesLineas.IsEditing()) {
 
-                            GridViewComponente.StartEditRow(index);
+                            GridViewGuiasBalancesLineas.StartEditRow(index);
                         }
                         break;
                     case 46://Eliminar
-                        if (!GridViewComponente.IsEditing()) {
-                            GridViewComponente.DeleteRow(index);
+                        if (!GridViewGuiasBalancesLineas.IsEditing()) {
+                            GridViewGuiasBalancesLineas.DeleteRow(index);
                         }
                         break;
                     case 27://escape
-                        if (GridViewComponente.IsEditing()) {
-                            GridViewComponente.CancelEdit();
-                            GridViewComponente.Focus();
+                        if (GridViewGuiasBalancesLineas.IsEditing()) {
+                            GridViewGuiasBalancesLineas.CancelEdit();
+                            GridViewGuiasBalancesLineas.Focus();
                         }
                         break;
                     case 13://enter
-                        if (GridViewComponente.IsEditing()) {
-                            GridViewComponente.Focus();
-                            GridViewComponente.UpdateEdit();
+                        if (GridViewGuiasBalancesLineas.IsEditing()) {
+                            GridViewGuiasBalancesLineas.Focus();
+                            GridViewGuiasBalancesLineas.UpdateEdit();
                         }
                         break;
                     case 107://mas
@@ -191,12 +191,12 @@
         }
 
         //Se le llama cuando le das a nuevo registro
-        function CreateLineasRowComponentes() {
+    function CreateLineasRowComponentes() {
 
-            if (!GridViewComponente.IsEditing()) {
-                GridViewComponente.Focus();
-                var rowIndex = GridViewComponente.GetFocusedRowIndex();
-                GridViewComponente.AddNewRow();
+        if (!GridViewGuiasBalancesLineas.IsEditing()) {
+                GridViewGuiasBalancesLineas.Focus();
+                var rowIndex = GridViewGuiasBalancesLineas.GetFocusedRowIndex();
+                GridViewGuiasBalancesLineas.AddNewRow();
             }
         }
 
@@ -205,7 +205,7 @@
 
             var componente = s.GetValue();
             s.SetValue(componente);
-            GridViewComponente.GetEditor("IdComponente").SetEnabled(false);
+            GridViewGuiasBalancesLineas.GetEditor("GuiasBalancesId").SetEnabled(false);
 
             //Buscamos la descripcion del articulo
             SearchDescripcionAndPermitirMedidas(componente);
@@ -219,22 +219,22 @@
             $.get("@Url.Action("ArticulosDocumentosApi","Api")" + "/" + obj).success(function (result) {
 
                 //Descripcion
-                GridViewComponente.GetEditor("DescripcionComponente").SetValue(result.Descripcion);
+                GridViewGuiasBalancesLineas.GetEditor("DescripcionComponente").SetValue(result.Descripcion);
 
-                GridViewComponente.GetEditor("Largo").SetValue(result.Largo);
-                GridViewComponente.GetEditor("Ancho").SetValue(result.Ancho);
-                GridViewComponente.GetEditor("Grueso").SetValue(result.Grueso);
+                GridViewGuiasBalancesLineas.GetEditor("Largo").SetValue(result.Largo);
+                GridViewGuiasBalancesLineas.GetEditor("Ancho").SetValue(result.Ancho);
+                GridViewGuiasBalancesLineas.GetEditor("Grueso").SetValue(result.Grueso);
 
                 //Largo, Ancho, Grueso
-                GridViewComponente.GetEditor("Piezas").SetEnabled(true);
-                GridViewComponente.GetEditor("Merma").SetEnabled(true);
-                GridViewComponente.GetEditor("Largo").SetEnabled(result.Permitemodificarlargo);
-                GridViewComponente.GetEditor("Ancho").SetEnabled(result.Permitemodificarancho);
-                GridViewComponente.GetEditor("Grueso").SetEnabled(result.Permitemodificargrueso);
+                GridViewGuiasBalancesLineas.GetEditor("Piezas").SetEnabled(true);
+                GridViewGuiasBalancesLineas.GetEditor("Merma").SetEnabled(true);
+                GridViewGuiasBalancesLineas.GetEditor("Largo").SetEnabled(result.Permitemodificarlargo);
+                GridViewGuiasBalancesLineas.GetEditor("Ancho").SetEnabled(result.Permitemodificarancho);
+                GridViewGuiasBalancesLineas.GetEditor("Grueso").SetEnabled(result.Permitemodificargrueso);
 
             }).error(function (jqXHR, textStatus, errorThrown) {
 
-                GridViewComponente.GetEditor("IdComponente").SetEnabled(true);
+                GridViewGuiasBalancesLineas.GetEditor("GuiasBalancesId").SetEnabled(true);
             });
         }
 
@@ -263,28 +263,28 @@
 
         //Viene del BusquedasController.js que hace un publish con la cuenta y aqui te suscribes al evento
         eventAggregator.RegisterEvent("IdComponente-Buscarfocus", function (obj) {
-            GridViewComponente.GetEditor("IdComponente").SetValue(obj);
-            GridViewComponente.GetEditor("IdComponente").SetEnabled(false);
+            GridViewGuiasBalancesLineas.GetEditor("IdComponente").SetValue(obj);
+            GridViewGuiasBalancesLineas.GetEditor("IdComponente").SetEnabled(false);
             SearchDescripcionAndPermitirMedidas(obj);
         });
 
         //Tenemos que tener a disabled la descripcion para que el usuario no la pueda modificar
         function DescripcionDisabledComponentes(s, e) {
             s.Focus();
-            GridViewComponente.GetEditor("DescripcionComponente").SetEnabled(false);
+            GridViewGuiasBalancesLineas.GetEditor("DescripcionComponente").SetEnabled(false);
         }
 
         //Creamos fila
         function CreateRow() {
-            if (!GridViewComponente.IsEditing()) {
-                GridViewComponente.Focus();
-                GridViewComponente.AddNewRow();
+            if (!GridViewGuiasBalancesLineas.IsEditing()) {
+                GridViewGuiasBalancesLineas.Focus();
+                GridViewGuiasBalancesLineas.AddNewRow();
             }
         }
 
         //Focus
         $(document).ready(function () {
-            GridViewComponente.Focus();
+            GridViewGuiasBalancesLineas.Focus();
         });
 
 </script>

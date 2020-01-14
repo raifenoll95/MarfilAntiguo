@@ -3,9 +3,10 @@
 
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
-    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
+    var iseditable = ViewData["operacion"] != null && (ViewData["operacion"].ToString() == "Edit");
 }
 
+    
 <div>
     <br />
     <div id="tabs">

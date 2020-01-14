@@ -3,15 +3,14 @@
 
 @model IModelView
 
-@{
-    ViewData["operacion"] = "Edit";
-}
-
 
 @using (Html.BeginForm("EditOperacion", "GuiasBalances", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
+        @{
+            ViewData["operacion"] = "Edit";
+        }
         @Html.Partial("_GuiasBalances", Model as GuiasBalancesModel)
         <div class="form-group margin-top">
             <div class="col-md-10">
@@ -24,3 +23,14 @@
     </div>
 }
 
+
+@section GridView
+{
+    @Html.DevExpress().GetStyleSheets(
+    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+)
+    @Html.DevExpress().GetScripts(
+    new Script { ExtensionSuite = ExtensionSuite.GridView }
+)
+
+}

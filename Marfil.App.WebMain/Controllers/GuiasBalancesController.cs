@@ -58,12 +58,43 @@ namespace Marfil.App.WebMain.Controllers
                 }
 
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
+                SetListGuiasBalancesLineas(((GuiasBalancesModel)model).GuiasBalancesLineas);
                 return View(model);
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public override ActionResult EditOperacion(GuiasBalancesModel model)
         {
-            return base.EditOperacion(model);
+            var obj = model as IModelView;
+            var objExt = model as IModelViewExtension;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (var gestionService = createService(model))
+                    {
+                        model.GuiasBalancesLineas = GetListGuiasBalancesLineas.ToList();
+                        gestionService.edit(model);
+                        //TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        return RedirectToAction("Index");
+                    }
+                }
+                TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage));
+                TempData["model"] = model;
+                //return base.EditOperacion(model);
+                return RedirectToAction("Edit", new { id = model.Id });
+            }
+            catch (Exception ex)
+            {
+                model.Context = ContextService;
+                TempData["errors"] = ex.Message;
+                TempData["model"] = model;
+                return RedirectToAction("Edit", new { id = model.Id });
+            }
         }
         #endregion
         #region Details
@@ -89,6 +120,19 @@ namespace Marfil.App.WebMain.Controllers
             }
         }
         #endregion
+
+        #region Delete
+        public override ActionResult Delete(string id)
+        {
+            return base.Delete(id);
+        }
+
+        public override ActionResult DeleteConfirmed(string id)
+        {
+            return base.DeleteConfirmed(id);
+        }
+        #endregion
+
         #region Gias de Balances Lineas
         [ValidateInput(false)]
         public ActionResult GuiasBalancesLineas() => PartialView("_GuiasBalancesLineasGrid", GetListGuiasBalancesLineas);

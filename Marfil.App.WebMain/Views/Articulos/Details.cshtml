@@ -5,20 +5,13 @@
 @using Resources
 @model IModelView
 @{
-
     ViewBag.Title = ((IToolbar)Model).Toolbar.Titulo;
 }
-
-
-
 <div>
-    
     @{
         ViewData["readonly"] = true;
     }
     <div class="form-horizontal">
-
-
         @Html.Partial("_Articulos", Model as ArticulosModel)
     </div>
 </div>
