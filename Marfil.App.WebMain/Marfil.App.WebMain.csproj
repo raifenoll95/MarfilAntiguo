@@ -280,6 +280,7 @@
     <Compile Include="Controllers\DivisionLotesController.cs" />
     <Compile Include="Controllers\ExportarController.cs" />
     <Compile Include="Controllers\GuiasBalancesController.cs" />
+    <Compile Include="Controllers\ListadoAcomuladorPeriodosController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -3440,6 +3441,7 @@
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineasGrid.cshtml" />
     <Content Include="Views\GuiasBalances\Delete.cshtml" />
     <Content Include="Views\GuiasBalances\Create.cshtml" />
+    <Content Include="Views\ListadoAcomuladorPeriodos\AcomuladorPeriodos.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
