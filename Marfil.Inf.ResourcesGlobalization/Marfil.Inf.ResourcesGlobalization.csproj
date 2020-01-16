@@ -298,6 +298,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Kit.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\ListadoAcomuladoPeriodos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListadoAcomuladoPeriodos.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\ListadoComisiones.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -857,6 +862,10 @@
     <EmbeddedResource Include="Textos\Entidades\Kit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Kit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListadoAcomuladoPeriodos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.fr.resx" />
