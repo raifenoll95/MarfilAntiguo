@@ -273,6 +273,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Gruposusuarios.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalancesLineas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalancesLineas.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Guiascontables.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -573,6 +578,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TiposDocumentosContables.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalances.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalances.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Login\Login.en.Designer.cs">
       <DependentUpon>Login.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -834,6 +844,10 @@
     <EmbeddedResource Include="Textos\Entidades\Gruposusuarios.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Gruposusuarios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalancesLineas.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Guiascontables.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Guiascontables.fr.resx" />
@@ -1170,6 +1184,10 @@
     <EmbeddedResource Include="Textos\GeneralUI\TiposDocumentosContables.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TiposDocumentosContables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalances.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalances.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Login\Login.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

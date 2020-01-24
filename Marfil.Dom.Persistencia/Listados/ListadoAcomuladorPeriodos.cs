@@ -72,5 +72,60 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.Append("Select * from Maes");
             return sb.ToString();
         }
+        //public void GenerarMovimiento(MovsModel model, TipoOperacionMaes tipo)// short multiplo)
+        //// multiplo 1 para alta  -1 para baja
+        //{
+        //    // nivel 0
+        //    foreach (var item in model.Lineas.GroupBy(l => l.Fkcuentas))
+        //    {
+        //        string fkcuentas = item.Key;
+
+
+        //        var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
+        //                      ?? _db.Maes.Create();
+
+        //        if (string.IsNullOrWhiteSpace(itemmaes.empresa))
+        //        {
+        //            itemmaes.empresa = model.Empresa;
+        //            itemmaes.fkcuentas = fkcuentas;
+        //            itemmaes.fkejercicio = model.Fkejercicio;
+        //        }
+        //        int multiplo = (tipo == TipoOperacionMaes.Alta ? 1 : -1);
+
+        //        itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l => l.Esdebe == 1).Sum(l => l.Importe) * (multiplo));
+        //        itemmaes.haber = (itemmaes.haber ?? 0) + (item.Where(l => l.Esdebe == -1).Sum(l => l.Importe) * (multiplo));
+        //        itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
+
+        //        _db.Maes.AddOrUpdate(itemmaes);
+        //    }
+
+
+        //    // nivel 0 - 4
+
+        //    for (int nivel = 4; nivel > 0; nivel--)
+        //    {
+        //        foreach (var item in model.Lineas.GroupBy(l => l.Fkcuentas.Substring(0, nivel)))
+        //        {
+        //            string fkcuentas = item.Key;//.Substring(0, nivel);
+
+        //            var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
+        //                           ?? _db.Maes.Create();
+
+        //            if (string.IsNullOrWhiteSpace(itemmaes.empresa))
+        //            {
+        //                itemmaes.empresa = model.Empresa;
+        //                itemmaes.fkcuentas = fkcuentas;
+        //                itemmaes.fkejercicio = model.Fkejercicio;
+        //            }
+        //            int multiplo = (tipo == TipoOperacionMaes.Alta ? 1 : -1);
+
+        //            itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l => l.Esdebe == 1).Sum(l => l.Importe) * (multiplo));
+        //            itemmaes.haber = (itemmaes.haber ?? 0) + (item.Where(l => l.Esdebe == -1).Sum(l => l.Importe) * (multiplo));
+        //            itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
+
+        //            _db.Maes.AddOrUpdate(itemmaes);
+        //        }
+        //    }
+        //}
     }
 }

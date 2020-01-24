@@ -1,9 +1,11 @@
 ﻿using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RGuiasBLineas = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.GuiasBalancesLineas;
 
 namespace Marfil.Dom.Persistencia.Model.Contabilidad
 {
@@ -11,12 +13,26 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
     {
         #region Propiedades
         public int Id { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "informe")]
         public string informe { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "guia")]
         public string guia { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "GuiasBalancesId")]
         public int? GuiasBalancesId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "orden")]
         public string orden { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "cuenta")]
         public string cuenta { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "signo")]
         public string signo { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "signoea")]
         public string signoea { get; set; }
         #endregion
 
