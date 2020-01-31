@@ -227,7 +227,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var tablavaria = service.GetTablasVariasByCode(55);
             return tablavaria.Lineas.OrderBy(f => f.Descripcion).Select(f => (TablasVariasGeneralModel)f);
         }
-
+        public IEnumerable<TipoInforme> GetListTipoInforme()
+        {
+            return _db.TipoInforme.ToList();
+        }
+        public IEnumerable<TipoGuia> GetListTipoGuia()
+        {
+            return _db.TipoGuia.ToList();
+        }
         public IEnumerable<TablasVariasGeneralModel> GetListZonaClienteProveedor()
         {
 

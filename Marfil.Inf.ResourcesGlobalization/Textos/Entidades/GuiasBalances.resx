@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Actpas" xml:space="preserve">
-    <value>Actpas</value>
+    <value>Activo/Pasivo</value>
   </data>
   <data name="Balca" xml:space="preserve">
     <value>Balca</value>

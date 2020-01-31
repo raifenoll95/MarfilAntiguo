@@ -187,6 +187,8 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Vencimientos> Vencimientos { get; set; }
         public virtual DbSet<CircuitosTesoreriaCobros> CircuitosTesoreriaCobros { get; set; }
         public virtual DbSet<CarteraVencimientos> CarteraVencimientos { get; set; }
+        public virtual DbSet<TipoGuia> TipoGuia { get; set; }
+        public virtual DbSet<TipoInforme> TipoInforme { get; set; }
         public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
         public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
     

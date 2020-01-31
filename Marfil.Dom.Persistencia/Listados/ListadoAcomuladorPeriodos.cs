@@ -64,6 +64,7 @@ namespace Marfil.Dom.Persistencia.Listados
         }
         internal override string GenerarFiltrosColumnas()
         {
+
             return base.GenerarFiltrosColumnas();
         }
         internal override string GenerarSelect()
@@ -72,6 +73,7 @@ namespace Marfil.Dom.Persistencia.Listados
             sb.Append("Select * from Maes");
             return sb.ToString();
         }
+
         //public void GenerarMovimiento(MovsModel model, TipoOperacionMaes tipo)// short multiplo)
         //// multiplo 1 para alta  -1 para baja
         //{

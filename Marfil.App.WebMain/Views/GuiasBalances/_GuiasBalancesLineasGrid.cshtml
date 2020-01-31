@@ -11,8 +11,8 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
-//general
-settings.Name = "GridViewGuiasBalancesLineas";
+        //general
+        settings.Name = "GridViewGuiasBalancesLineas";
         settings.KeyFieldName = "Id";
         settings.CallbackRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineas" };
         settings.EnableRowsCache = true;
@@ -20,8 +20,8 @@ settings.Name = "GridViewGuiasBalancesLineas";
         settings.Width = Unit.Percentage(100);
         settings.SettingsPager.Visible = true;
 
-//edition
-settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasAddNew" };
+        //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "GuiasBalances", Action = "GuiasBalancesLineasDelete" };
         settings.CustomActionRouteValues = new { Controller = "GuiasBalances", Action = "CustomGridViewEditingPartial" };
@@ -46,23 +46,38 @@ settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalance
             p.ClientSideEvents.ButtonClick = "function(e,o) { SearchComponente(); } ";
             p.Buttons.Add(new EditButton("<i class=\"fa fa-search\"></i>"));
         });
-
+        settings.Columns.Add("InformeId");
+        settings.Columns.Add("GuiaId");
         settings.Columns.Add(j =>
         {
-            j.FieldName = "informe";
+            j.FieldName = "TipoInforme.Descripcion";
             j.ColumnType = MVCxGridViewColumnType.ButtonEdit;
             j.Width = Unit.Pixel(360);
+            j.ReadOnly = true;
         });
 
-        settings.Columns.Add("guia");
-        settings.Columns.Add("orden");
+        settings.Columns.Add(j=> {
+            j.FieldName = "TipoGuia.Descripcion";
+            j.ReadOnly = true;
+        });
+        settings.Columns.Add(j=>
+        {
+            j.FieldName = "orden";
+            j.ReadOnly = true;
+        });
         settings.Columns.Add("cuenta");
         settings.Columns.Add("signo");
         settings.Columns.Add("signoea");
+        settings.Columns.Add("TipoInforme.Id");
+        settings.Columns.Add("TipoGuia.Id");
 
         settings.Columns["GuiasBalancesId"].Visible = false;
-        settings.Columns["informe"].Visible = true;
-        settings.Columns["guia"].Visible = true;
+        settings.Columns["InformeId"].Visible = false;
+        settings.Columns["GuiaId"].Visible = false;
+        settings.Columns["TipoInforme.Id"].Visible = false;
+        settings.Columns["TipoGuia.Id"].Visible = false;
+        settings.Columns["TipoInforme.Descripcion"].Visible = true;
+        settings.Columns["TipoGuia.Descripcion"].Visible = true;
         settings.Columns["orden"].Visible = true;
         settings.Columns["cuenta"].Visible = true;
         settings.Columns["signo"].Visible = true;
@@ -70,15 +85,20 @@ settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalance
 
         settings.InitNewRow += (s, e) =>
         {
-    ////Si es un registro nuevo
-    e.NewValues["Id"] = "";
-            e.NewValues["informe"] = "";
-            e.NewValues["guia"] = 0;
+            var model = Model.FirstOrDefault();
+            ////Si es un registro nuevo
+            e.NewValues["Id"] = 0;
+            e.NewValues["TipoInforme.Descripcion"] = model.TipoInforme.Descripcion;
+            e.NewValues["TipoGuia.Descripcion"] = model.TipoGuia.Descripcion;
+            e.NewValues["TipoInforme.Id"] = model.TipoInforme.Id;
+            e.NewValues["TipoGuia.Id"] = model.TipoGuia.Id;
+            e.NewValues["InformeId"] = model.InformeId;
+            e.NewValues["GuiaId"] = model.GuiaId;
             e.NewValues["GuiasBalancesId"] = 0;
-            e.NewValues["orden"] = 0;
+            e.NewValues["orden"] = model.orden;
             e.NewValues["cuenta"] = 0;
-            e.NewValues["signo"] = 0;
-            e.NewValues["signoea"] = 0;
+            e.NewValues["signo"] = "";
+            e.NewValues["signoea"] = "";
         };
 
         settings.CellEditorInitialize = (s, e) =>
@@ -109,8 +129,8 @@ settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalance
             if (args.Column.FieldName == settings.KeyFieldName)
             {
                 ASPxTextBox tb = (ASPxTextBox)args.Editor;
-        //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
-        tb.Focus();
+                //tb.SetClientSideEventHandler("TextChanged", "function(s,e){ s.SetText(s.GetText().toUpperCase());}");
+                tb.Focus();
             }
         };
 
@@ -124,8 +144,8 @@ settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "GuiasBalance
             settings.ClientSideEvents.RowDblClick = null;
         }
 
-//display
-settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        //display
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
         settings.EditFormLayoutProperties.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
         settings.EditFormLayoutProperties.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
@@ -213,7 +233,7 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCell
         }
 
         //Seteamos descripcion y medidas
-        function SearchDescripcionAndPermitirMedidas(obj) {
+        @*function SearchDescripcionAndPermitirMedidas(obj) {
 
             console.log("@Url.Action("ArticulosDocumentosApi","Api")" + "/" + obj);
             $.get("@Url.Action("ArticulosDocumentosApi","Api")" + "/" + obj).success(function (result) {
@@ -266,7 +286,7 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCell
             GridViewGuiasBalancesLineas.GetEditor("IdComponente").SetValue(obj);
             GridViewGuiasBalancesLineas.GetEditor("IdComponente").SetEnabled(false);
             SearchDescripcionAndPermitirMedidas(obj);
-        });
+        });*@
 
         //Tenemos que tener a disabled la descripcion para que el usuario no la pueda modificar
         function DescripcionDisabledComponentes(s, e) {

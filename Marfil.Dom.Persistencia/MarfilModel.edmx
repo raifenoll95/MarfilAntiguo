@@ -1918,8 +1918,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="informe" Type="nvarchar" MaxLength="255" />
-          <Property Name="guia" Type="nvarchar" MaxLength="255" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
           <Property Name="textogrupo" Type="nvarchar" MaxLength="255" />
           <Property Name="orden" Type="nvarchar" MaxLength="255" />
           <Property Name="actpas" Type="nvarchar" MaxLength="255" />
@@ -1934,8 +1934,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="informe" Type="nvarchar" MaxLength="255" />
-          <Property Name="guia" Type="nvarchar" MaxLength="255" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
           <Property Name="GuiasBalancesId" Type="int" />
           <Property Name="orden" Type="nvarchar" MaxLength="255" />
           <Property Name="cuenta" Type="nvarchar" MaxLength="255" />
@@ -3732,6 +3732,20 @@
           <Property Name="descuento" Type="float" />
           <Property Name="Unidades" Type="nvarchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="TipoGuia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tiposcuentas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -5018,6 +5032,30 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GuiasBalances_TipoGuia">
+          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalances_TipoInforme">
+          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
           <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="0..1" />
           <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
@@ -5027,6 +5065,30 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="GuiasBalancesLineas">
               <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoGuia">
+          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoInforme">
+          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="InformeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5601,6 +5663,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Tarifas" EntityType="Self.Tarifas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarifasbase" EntityType="Self.Tarifasbase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TarifasLin" EntityType="Self.TarifasLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoGuia" EntityType="Self.TipoGuia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoInforme" EntityType="Self.TipoInforme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiposcuentas" EntityType="Self.Tiposcuentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposcuentasLin" EntityType="Self.TiposcuentasLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposIva" EntityType="Self.TiposIva" Schema="dbo" store:Type="Tables" />
@@ -5889,8 +5953,24 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="GruposIva" EntitySet="GruposIva" />
             <End Role="GruposIvaLin" EntitySet="GruposIvaLin" />
           </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoGuia" Association="Self.FK_GuiasBalances_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoInforme" Association="Self.FK_GuiasBalances_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
           <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="Self.FK_GuiasBalancesLineas_GuiasBalances">
             <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoGuia" Association="Self.FK_GuiasBalancesLineas_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoInforme" Association="Self.FK_GuiasBalancesLineas_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
             <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
           <AssociationSet Name="FK_GuiascontablesLin_Guiascontables" Association="Self.FK_GuiascontablesLin_Guiascontables">
@@ -6452,10 +6532,28 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="Vencimientos" EntityType="MarfilModel.Vencimientos" />
           <EntitySet Name="CircuitosTesoreriaCobros" EntityType="MarfilModel.CircuitosTesoreriaCobros" />
           <EntitySet Name="CarteraVencimientos" EntityType="MarfilModel.CarteraVencimientos" />
+          <EntitySet Name="TipoGuia" EntityType="MarfilModel.TipoGuia" />
+          <EntitySet Name="TipoInforme" EntityType="MarfilModel.TipoInforme" />
           <EntitySet Name="GuiasBalances" EntityType="MarfilModel.GuiasBalances" />
+          <AssociationSet Name="FK_GuiasBalances_TipoGuia" Association="MarfilModel.FK_GuiasBalances_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoInforme" Association="MarfilModel.FK_GuiasBalances_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
           <EntitySet Name="GuiasBalancesLineas" EntityType="MarfilModel.GuiasBalancesLineas" />
           <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances">
             <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoGuia" Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoInforme" Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
             <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
           </EntityContainer>
@@ -11944,13 +12042,31 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="codigoremesa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="tiponumerofactura" Type="Int32" />
         </EntityType>
+        <EntityType Name="TipoGuia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalances_TipoGuia" FromRole="TipoGuia" ToRole="GuiasBalances" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" FromRole="TipoGuia" ToRole="GuiasBalancesLineas" />
+        </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalances_TipoInforme" FromRole="TipoInforme" ToRole="GuiasBalances" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" FromRole="TipoInforme" ToRole="GuiasBalancesLineas" />
+        </EntityType>
         <EntityType Name="GuiasBalances">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="informe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="guia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
           <Property Name="textogrupo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="actpas" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -11959,21 +12075,49 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="regdig" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="listado" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TipoGuia" Relationship="MarfilModel.FK_GuiasBalances_TipoGuia" FromRole="GuiasBalances" ToRole="TipoGuia" />
+          <NavigationProperty Name="TipoInforme" Relationship="MarfilModel.FK_GuiasBalances_TipoInforme" FromRole="GuiasBalances" ToRole="TipoInforme" />
           <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalances" ToRole="GuiasBalancesLineas" />
         </EntityType>
+        <Association Name="FK_GuiasBalances_TipoGuia">
+          <End Type="MarfilModel.TipoGuia" Role="TipoGuia" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalances_TipoInforme">
+          <End Type="MarfilModel.TipoInforme" Role="TipoInforme" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="GuiasBalancesLineas">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="informe" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="guia" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
           <Property Name="GuiasBalancesId" Type="Int32" />
           <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="cuenta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="signo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="signoea" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalancesLineas" ToRole="GuiasBalances" />
+          <NavigationProperty Name="TipoGuia" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" FromRole="GuiasBalancesLineas" ToRole="TipoGuia" />
+          <NavigationProperty Name="TipoInforme" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" FromRole="GuiasBalancesLineas" ToRole="TipoInforme" />
         </EntityType>
         <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
           <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="0..1" />
@@ -11984,6 +12128,30 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="GuiasBalancesLineas">
               <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoGuia">
+          <End Type="MarfilModel.TipoGuia" Role="TipoGuia" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoInforme">
+          <End Type="MarfilModel.TipoInforme" Role="TipoInforme" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="InformeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16343,6 +16511,22 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TipoGuia">
+            <EntityTypeMapping TypeName="MarfilModel.TipoGuia">
+              <MappingFragment StoreEntitySet="TipoGuia">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoInforme">
+            <EntityTypeMapping TypeName="MarfilModel.TipoInforme">
+              <MappingFragment StoreEntitySet="TipoInforme">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="GuiasBalances">
             <EntityTypeMapping TypeName="MarfilModel.GuiasBalances">
               <MappingFragment StoreEntitySet="GuiasBalances">
@@ -16354,8 +16538,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="actpas" ColumnName="actpas" />
                 <ScalarProperty Name="orden" ColumnName="orden" />
                 <ScalarProperty Name="textogrupo" ColumnName="textogrupo" />
-                <ScalarProperty Name="guia" ColumnName="guia" />
-                <ScalarProperty Name="informe" ColumnName="informe" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -16368,8 +16552,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="cuenta" ColumnName="cuenta" />
                 <ScalarProperty Name="orden" ColumnName="orden" />
                 <ScalarProperty Name="GuiasBalancesId" ColumnName="GuiasBalancesId" />
-                <ScalarProperty Name="guia" ColumnName="guia" />
-                <ScalarProperty Name="informe" ColumnName="informe" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

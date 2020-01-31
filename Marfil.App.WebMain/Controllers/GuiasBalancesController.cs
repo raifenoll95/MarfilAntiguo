@@ -216,10 +216,10 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     var EditItem = items.Single(s => s.Id == item.Id);
-                    EditItem.guia = item.guia;
+                    EditItem.GuiaId = item.GuiaId;
                     EditItem.GuiasBalancesId = item.GuiasBalancesId;
                     EditItem.Id = item.Id;
-                    EditItem.informe = item.informe;
+                    EditItem.InformeId = item.InformeId;
                     EditItem.orden = item.orden;
                     EditItem.signo = item.signo;
                     EditItem.signoea = item.signoea;

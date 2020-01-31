@@ -15,10 +15,16 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public int Id { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBLineas), Name = "informe")]
-        public string informe { get; set; }
+        public int InformeId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "informe")]
+        public TipoInforme TipoInforme { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBLineas), Name = "guia")]
-        public string guia { get; set; }
+        public int GuiaId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBLineas), Name = "guia")]
+        public TipoGuia TipoGuia { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBLineas), Name = "GuiasBalancesId")]
         public int? GuiasBalancesId { get; set; }

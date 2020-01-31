@@ -10,28 +10,30 @@ using RGuiasBalances = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.GuiasB
 
 namespace Marfil.Dom.Persistencia.Model.Contabilidad
 {
-    public enum TipoInforme
+    public enum TipoInformeE
     {
         [StringValue(typeof(RGuiasBalances), "Balca")]
-        Balca,
+        Balca=1,
         [StringValue(typeof(RGuiasBalances), "CTAPG")]
-        Ctapg,
+        Ctapg=2,
     }
-    public enum TipoGuia 
+    public enum TipoGuiaE
     {
         [StringValue(typeof(RGuiasBalances), "TipoGuia1")]
-        Abreviada,
+        Abreviada=1,
         [StringValue(typeof(RGuiasBalances), "TipoGuia2")]
-        Abreviado,
+        Abreviado=2,
         [StringValue(typeof(RGuiasBalances), "TipoGuia3")]
-        COOP_ABREVIA,
+        COOP_ABREVIA=3,
         [StringValue(typeof(RGuiasBalances), "TipoGuia4")]
-        COOP_NORMAL,
+        COOP_NORMAL=4,
         [StringValue(typeof(RGuiasBalances), "TipoGuia5")]
-        NORMAL,
+        NORMAL=5,
         [StringValue(typeof(RGuiasBalances), "TipoGuia6")]
-        PYME
+        PYME=6
     }
+
+    //http://localhost:55459/GuiasBalances/Index
     public class GuiasBalancesModel : BaseModel<GuiasBalancesModel, GuiasBalances>
     {
         public override string DisplayName => "Guias Contables";
@@ -39,17 +41,23 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public int Id { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
-        public string Informe { get; set; }
+        
+        public int InformeId { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
+        public int GuiaId { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
-        public TipoInforme TInforme { get; set; }
-        
+        public TipoInforme TipoInforme { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
-        public string Guia { get; set; }
+        public TipoGuia TipoGuia { get; set; }
+
+        [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
+        public TipoInformeE TipoInformeE { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
-        public TipoGuia TGuia { get; set; }
+        public TipoGuiaE TipoGuiaE { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "TextoGrupo")]
         public string TextoGrupo { get; set; }

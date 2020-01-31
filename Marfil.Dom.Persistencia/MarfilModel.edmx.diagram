@@ -232,9 +232,15 @@
         <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="30.375" PointY="23.75" />
         <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
         <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="34.375" PointY="23.75" />
-        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="38.375" PointY="15" />
-        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="40.625" PointY="15.25" />
+        <EntityTypeShape EntityType="MarfilModel.TipoGuia" Width="1.5" PointX="36.125" PointY="11.375" />
+        <EntityTypeShape EntityType="MarfilModel.TipoInforme" Width="1.5" PointX="36.125" PointY="16.125" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="38.375" PointY="14.75" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalances_TipoInforme" />
+        <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="40.625" PointY="14.375" />
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" />
+        <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

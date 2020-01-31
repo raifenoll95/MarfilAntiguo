@@ -20,13 +20,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override IModelView GetModelView(GuiasBalances obj)
         {
             var result = base.GetModelView(obj) as GuiasBalancesModel;
-            result.GuiasBalancesLineas = obj.GuiasBalancesLineas.ToList().Select(g => new GuiasBalancesLineasModel()
+            result.GuiasBalancesLineas = obj.GuiasBalancesLineas.Where(w=> w.InformeId == obj.InformeId && w.GuiaId == obj.GuiaId).ToList().Select(g => new GuiasBalancesLineasModel()
             {
+                TipoGuia = g.TipoGuia,
+                TipoInforme =  g.TipoInforme,
                 cuenta = g.cuenta,
-                guia = g.guia,
+                GuiaId = g.GuiaId.Value,
                 GuiasBalancesId = g.GuiasBalancesId,
                 Id = g.Id,
-                informe = g.informe,
+                InformeId = g.InformeId.Value,
                 orden = g.orden,
                 signo = g.signo,
                 signoea = g.signoea
@@ -61,13 +63,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             {
                 var newItem = _db.Set<GuiasBalancesLineas>().Create();
                 newItem.cuenta = item.cuenta;
-                newItem.guia = item.guia;
+                newItem.GuiaId = item.GuiaId;
                 newItem.GuiasBalancesId = item.GuiasBalancesId;
                 newItem.Id = item.Id;
-                newItem.informe = item.informe;
+                newItem.InformeId = item.InformeId;
                 newItem.orden = item.orden;
                 newItem.signo = item.signo;
                 newItem.signoea = item.signoea;
+                newItem.TipoGuia = item.TipoGuia;
+                newItem.TipoInforme = item.TipoInforme;
                 result.GuiasBalancesLineas.Add(newItem);
             }
             return result;
@@ -100,13 +104,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             {
                 var newItem = _db.Set<GuiasBalancesLineas>().Create();
                 newItem.cuenta = item.cuenta;
-                newItem.guia = item.guia;
+                newItem.GuiaId = item.GuiaId;
                 newItem.GuiasBalancesId = item.GuiasBalancesId;
                 newItem.Id = item.Id;
-                newItem.informe = item.informe;
+                newItem.InformeId = item.InformeId;
                 newItem.orden = item.orden;
                 newItem.signo = item.signo;
                 newItem.signoea = item.signoea;
+                newItem.TipoGuia = item.TipoGuia;
+                newItem.TipoInforme = item.TipoInforme;
                 result.GuiasBalancesLineas.Add(newItem);
             }
             return result;

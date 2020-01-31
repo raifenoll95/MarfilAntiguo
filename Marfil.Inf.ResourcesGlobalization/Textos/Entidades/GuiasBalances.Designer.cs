@@ -61,7 +61,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Actpas.
+        ///   Busca una cadena traducida similar a Activo/Pasivo.
         /// </summary>
         public static string Actpas {
             get {

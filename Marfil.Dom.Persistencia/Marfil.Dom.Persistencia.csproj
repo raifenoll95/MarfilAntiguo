@@ -1224,6 +1224,12 @@
     <Compile Include="TarifasLin.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="TipoGuia.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoInforme.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tiposcuentas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
