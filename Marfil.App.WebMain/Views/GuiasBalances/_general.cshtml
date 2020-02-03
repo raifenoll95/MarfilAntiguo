@@ -45,7 +45,8 @@
 <div class="form-group">
     @Html.LabelFor(model => model.Actpas, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Actpas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @*@Html.TextBoxFor(model => model.Actpas, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })*@
+        @Html.DropDownListFor(model => model.Actpas, new SelectList(Model.ListActpas,""), isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Actpas, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -53,7 +54,8 @@
 <div class="form-group">
     @Html.LabelFor(model => model.Detfor, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Detfor, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @Html.DropDownListFor(model => model.Detfor, new SelectList(Model.ListFormula), isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
+        @*@Html.TextBoxFor(model => model.Detfor, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })*@
         @Html.ValidationMessageFor(model => model.Detfor, "", new { @class = "text-danger" })
     </div>
 </div>

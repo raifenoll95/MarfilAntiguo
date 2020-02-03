@@ -33,6 +33,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 signo = g.signo,
                 signoea = g.signoea
             }).ToList();
+
             return result;
         }
         public override GuiasBalances CreatePersitance(IModelView obj)

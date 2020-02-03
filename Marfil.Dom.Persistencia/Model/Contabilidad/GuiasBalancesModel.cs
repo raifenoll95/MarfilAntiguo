@@ -91,6 +91,11 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
             set { _GuiasBalancesLineas = value; }
         }
 
+        private List<string> listFormula;
+        public List<string> ListFormula { get => listFormula; set { listFormula = value; } }
+
+        private List<string> listActpas;
+        public List<string> ListActpas { get => listActpas; set { listActpas = value; } }
 
         public GuiasBalancesModel()
         {
@@ -99,6 +104,16 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public GuiasBalancesModel(IContextService context) : base(context)
         {
             GuiasBalancesLineas = new List<GuiasBalancesLineasModel>();
+            ListFormula = new List<string>();
+            ListActpas = new List<string>();
+
+            ListActpas.Add("A");
+            ListActpas.Add("P");
+
+            ListFormula.Add("D");
+            ListFormula.Add("T");
+            ListFormula.Add("F");
+            ListFormula.Add("G");
         }
         public override object generateId(string id)
         {
