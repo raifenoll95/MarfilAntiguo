@@ -101,6 +101,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         {
 
         }
+
         public GuiasBalancesModel(IContextService context) : base(context)
         {
             GuiasBalancesLineas = new List<GuiasBalancesLineasModel>();
@@ -115,6 +116,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
             ListFormula.Add("F");
             ListFormula.Add("G");
         }
+
         public override object generateId(string id)
         {
             return int.Parse(id);

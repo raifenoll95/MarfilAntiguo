@@ -41,9 +41,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             foreach (var item in viewmodel.Usuarios.usuarios)
                 result.Usuarios.Add(_db.Usuarios.Single(f=>f.id == item.id));
 
-
-            
-
             return result;
         }
 

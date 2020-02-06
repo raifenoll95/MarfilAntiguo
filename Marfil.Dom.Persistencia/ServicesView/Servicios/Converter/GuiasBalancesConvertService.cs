@@ -36,6 +36,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             return result;
         }
+
         public override GuiasBalances CreatePersitance(IModelView obj)
         {
             var viewmodel = base.CreatePersitance(obj);
@@ -44,8 +45,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             foreach (var item in result.GetType().GetProperties())
             {
                 if ((obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.IsGenericType ?? false) &&
-                    (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() !=
-                    typeof(ICollection<>)) && item.Name.ToLower() != "guiasbalanceslineas")
+                    (obj.GetType().GetProperty(item.Name.FirstToUpper())?.PropertyType.GetGenericTypeDefinition() != typeof(ICollection<>)) && 
+                    item.Name.ToLower() != "guiasbalanceslineas")
                 {
                     item.SetValue(result, obj.GetType().GetProperty(item.Name.FirstToUpper())?.GetValue(obj, null));
                 }
@@ -77,6 +78,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             }
             return result;
         }
+
         public override GuiasBalances EditPersitance(IModelView obj)
         {
             var viewmodel = obj as GuiasBalancesModel;

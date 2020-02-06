@@ -25,10 +25,10 @@ namespace Marfil.Dom.Persistencia.Listados
         public DateTime FechaHasta { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "SeccionDesde")]
-        public int SeccionDesde { get; set; }
+        public string SeccionDesde { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "SeccionHasta")]
-        public int SeccionHasta { get; set; }
+        public string SeccionHasta { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "Ejercicio")]
         public bool Ejercicio { get; set; }
@@ -64,13 +64,75 @@ namespace Marfil.Dom.Persistencia.Listados
         }
         internal override string GenerarFiltrosColumnas()
         {
+            var sb = new StringBuilder();
+            string filtro = string.Empty;
+            bool flag = false;
+            string valor = string.Empty;
 
-            return base.GenerarFiltrosColumnas();
+            if (!string.IsNullOrEmpty(FechaDesde.ToShortDateString()) || !string.IsNullOrEmpty(FechaHasta.ToShortDateString()))
+            {
+                filtro = $" convert(nvarchar(10),fecha,103) BETWEEN '{FechaDesde.ToShortDateString()}' AND '{FechaHasta.ToShortDateString()}'";
+            }
+
+            if (Ejercicio)
+            {
+                if (flag)
+                    valor += ",";
+                valor += "'R2'";
+                flag = true;
+            }
+            if(Existencia)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R3'";
+                flag = true;
+            }
+            if(Grupos)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R4'";
+                flag = true;
+            }
+            if (CierreEjercicio)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R5'";
+                flag = true;
+            }
+            if (IncluirAsientosSimulacion)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'F2'";
+                flag = true;
+            }
+            if (ExcluirAsientosSimulacion)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'F3'";
+                flag = true;
+            }
+
+            if(flag)
+            {
+                filtro += $" AND tipoasiento in({valor})";
+            }
+            sb.Append(filtro);
+            return sb.ToString();
         }
         internal override string GenerarSelect()
         {
             var sb = new StringBuilder();
-            sb.Append("Select * from Maes");
+            sb.Append("Select * from Movs");
             return sb.ToString();
         }
 
