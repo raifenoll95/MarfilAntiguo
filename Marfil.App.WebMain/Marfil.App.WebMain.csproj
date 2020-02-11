@@ -42,6 +42,7 @@
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
     <PrimaryVersionType>AssemblyFileVersionAttribute</PrimaryVersionType>
     <AssemblyVersion>2020.8.579.0</AssemblyVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1279,9 +1280,6 @@
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="assets\css\less\ace-angular.less" />
     <Content Include="assets\css\less\ace-extra.less" />
     <Content Include="assets\css\less\ace-features.less" />
