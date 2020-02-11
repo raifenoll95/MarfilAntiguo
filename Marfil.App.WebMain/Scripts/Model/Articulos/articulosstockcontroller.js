@@ -63,21 +63,24 @@
         $scope.actualizarTipofamilia = function (tipofamilia) {
 
             $scope.Lotefraccionabledisabled = false;
-            $scope.Gestionstockdisabled = $scope.Bloqueostock(tipofamilia); //No se puede modificar si es tabla o bloque
 
-            //Si la gestion de stock es true, lo dejamos a true, si es falso es porque o es nuevo (dependera de si es bloque o tabla para ponerse a true, o si es otro, estara a false)
-            if (!$scope.Gestionstock) {
-                $scope.Gestionstock = $scope.Bloqueostock(tipofamilia); //Por defecto activado (true,1)
+            if (tipofamilia == 1 || tipofamilia == 2) {
+                $scope.Gestionstock = true;
+                $scope.Gestionstockdisabled = true;
+                $("[name='Gestionstock']").val(true);
             }
+
+            else {
+                $scope.Gestionstock = true;
+                $scope.Gestionstockdisabled = false;
+                $("[name='Gestionstock']").val(true);
+            }
+
             $scope.Tipogestionlotesdisabled = false; //Si es tabla o bloque, puede elegir el que quiera
             $scope.Stocknegativoautorizadodisabled = false;
             $scope.VerificarTipofamilia(tipofamilia);
         }
-        
-        //Bloqueo si es tabla o bloque
-        $scope.Bloqueostock = function (valor) {
-            return (valor == 1 || valor == 2) 
-        }
+       
 
     $scope.$watch("Gestionstock", function (nwevalue, oldvalue) {
         if (!$scope.Gestionstock) {

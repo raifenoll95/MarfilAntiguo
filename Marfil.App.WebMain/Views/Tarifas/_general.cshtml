@@ -121,6 +121,16 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(f => Model.Asignartarifaalcreararticulos, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(f => Model.Asignartarifaalcreararticulos, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @ng_model = "asignaralcrear", @ng_disabled = "tipotarifa==\"0\"" })
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Asignartarifaalcreararticulos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(f => Model.Observaciones, new {@class = "control-label col-md-2"})
         <div class="col-md-10">
             @Html.TextAreaFor(f => Model.Observaciones, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})

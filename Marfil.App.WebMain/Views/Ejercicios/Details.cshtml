@@ -20,12 +20,12 @@
     <div class="form-horizontal">
 
 
-        @Html.Partial("_Ejercicios", Model as EjerciciosModel)
+        @Html.Partial("_ejercicios", Model as EjerciciosModel)
     </div>
 </div>
 @if (ViewBag.Modificar)
 {
-    <p>
+    <p class="margin-top">
         <a class="btn btn-info" href="@Url.Action("Edit", new {id = ((EjerciciosModel)Model).Id})">
             <i class="ace-icon fa fa-pencil bigger-110"></i>
             @General.LblEditar

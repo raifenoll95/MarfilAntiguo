@@ -10,6 +10,10 @@ using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using System.Web.Script.Serialization;
+using Marfil.Dom.Persistencia.ServicesView;
+using Newtonsoft.Json;
+using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -168,6 +172,42 @@ namespace Marfil.App.WebMain.Controllers
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
             }
+        }
+
+        public ActionResult obtenerDatosAsistenteMovimientosTesoreria(string circuito)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioCircuitosTesoreria = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService;
+
+            string data = new JavaScriptSerializer().Serialize(new
+            {
+                actualizar = servicioCircuitosTesoreria.ActualizarFechaPago(circuito),
+                datosdocumento = servicioCircuitosTesoreria.SolicitarDatosDocumento(circuito),
+                importecargo2 = servicioCircuitosTesoreria.ImporteCargo2(circuito),
+                importeabono2 = servicioCircuitosTesoreria.ImporteAbono2(circuito),
+                codigomanual = servicioCircuitosTesoreria.CodigoManual(circuito),
+                cobrador = servicioCircuitosTesoreria.ExisteCobrador(circuito),
+                remesa = servicioCircuitosTesoreria.Remesa(circuito)
+            });
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult obtenerCuentaCargo(string circuito)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioCircuitosTesoreria = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService;
+            var CuentaModel = servicioCircuitosTesoreria.Cuentacargo2(circuito) as CuentasModel;
+            var data = JsonConvert.SerializeObject(CuentaModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult obtenerCuentaAbono(string circuito)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioCircuitosTesoreria = FService.Instance.GetService(typeof(CircuitoTesoreriaCobrosModel), ContextService) as CircuitosTesoreriaCobrosService;
+            var CuentaModel = servicioCircuitosTesoreria.Cuentaabono2(circuito) as CuentasModel;
+            var data = JsonConvert.SerializeObject(CuentaModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

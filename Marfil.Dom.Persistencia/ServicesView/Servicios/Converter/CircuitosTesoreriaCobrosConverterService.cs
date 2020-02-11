@@ -36,6 +36,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.situacionfinal = viewmodel.Situacionfinal;
             result.datos = viewmodel.Datos;
             result.asientocontable = viewmodel.Asientocontable;
+            result.documentocartera = viewmodel.Documentocartera;
             result.fecharemesa = viewmodel.Fecharemesa;
             result.fechapago = viewmodel.Fechapago;
             result.liquidariva = viewmodel.Liquidariva;
@@ -60,6 +61,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.desccuentaabono2 = viewmodel.Desccuentaabono2;
             result.desccuentaabonorel = viewmodel.Desccuentaabonorel;
             result.tipocircuito = (int)viewmodel.Tipocircuito;
+            result.codigodescripcionasiento = viewmodel.Codigodescripcionasiento;
+            result.actualizarcobrador = viewmodel.Actualizarcobrador;
             return result;
         }
 
@@ -72,6 +75,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.situacioninicial = viewmodel.Situacioninicial;
             result.situacionfinal = viewmodel.Situacionfinal;
             result.datos = viewmodel.Datos;
+            result.documentocartera = viewmodel.Documentocartera;
             result.asientocontable = viewmodel.Asientocontable;
             result.fecharemesa = viewmodel.Fecharemesa;
             result.fechapago = viewmodel.Fechapago;
@@ -97,6 +101,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.desccuentaabono2 = viewmodel.Desccuentaabono2;
             result.desccuentaabonorel = viewmodel.Desccuentaabonorel;
             result.tipocircuito = (int)viewmodel.Tipocircuito;
+            result.codigodescripcionasiento = viewmodel.Codigodescripcionasiento;
+            result.actualizarcobrador = viewmodel.Actualizarcobrador;
             return result;
         }
 
@@ -109,7 +115,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Descripcion = viewmodel.descripcion,
                 Situacioninicial = viewmodel.situacioninicial,
                 Situacionfinal = viewmodel.situacionfinal,
-                Datos = viewmodel.datos.Value,
+                Datos = viewmodel.datos,
+                Documentocartera = viewmodel.documentocartera.Value,
                 Asientocontable = viewmodel.asientocontable.Value,
                 Fecharemesa = viewmodel.fecharemesa.Value,
                 Fechapago = viewmodel.fechapago.Value,
@@ -134,7 +141,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Desccuentaabono1 = viewmodel.desccuentaabono1,
                 Desccuentaabono2 = viewmodel.desccuentaabono2,
                 Desccuentaabonorel = viewmodel.desccuentaabonorel,
-                Tipocircuito = (TipoCircuito)viewmodel.tipocircuito
+                Tipocircuito = (TipoCircuito)viewmodel.tipocircuito,
+                Codigodescripcionasiento = viewmodel.codigodescripcionasiento,
+                Actualizarcobrador = viewmodel.actualizarcobrador.Value
             };
            
             return result;

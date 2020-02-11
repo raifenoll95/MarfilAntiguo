@@ -9,9 +9,21 @@ namespace Marfil.Dom.Persistencia.Listados
 {
     public class ListadoGuiasBalancesLineas : ListadosModel
     {
-        public override string TituloListado => throw new NotImplementedException();
+        public override string IdListado
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        public override string IdListado => throw new NotImplementedException();
+        public override string TituloListado
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         internal override string GenerarSelect()
         {

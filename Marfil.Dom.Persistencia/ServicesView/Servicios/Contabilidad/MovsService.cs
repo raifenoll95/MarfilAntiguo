@@ -970,7 +970,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             //serie contable defecto
             var ejercicio = _db.Ejercicios.Where(e => e.empresa == Empresa && e.id == factura.Fkejercicio).SingleOrDefault();
-            var FkSerieContable = ejercicio.fkseriescontables;
+            var FkSerieContable = ejercicio.fkseriescontablesAST;
 
             //tipoasientodefecto
             var tipoAsientoDefecto = app.GetListTiposAsientos().Where(f => f.Defecto).Select(f => f.Valor).SingleOrDefault();
@@ -1121,6 +1121,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var vencimientosModel = new VencimientosModel(_context);
                     vencimientosModel.Empresa = Empresa; //Empresa
+                    vencimientosModel.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRC").Select(f => f.id).SingleOrDefault();
+                    vencimientosModel.Fecha = vencimiento.Fechavencimiento;
                     vencimientosModel.Situacion = _db.SituacionesTesoreria.Where(f => f.valorinicialcobros == true).Select(f => f.cod).SingleOrDefault();
                     vencimientosModel.Traza = facturaVenta.Referencia; //Traza//Referencia Factura
                     vencimientosModel.Tipo = TipoVencimiento.Cobros;
@@ -1133,13 +1135,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     vencimientosModel.Fechavencimiento = vencimiento.Fechavencimiento.Value;
                     vencimientosModel.Monedabase = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.fkMonedabase.Value).SingleOrDefault();
                     vencimientosModel.Monedagiro = facturaVenta.Fkmonedas.Value;
-                    vencimientosModel.Importegiro = vencimiento.Importevencimiento.Value;
-                    vencimientosModel.Importefactura = facturaVenta.Importetotaldoc.Value;
+                    vencimientosModel.Importegiro = vencimiento.Importevencimiento;
+                    //vencimientosModel.Importefactura = Convert.ToDecimal(facturaVenta.Importetotaldoc);
                     vencimientosModel.Monedafactura = facturaVenta.Fkmonedas.Value;
                     vencimientosModel.Mandato = facturaVenta.Fkbancosmandatos;
                     vencimientosModel.Estado = Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoEstado.Inicial;
                     vencimientosModel.Fkformaspago = facturaVenta.Fkformaspago;
-                    vencimientosModel.Fkcuentatesoreria = facturaVenta.Fkclientes;
+                    vencimientosModel.Fkcuentatesoreria = facturaVenta.Fkcuentastesoreria;
 
                     vencimientosService.create(vencimientosModel);
                 }
@@ -1275,6 +1277,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     var vencimientosModel = new VencimientosModel(_context);
                     vencimientosModel.Empresa = Empresa; //Empresa
+                    vencimientosModel.Fkseriescontables = _db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRP").Select(f => f.id).SingleOrDefault();
                     vencimientosModel.Situacion = _db.SituacionesTesoreria.Where(f => f.valorinicialpagos == true).Select(f => f.cod).SingleOrDefault();
                     vencimientosModel.Traza = facturaCompra.Referencia; //Traza//Referencia Factura
                     vencimientosModel.Tipo = TipoVencimiento.Pagos;
@@ -1287,13 +1290,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     vencimientosModel.Fechavencimiento = vencimiento.Fechavencimiento.Value;
                     vencimientosModel.Monedabase = _db.Empresas.Where(f => f.id == Empresa).Select(f => f.fkMonedabase.Value).SingleOrDefault();
                     vencimientosModel.Monedagiro = facturaCompra.Fkmonedas.Value;
-                    vencimientosModel.Importegiro = vencimiento.Importevencimiento.Value;
-                    vencimientosModel.Importefactura = facturaCompra.Importetotaldoc.Value;
+                    vencimientosModel.Importegiro = vencimiento.Importevencimiento;
+                    //vencimientosModel.Importefactura = Convert.ToDecimal(facturaCompra.Importetotaldoc.Value);
                     vencimientosModel.Monedafactura = facturaCompra.Fkmonedas.Value;
                     vencimientosModel.Mandato = facturaCompra.Fkbancosmandatos;
                     vencimientosModel.Estado = Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoEstado.Inicial;
                     vencimientosModel.Fkformaspago = facturaCompra.Fkformaspago;
-                    vencimientosModel.Fkcuentatesoreria = facturaCompra.Fkproveedores;
+                    vencimientosModel.Fkcuentatesoreria = facturaCompra.Fkcuentastesoreria;
 
                     vencimientosService.create(vencimientosModel);
                 }

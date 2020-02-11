@@ -91,6 +91,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos
             {
                 return new TransformacioneslotesReport(user, primarykey);
             }
+            else if (tipo == TipoDocumentoImpresion.CarteraVencimientos)
+            {
+                return new CarteraVencimientosReport(user, primarykey);
+            }
             else if (tipo == TipoDocumentoImpresion.Asientos)
             {
                 Dictionary<string, object> dictionary = null;

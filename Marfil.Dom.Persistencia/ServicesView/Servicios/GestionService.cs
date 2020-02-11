@@ -78,8 +78,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public virtual IEnumerable<T> GetAll<T>() where T : IModelView
         {
-            var a = _db.Database.SqlQuery<T>(GetSelectPrincipal()).ToList();
-            return a;
+            return _db.Database.SqlQuery<T>(GetSelectPrincipal()).ToList();
         }
 
         public virtual string GetSelectPrincipal()
@@ -371,21 +370,32 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var instance = obj as IModelView;
             var extension = obj as IModelViewExtension;
             var display = obj as ICanDisplayName;
-            return new ListIndexModel()
-            {
-                Entidad = display.DisplayName,
-                List = GetAll<TView>(),
-                PrimaryColumnns = extension.primaryKey.Select(f => f.Name).ToList(),
-                VarSessionName = "__" + t.Name,
-                Properties = instance.getProperties(),
-                Controller = controller,
-                PermiteEliminar = canEliminar,
-                PermiteModificar = canModificar,
-                ExcludedColumns = new[] { "Toolbar" }
 
+            var a = new ListIndexModel();
+            a.Entidad = display.DisplayName;
+            a.List = GetAll<TView>();
+            a.PrimaryColumnns = extension.primaryKey.Select(f => f.Name).ToList();
+            a.VarSessionName = "__" + t.Name;
+            a.Properties = instance.getProperties();
+            a.Controller = controller;
+            a.PermiteEliminar = canEliminar;
+            a.PermiteModificar = canModificar;
+            a.ExcludedColumns = new[] { "Toolbar" } ;
 
+            //var a = new ListIndexModel()
+            //{
+            //    Entidad = display.DisplayName,
+            //    List = GetAll<TView>(),
+            //    PrimaryColumnns = extension.primaryKey.Select(f => f.Name).ToList(),
+            //    VarSessionName = "__" + t.Name,
+            //    Properties = instance.getProperties(),
+            //    Controller = controller,
+            //    PermiteEliminar = canEliminar,
+            //    PermiteModificar = canModificar,
+            //    ExcludedColumns = new[] { "Toolbar" }
+            //};
 
-            };
+            return a;
         }
 
         protected IEnumerable<string> GetprimarykeyColumns()

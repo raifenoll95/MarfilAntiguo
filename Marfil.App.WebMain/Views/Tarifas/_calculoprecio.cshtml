@@ -14,15 +14,7 @@
     var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
 }
 <div class="form-horizontal">
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Asignartarifaalcreararticulos, new {@class = "control-label col-md-2"})
-        <div class="col-md-10">
-            @Html.CheckBoxFor(f => Model.Asignartarifaalcreararticulos, isreadonly ? (object) new {@disabled = "disabled"} : (object) new {@ng_model = "asignaralcrear" ,@ng_disabled= "tipotarifa==\"0\"" })
-        </div>
-        <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Asignartarifaalcreararticulos, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    
     <h4>@Tarifas.LblFormula</h4>
     <div class="form-group">
         @Html.LabelFor(f => Model.Precioautomaticobase, new { @class = "control-label col-md-3 col-md-offset-2",@style="text-align:center !important" })

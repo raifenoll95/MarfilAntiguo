@@ -115,7 +115,25 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ejercicio siguiente.
+        ///   Looks up a localized string similar to Abierto.
+        /// </summary>
+        public static string EstadoEjercicioAbierto {
+            get {
+                return ResourceManager.GetString("EstadoEjercicioAbierto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cerrado.
+        /// </summary>
+        public static string EstadoEjercicioCerrado {
+            get {
+                return ResourceManager.GetString("EstadoEjercicioCerrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ejercicio anterior.
         /// </summary>
         public static string Fkejercicios {
             get {
@@ -126,9 +144,81 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         /// <summary>
         ///   Looks up a localized string similar to Serie contable.
         /// </summary>
-        public static string Fkseriescontables {
+        public static string FkseriescontablesAST {
             get {
-                return ResourceManager.GetString("Fkseriescontables", resourceCulture);
+                return ResourceManager.GetString("FkseriescontablesAST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cartera cobros.
+        /// </summary>
+        public static string FkseriescontablesCRC {
+            get {
+                return ResourceManager.GetString("FkseriescontablesCRC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cartera pagos.
+        /// </summary>
+        public static string FkseriescontablesCRP {
+            get {
+                return ResourceManager.GetString("FkseriescontablesCRP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inmovilizado.
+        /// </summary>
+        public static string FkseriescontablesINM {
+            get {
+                return ResourceManager.GetString("FkseriescontablesINM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iva repercutido.
+        /// </summary>
+        public static string FkseriescontablesIVP {
+            get {
+                return ResourceManager.GetString("FkseriescontablesIVP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iva soportado.
+        /// </summary>
+        public static string FkseriescontablesIVS {
+            get {
+                return ResourceManager.GetString("FkseriescontablesIVS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previsión cobros.
+        /// </summary>
+        public static string FkseriescontablesPRC {
+            get {
+                return ResourceManager.GetString("FkseriescontablesPRC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previsión pagos.
+        /// </summary>
+        public static string FkseriescontablesPRP {
+            get {
+                return ResourceManager.GetString("FkseriescontablesPRP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gestión remesas.
+        /// </summary>
+        public static string FkseriescontablesREM {
+            get {
+                return ResourceManager.GetString("FkseriescontablesREM", resourceCulture);
             }
         }
         

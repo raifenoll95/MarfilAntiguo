@@ -46,6 +46,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var identificador = Funciones.Qint(id);
             //var obj = _db.Set<Movs>().Where(f => f.empresa == Empresa && f.id == identificador).Include(f => f.MovsLin).Include(f => f.MovsTotales).Single();
             var obj = _db.Set<Movs>().Where(f => f.empresa == Empresa && f.id == identificador).Include(f => f.MovsLin).Single();
+
             var monedasObj = _db.Monedas.Single(f => f.id == obj.fkmonedas);
             var result = GetModelView(obj) as MovsModel;
             //var serieContableService = FService.Instance.GetService(typeof(SeriesContablesModel), Context, _db);
@@ -54,9 +55,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Decimalesmonedas = monedasObj.decimales ?? 2;
 
             //result.Codigodescripcionasiento =  obj.codigodescripcionasiento;
-
-
-            
+           
 
             return result;
         }

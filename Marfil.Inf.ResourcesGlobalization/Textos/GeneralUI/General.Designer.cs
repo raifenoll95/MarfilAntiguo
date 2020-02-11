@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asignar a cartera.
+        /// </summary>
+        public static string AsignarCartera {
+            get {
+                return ResourceManager.GetString("AsignarCartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prueba configuración email.
         /// </summary>
         public static string AsuntoEmailTest {
@@ -174,6 +183,24 @@ namespace Resources {
         public static string ConfiguradorDocumentos {
             get {
                 return ResourceManager.GetString("ConfiguradorDocumentos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configurador de documentos: Cartera.
+        /// </summary>
+        public static string configurardocumentoscartera {
+            get {
+                return ResourceManager.GetString("configurardocumentoscartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contabilidad.
+        /// </summary>
+        public static string Contabilidad {
+            get {
+                return ResourceManager.GetString("Contabilidad", resourceCulture);
             }
         }
         
@@ -592,6 +619,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generar movimiento.
+        /// </summary>
+        public static string GenerarMovimiento {
+            get {
+                return ResourceManager.GetString("GenerarMovimiento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ficheros adjuntos.
         /// </summary>
         public static string GestionFicheros {
@@ -903,6 +939,15 @@ namespace Resources {
         public static string LblCancelar {
             get {
                 return ResourceManager.GetString("LblCancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cartera.
+        /// </summary>
+        public static string LblCartera {
+            get {
+                return ResourceManager.GetString("LblCartera", resourceCulture);
             }
         }
         
@@ -1915,6 +1960,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previsión.
+        /// </summary>
+        public static string LblPrevisiones {
+            get {
+                return ResourceManager.GetString("LblPrevisiones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primero.
         /// </summary>
         public static string LblPrimero {
@@ -2262,6 +2316,15 @@ namespace Resources {
         public static string MetrosAlbaran {
             get {
                 return ResourceManager.GetString("MetrosAlbaran", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movimientos de tesorería.
+        /// </summary>
+        public static string MovimientosTesoreria {
+            get {
+                return ResourceManager.GetString("MovimientosTesoreria", resourceCulture);
             }
         }
         

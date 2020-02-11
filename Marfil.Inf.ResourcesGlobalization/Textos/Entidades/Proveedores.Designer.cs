@@ -358,7 +358,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previsión de pagos periódicos. Conciilar con:.
+        ///   Looks up a localized string similar to Previsión de pagos periódicos. Conciliar con:.
         /// </summary>
         public static string PrevisionPagosPeriodicos {
             get {

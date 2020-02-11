@@ -273,7 +273,6 @@
             };
         }
 
-
         //display
         settings.CommandColumn.VisibleIndex = settings.Columns.Count;
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
@@ -287,7 +286,24 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
         Session[Model.VarSessionName + "Settings"] = settings;
+
+        //Rai
+        if (!string.IsNullOrEmpty(Model.ColumnaColor))
+        {
+            settings.HtmlRowPrepared = (s, e) =>
+            {
+                if (e.RowType == GridViewRowType.Data)
+                {
+                    e.Row.Cells[Int32.Parse(Model.ColumnaColor)].Style.Add(HtmlTextWriterStyle.BackgroundColor, "#A9F5B6");/* = ColorTranslator.FromHtml("#e0793e");*/
+                    e.Row.Cells[Int32.Parse(Model.ColumnaColor)].Style.Add(HtmlTextWriterStyle.Color, "#000000");   /* BorderColor = System.Drawing.Color.Black*/;
+                    e.Row.Cells[Int32.Parse(Model.ColumnaColor)].Style.Add(HtmlTextWriterStyle.FontFamily, "Arial");
+                };
+
+            };
+        };
+
     });
 
     @grid.Bind(Model.List).GetHtml()

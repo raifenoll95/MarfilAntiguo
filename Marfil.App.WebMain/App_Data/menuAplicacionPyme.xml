@@ -33,17 +33,20 @@
       <item name="vencimientosventa" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/Vencimientos/Index" />
       <item name="vencimientoscompra" allowUpdate="true" allowDelete="true" text="Previsiones" icono="fa fa-file" url="~/VencimientosCompra/Index" />
       <item name="carteravencimientos" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/CarteraVencimientos/Index" />
+      <item name="asignacioncartera" allowUpdate="true" allowDelete="true" text="Cartera" icono="fa fa-file" url="~/AsignacionCartera/AsistenteAsignacionCartera" />
+      <item name="movimientostesoreria" allowUpdate="true" allowDelete="true" text="Movimientos" icono="fa fa-file" url="~/MovimientosTesoreria/AsistenteMovimientosTesoreria" />
     </item>
     <item name="listado" text="Listados" icono="fa fa-list">
       <item name="listadodiariocontable" eslistado="true" text="Diario contable" icono="fa fa-file" url="~/ListadosDiarioContable/Listado/DiarioContable" />
       <item name="listadomayor" eslistado="true" text="Mayor" icono="fa fa-file" url="~/ListadosMayor/Listado/Mayor" />
       <item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />
-      <item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances/Index" />
+      <item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances" />
       <item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcomuladorPeriodos/Listado/AcomuladorPeriodos" />
     </item>
     <item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />
     <item name="configurardocumentosmayor" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1010" />
     <item name="configurardocumentossumas" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1015" />
+    <item name="configurardocumentoscartera" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1050" />
     <item name="configuracion" text="Configuración" icono="fa fa-cog">
       <item name="tiposiva" text="Tipos de IVA" url="~/TiposIva/Index" />
       <item name="gruposiva" text="Grupos de IVA" url="~/GruposIva/Index" />

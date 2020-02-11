@@ -7,8 +7,9 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios.Validation;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.Model.Contabilidad.Maes;
-
-
+using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using System;
+using Marfil.Dom.ControlsUI.NifCif;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -65,21 +66,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return base.get(id);
         }
 
-        //public IEnumerable<MaesModel> RecalcularMaes(IEnumerable<MovsLinModel> model)
-        //{
-        //    List<MaesModel> result = new List<MaesModel>();
-                       
-        //    result = model.GroupBy(l => l.Fkcuentas)
-        //        .Select(cl => new MaesModel
-        //        {
-        //            Fkcuentas = cl.First().Fkcuentas,
-        //            Debe = cl.Sum(c => c.Debe),
-        //            Haber = cl.Sum(c => c.Haber)
-        //        }).ToList();
-        //    return result;
-
-        //}
-
         public void GenerarMovimiento(MovsModel model, TipoOperacionMaes tipo)// short multiplo)
         // multiplo 1 para alta  -1 para baja
         {
@@ -88,6 +74,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 string fkcuentas = item.Key;
 
+                //Creamos la cuenta en caso de que no exista en el proceso de asignar a cartera
+                if(!_db.Cuentas.Any(f => f.empresa == model.Empresa && f.id == fkcuentas) && model.Generar == GenerarMovimientoAPartirDe.AsignarCartera)
+                {
+                    var nuevacuenta = new CuentasModel(_context);
+                    nuevacuenta.Empresa = model.Empresa;
+                    nuevacuenta.Id = fkcuentas;
+                    nuevacuenta.Descripcion = "**ALTA CUENTA AUTOMÁTICA**";
+                    nuevacuenta.Descripcion2 = "**ALTA CUENTA AUTOMÁTICA**";
+                    nuevacuenta.UsuarioId = _db.Usuarios.Where(f => f.usuario == _context.Usuario).Select(f => f.id.ToString()).SingleOrDefault() ?? "";
+                    nuevacuenta.Nivel = 0;
+                    var id = model.Lineas[1].Fkcuentas.ToString();
+
+                    var newNif = new NifCifModel
+                    {
+                        Nif = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == id).Select(f => f.nif).SingleOrDefault() ?? ""
+                    };
+
+                    nuevacuenta.Nif = newNif;
+                    nuevacuenta.FkPais = _db.Cuentas.Where(f => f.empresa == Empresa && f.id == id).Select(f => f.fkPais).SingleOrDefault() ?? "";
+                    nuevacuenta.Fechaalta = DateTime.Now;
+
+                    var cuentaService = new CuentasService(_context);
+                    cuentaService.create(nuevacuenta);
+                }
                 
                 var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
                               ?? _db.Maes.Create();
@@ -109,7 +119,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
 
             // nivel 0 - 4
-
             for (int nivel = 4; nivel > 0; nivel--)
             {
                 foreach (var item in model.Lineas.GroupBy(l=> l.Fkcuentas.Substring(0, nivel)))
@@ -135,42 +144,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
             }
         }
-
-
-        //public void GenerarLineas(MovsModel model)
-        //{
-        //    foreach (var item in model.Lineas)
-        //    {
-        //        var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == item.Fkcuentas && f.fkejercicio == model.Fkejercicio)
-        //                       ?? _db.Maes.Create();
-
-        //        itemmaes.empresa = model.Empresa;
-        //        itemmaes.fkcuentas = item.Fkcuentas;
-        //        itemmaes.fkejercicio = model.Fkejercicio;
-
-        //        //switch (operacion)
-        //        //{
-        //        //    case MaesModel.TipoOperacion.Añadir:
-        //        itemmaes.debe = itemmaes.debe + item.Debe;
-        //        itemmaes.haber = itemmaes.haber + item.Haber;
-        //        //        break;
-        //        //    case MaesModel.TipoOperacion.Borrar:
-        //        //        itemmaes.debe = itemmaes.debe - item.Debe;
-        //        //        itemmaes.haber = itemmaes.haber - item.Haber;
-        //        //        break;
-        //        //    case MaesModel.TipoOperacion.Actualizar:
-        //        //        itemmaes.debe = itemmaes.debe + item.Debe;
-        //        //        itemmaes.haber = itemmaes.haber + item.Haber;
-        //        //        break;
-        //        //}
-
-
-        //        itemmaes.saldo = itemmaes.debe - itemmaes.haber;
-
-
-        //        _db.Maes.AddOrUpdate(itemmaes);
-        //    }
-        //}
 
         #endregion
     }

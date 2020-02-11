@@ -25,13 +25,16 @@ namespace Marfil.App.WebMain.Controllers
 
         public HttpResponseMessage Get()
         {
-            
+            var nvc = HttpUtility.ParseQueryString(Request.RequestUri.Query);
+            var situaciones = nvc["situaciones"];
+
             using (var service = new SituacionesTesoreriaService(ContextService))
             {
                 var listsituaciones = appService.GetListSituaciones();
                 var result = new ResultBusquedas<SituacionesTesoreriaModel>()
                 {
-                    values = service.getAll().Select(f=>(SituacionesTesoreriaModel)f).ToList(),
+                    values = !String.IsNullOrEmpty(situaciones) ? service.getAll().Select(f => (SituacionesTesoreriaModel)f).ToList().Where(f => f.Valorinicialcobros == false && f.Valorinicialpagos == false) :
+                        service.getAll().Select(f=>(SituacionesTesoreriaModel)f).ToList(),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Cod", displayName = "Cod", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
@@ -51,7 +54,6 @@ namespace Marfil.App.WebMain.Controllers
             
             using (var service = new SituacionesTesoreriaService(ContextService))
             {
-
                 var list = service.get(id) as SituacionesTesoreriaModel;
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,

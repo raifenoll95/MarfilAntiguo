@@ -23,8 +23,8 @@ namespace Marfil.Dom.Persistencia
         public string empresa { get; set; }
         public int fkejercicio { get; set; }
     
-        public virtual Ejercicios Ejercicios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CostesVariablesPeriodoLin> CostesVariablesPeriodoLin { get; set; }
+        public virtual Ejercicios Ejercicios { get; set; }
     }
 }

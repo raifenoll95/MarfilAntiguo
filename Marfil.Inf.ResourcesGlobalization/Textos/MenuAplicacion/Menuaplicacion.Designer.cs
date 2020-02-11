@@ -142,6 +142,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asignación de cartera.
+        /// </summary>
+        public static string asignacioncartera {
+            get {
+                return ResourceManager.GetString("asignacioncartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asistente: Generar pedidos de compra.
         /// </summary>
         public static string asistentepedidoscompras {
@@ -1011,6 +1020,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         public static string monedas {
             get {
                 return ResourceManager.GetString("monedas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movimientos de tesorería.
+        /// </summary>
+        public static string movimientostesoreria {
+            get {
+                return ResourceManager.GetString("movimientostesoreria", resourceCulture);
             }
         }
         

@@ -9,6 +9,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Inf.Genericos.Helper;
+using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -335,7 +336,39 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 bancosmandatosService.delete(item);
             }
         }
-
         #endregion
+
+        public IEnumerable<CuentasModel> getCuentasTesoreriaExclusive(string tipoasignacion, string fkcuentas, string importe)
+        {
+            List<CuentasModel> cuentas = new List<CuentasModel>();
+
+            var vencimientosService = new VencimientosService(_context);
+            List<VencimientosModel> vencimientos = new List<VencimientosModel>();
+            vencimientos.AddRange(vencimientosService.getVencimientos(tipoasignacion, "", fkcuentas, importe));
+
+            var cuentasService = new CuentasService(_context);
+
+            foreach (var vencimiento in vencimientos)
+            {
+                cuentas.Add(cuentasService.get(vencimiento.Fkcuentatesoreria) as CuentasModel);
+            }
+
+            return cuentas;
+        }
+
+        public IEnumerable<CuentasModel> getCuentasTesoreria()
+        {
+            List<CuentasModel> cuentas = new List<CuentasModel>();
+            var cuentastesoreria = _db.Cuentastesoreria.Where(f => f.empresa == Empresa);
+
+            var cuentasService = new CuentasService(_context);
+
+            foreach (var cuenta in cuentastesoreria)
+            {
+                cuentas.Add(cuentasService.get(cuenta.fkcuentas) as CuentasModel);
+            }
+
+            return cuentas;
+        }
     }
 }

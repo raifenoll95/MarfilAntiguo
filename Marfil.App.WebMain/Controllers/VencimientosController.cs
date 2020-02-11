@@ -11,6 +11,8 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model;
+using Marfil.Dom.Persistencia.ServicesView;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -85,14 +87,17 @@ namespace Marfil.App.WebMain.Controllers
                 ((IToolbar)model).Toolbar = GenerateToolbar(service, TipoOperacion.Alta, model);
             }
 
+            var serviceSeries = FService.Instance.GetService(typeof(SeriesContablesModel), ContextService) as SeriesContablesService;
+
             model.Tipo = TipoVencimiento.Cobros;
             model.Situacion = "X";
+            model.Fkseriescontables = serviceSeries.getSerieEjercicio("PRC");
             model.Origen = TipoOrigen.EntradaManual;
+            model.Importegiro = 0;
             model.Importeasignado = 0;
             model.Importepagado = 0;
-            model.Estado = TipoEstado.Inicial;
+            model.Estado = Dom.Persistencia.Model.Documentos.CobrosYPagos.TipoEstado.Inicial;
             return View(model);
-
         }
 
         // POST: Paises/Create
@@ -107,21 +112,21 @@ namespace Marfil.App.WebMain.Controllers
                 if (ModelState.IsValid)
                 {
                     using (var gestionService = createService(model))
-                    {
+                    { 
                         gestionService.create(model);
                         TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
                     }
-                }
+            }
                 TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
                    .SelectMany(x => x.Errors)
                    .Select(x => x.ErrorMessage));
                 TempData["model"] = model;
                 return RedirectToAction("Create");
-            }
+        }
             catch (Exception ex)
             {
-                //model.Context = ContextService;
+                model.Context = ContextService;
                 TempData["errors"] = ex.Message;
                 TempData["model"] = model;
                 return RedirectToAction("Create");
@@ -143,13 +148,20 @@ namespace Marfil.App.WebMain.Controllers
                 if (TempData["model"] != null)
                     return View(TempData["model"]);
 
-                var model = gestionService.get(id);
+                var model = gestionService.get(id) as VencimientosModel;
+
                 if (model == null)
                 {
                     return HttpNotFound();
                 }
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
-                return View(urlDocumento(model));
+
+                foreach (var cartera in model.LineasCartera)
+                {
+                    cartera.urlDocumento = Url.Action("Details", "CarteraVencimientos", new { id = cartera.Id });
+                }
+
+                return View(model);
             }
         }
 
@@ -165,6 +177,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     using (var gestionService = createService(model))
                     {
+
                         gestionService.edit(model);
                         TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
                         return RedirectToAction("Index");
@@ -197,14 +210,21 @@ namespace Marfil.App.WebMain.Controllers
             using (var gestionService = createService(newModel))
             {
 
-                var model = gestionService.get(id);
+                var model = gestionService.get(id) as VencimientosModel;
+
                 if (model == null)
                 {
                     return HttpNotFound();
                 }
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
-                return View(urlDocumento(model));
+
+                foreach (var cartera in model.LineasCartera)
+                {
+                    cartera.urlDocumento = Url.Action("Details", "CarteraVencimientos", new { id = cartera.Id });
+                }
+
+                return View(model);
             }
         }
 
@@ -217,11 +237,11 @@ namespace Marfil.App.WebMain.Controllers
 
             if (model.Origen == TipoOrigen.FacturaCompra)
             {
-                model.urlDocumento = Url.Action("Details", "FacturasCompras", new { id = intFactura });
+                model.urlDocumentoGeneral = Url.Action("Details", "FacturasCompras", new { id = intFactura });
             }
             if (model.Origen == TipoOrigen.FacturaVenta)
             {
-                model.urlDocumento = Url.Action("Details", "Facturas", new { id = intFactura });
+                model.urlDocumentoGeneral = Url.Action("Details", "Facturas", new { id = intFactura });
             }
             return (model);
         }

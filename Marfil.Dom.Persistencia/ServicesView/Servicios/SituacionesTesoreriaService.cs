@@ -81,5 +81,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return situaciones;
         }
+
+        public SituacionesTesoreriaModel getSituacion(string circuito)
+        {
+            var situacionfinal = _db.CircuitosTesoreriaCobros.Where(f => f.empresa == Empresa && f.id.ToString() == circuito).
+                Select(f => f.situacionfinal).SingleOrDefault().ToString();
+
+            return get(situacionfinal) as SituacionesTesoreriaModel;
+        }
     }
 }

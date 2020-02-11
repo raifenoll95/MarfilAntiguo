@@ -16,6 +16,8 @@ using RInventarios = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Inventar
 using RTransformaciones = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Transformaciones;
 using RDivisionLotes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.DivisionLotes;
 using RImputacionCostes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.ImputacionCostes;
+using RCobrosYPagos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.CobrosYPagos;
+
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 {
     public enum TipoDocumento
@@ -126,6 +128,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
         ListadoMargen = 1025,
         [StringValue(typeof(RImputacionCostes), "TituloEntidadSingular")]
         ImputacionCostes = 1030,
+        [StringValue(typeof(RCobrosYPagos), "TituloEntidadCartera")]
+        CarteraVencimientos = 1050,
 
 
     }

@@ -16,6 +16,8 @@ using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -289,6 +291,15 @@ namespace Marfil.App.WebMain.Controllers
         #endregion
 
         #region Helper
+
+        public ActionResult obtenerFormaPago(string formapago)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioFormaPago = FService.Instance.GetService(typeof(FormasPagoModel), ContextService) as FormasPagoService;
+            var SerieModel = servicioFormaPago.get(formapago) as FormasPagoModel;
+            var data = JsonConvert.SerializeObject(SerieModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
 
 

@@ -41,8 +41,7 @@
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
     <PrimaryVersionType>AssemblyFileVersionAttribute</PrimaryVersionType>
-    <AssemblyVersion>2019.8.130.0</AssemblyVersion>
-    <Use64BitIISExpress />
+    <AssemblyVersion>2020.8.579.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -272,19 +271,28 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
+    <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
+    <Compile Include="Controllers\CuentasTesoreriaApiController.cs" />
+    <Compile Include="Controllers\MovimientosTesoreriaController.cs" />
     <Compile Include="Controllers\BusquedaArticulosConSinStockSingleLotesApiController.cs" />
+    <Compile Include="Controllers\AsistenteAsignacionVencimientosApiController.cs" />
+    <Compile Include="Controllers\CuentasTesoreriaExclusiveApiController.cs" />
     <Compile Include="Controllers\ComentariosAsientosApiController.cs" />
     <Compile Include="Controllers\ConsultaVisual\ConsultaVisualController.cs" />
     <Compile Include="Controllers\CostesVariablesPeriodoController.cs" />
     <Compile Include="Controllers\CuentasApiController.cs" />
     <Compile Include="Controllers\DivisionLotesController.cs" />
     <Compile Include="Controllers\ExportarController.cs" />
+    <Compile Include="Controllers\CircuitosTesoreriaApiController.cs" />
+    <Compile Include="Controllers\AsistenteVencimientosApiController.cs" />
+    <Compile Include="Controllers\AsignacionSituacionesApiController.cs" />
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcomuladorPeriodosController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
     <Compile Include="Controllers\CarteraVencimientosController.cs" />
+    <Compile Include="Controllers\AsignacionCarteraController.cs" />
     <Compile Include="Controllers\VencimientosController.cs" />
     <Compile Include="Controllers\SituacionesTesoreriaController.cs" />
     <Compile Include="Controllers\GrupoMaterialesApiController.cs" />
@@ -1271,6 +1279,9 @@
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-datepicker-locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\css\less\ace-angular.less" />
     <Content Include="assets\css\less\ace-extra.less" />
     <Content Include="assets\css\less\ace-features.less" />
@@ -1823,6 +1834,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Marfil.App.WebMain.csproj.bak" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -2365,6 +2377,8 @@
     <Content Include="Scripts\Model\Traspasos\NuevaLineaEntregaStockController.js" />
     <Content Include="Scripts\Model\Traspasos\TraspasosalmacenController.js" />
     <Content Include="Scripts\Model\Usuarios\UsuariosController.js" />
+    <Content Include="Scripts\Model\Vencimientos\Asistentemovimientostesoreriacontroller.js" />
+    <Content Include="Scripts\Model\Vencimientos\Asistenteasignaciontesoreriacontroller.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -2752,15 +2766,15 @@
     <Content Include="Views\ListadoDetalladoPresupuestos\PresupuestosDetallado.cshtml" />
     <Content Include="Views\ListadosPresupuestos\PresupuestosCabecera.cshtml" />
     <Content Include="Views\Presupuestos\Imprimir.cshtml" />
-    <Content Include="Views\Designer\Index.cshtml" />
+    <Content Include="Views\DiarioStock\Designer\Index.cshtml" />
     <Content Include="Views\Documentos\Index.cshtml" />
     <Content Include="Views\Documentos\_listDocumentos.cshtml" />
     <Content Include="Views\Documentos\Delete.cshtml" />
-    <Content Include="Views\Designer\ReportViewerPartial.cshtml" />
-    <Content Include="Views\Designer\Visualizar.cshtml" />
+    <Content Include="Views\DiarioStock\Designer\ReportViewerPartial.cshtml" />
+    <Content Include="Views\DiarioStock\Designer\Visualizar.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DocumentosBotonImprimirModel.cshtml" />
-    <Content Include="Views\Designer\SaveDialog.cshtml" />
-    <Content Include="Views\Designer\ImportDialog.cshtml" />
+    <Content Include="Views\DiarioStock\Designer\SaveDialog.cshtml" />
+    <Content Include="Views\DiarioStock\Designer\ImportDialog.cshtml" />
     <Content Include="Views\Configuracion\_presupuestos.cshtml" />
     <Content Include="Views\Shared\_ejercicios.cshtml" />
     <Content Include="Views\Ejercicios\Create.cshtml" />
@@ -3432,16 +3446,38 @@
     <Content Include="Views\CarteraVencimientos\Details.cshtml" />
     <Content Include="Views\CarteraVencimientos\Edit.cshtml" />
     <Content Include="Views\CarteraVencimientos\Index.cshtml" />
+    <Content Include="Views\AsignacionCartera\AsistenteAsignacionCartera.cshtml" />
+    <Content Include="Views\AsignacionCartera\_asignacionstep1.cshtml" />
+    <Content Include="Views\AsignacionCartera\_asignacionstep2.cshtml" />
+    <Content Include="Views\AsignacionCartera\_asignacionstep3.cshtml" />
+    <Content Include="Views\Ejercicios\_ejercicios.cshtml" />
+    <Content Include="Views\Ejercicios\_general.cshtml" />
+    <Content Include="Views\Ejercicios\_contabilidad.cshtml" />
+    <Content Include="Views\CarteraVencimientos\_previsiones.cshtml" />
+    <Content Include="Views\CarteraVencimientos\_previsioneslin.cshtml" />
+    <Content Include="Views\Vencimientos\_carteralin.cshtml" />
+    <Content Include="Views\Vencimientos\_cartera.cshtml" />
+    <Content Include="Views\VencimientosCompra\_cartera.cshtml" />
+    <Content Include="Views\VencimientosCompra\_carteralin.cshtml" />
+    <Content Include="Views\GuiasBalances\Create.cshtml" />
+    <Content Include="Views\GuiasBalances\Delete.cshtml" />
+    <Content Include="Views\GuiasBalances\Details.cshtml" />
+    <Content Include="Views\GuiasBalances\Edit.cshtml" />
     <Content Include="Views\GuiasBalances\Index.cshtml" />
     <Content Include="Views\GuiasBalances\_general.cshtml" />
-    <Content Include="Views\GuiasBalances\Edit.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalances.cshtml" />
-    <Content Include="Views\GuiasBalances\Details.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineas.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineasGrid.cshtml" />
-    <Content Include="Views\GuiasBalances\Delete.cshtml" />
-    <Content Include="Views\GuiasBalances\Create.cshtml" />
     <Content Include="Views\ListadoAcomuladorPeriodos\AcomuladorPeriodos.cshtml" />
+    <Content Include="Views\MovimientosTesoreria\_asignacionstep1.cshtml" />
+    <Content Include="Views\MovimientosTesoreria\_asignacionstep2.cshtml" />
+    <Content Include="Views\MovimientosTesoreria\_asignacionstep3.cshtml" />
+    <Content Include="Views\MovimientosTesoreria\AsistenteMovimientosTesoreria.cshtml" />
+    <Content Include="Views\Designer\ImportDialog.cshtml" />
+    <Content Include="Views\Designer\Index.cshtml" />
+    <Content Include="Views\Designer\ReportViewerPartial.cshtml" />
+    <Content Include="Views\Designer\SaveDialog.cshtml" />
+    <Content Include="Views\Designer\Visualizar.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

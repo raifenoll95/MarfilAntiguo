@@ -5,6 +5,8 @@
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
 @using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+@using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas
 @using Resources
 
 @*Rai*@
@@ -16,6 +18,7 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -23,109 +26,151 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
 
-    @*Tipo Circuito*@
+    @*Tipo*@
     <div class="form-group">
-        @Html.LabelFor(f => Model.Tipo, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.Tipovencimiento, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
-            @Html.EnumDropDownList("Tipo", Model.Tipo, isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
-            @Html.ValidationMessageFor(f => Model.Tipo, "", new { @class = "text-danger" })
+            @Html.EnumDropDownList("Tipovencimiento", Model.Tipovencimiento, isreadonly || iseditable ? (object)new { @class = "form-control", @disabled = "disabled" } : (object)new { @class = "form-control" })
+            @Html.ValidationMessageFor(f => Model.Tipovencimiento, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    @*Situacion*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Situacion, isreadonly || iseditable ? (object)new { @class = "control-label col-md-2", @readonly = "readonly" } : new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @{
-                cvsituaciones.Name = "Situacion";
-                cvsituaciones.Url = Url.Action("SituacionesApi", "Api");
-                cvsituaciones.Valor = Model.Situacion;
-                cvsituaciones.Titulo = "Situaciones de tesorería";
-                //cvsituaciones.SoloLectura = true;
-                cvsituaciones.Obligatorio = true;
-            }
-            @Html.Partial("CampoverificacionUI", cvsituaciones)
+    @*------Serie-------*@
+    @if (isNuevo)
+    {
+        <div class="form-group">
+            @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    cvserie.Name = "Fkseriescontables";
+                    cvserie.Url = Url.Action("SeriesContablesApi", "Api");
+                    cvserie.Valor = Model.Fkseriescontables;
+                    cvserie.Titulo = "Series contables";
+                    cvserie.ControlesAsociados = "[ { \"tipodocumento\":\"Tipovencimiento\" } ]";
+                    cvserie.Obligatorio = true;
+                }
 
-        </div>
-        <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Traza, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.Traza, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
-        </div>
-        <div class="col-md-1">
-            @Html.ValidationMessageFor(f => Model.Traza, "", new { @class = "text-danger" })
-        </div>
-
-        @if (Model.urlDocumento != null && (isreadonly || iseditable))
-        {
-            <div class="col-md-2">
-                <a class="btn-xs btn btn-info" align="right" href="@Model.urlDocumento" target="_blank">
-                    <i class="fa fa-eye">
-                        Ver documento
-                    </i>
-                </a>
+                @Html.Partial("CampoverificacionUI", cvserie)
             </div>
-        }
-    </div>
+            <div class="col-md-10 col-md-offset-2">
+                @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
+            </div>
+        </div>
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(f => Model.Fkseriescontables)
+                        <div class="form-group">
+                            @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                         </div>
+                    }
 
-    @*Cuenta*@
+                            @*Situacion*@
+                            <div class="form-group">
+                                @Html.LabelFor(f => Model.Situacion, new { @class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @{
+                                        cvsituaciones.Name = "Situacion";
+                                        cvsituaciones.Url = Url.Action("SituacionesApi", "Api");
+                                        cvsituaciones.Valor = Model.Situacion;
+                                        cvsituaciones.Titulo = "Situaciones de tesorería";
+                                        cvsituaciones.SoloLectura = isreadonly || iseditable;
+                                        cvsituaciones.Obligatorio = true;
+                                    }
+                                    @Html.Partial("CampoverificacionUI", cvsituaciones)
+
+                                </div>
+                                <div class="col-md-10 col-md-offset-2">
+                                    @Html.ValidationMessageFor(f => Model.Fkformaspago, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*Cuenta*@
+                            <div class="form-group">
+                                @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @{
+                                        campoverificacion.Name = "Fkcuentas";
+                                        campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
+                                        campoverificacion.Valor = Model.Fkcuentas;
+                                        campoverificacion.Titulo = Clientes.TituloEntidadSingular;
+                                        campoverificacion.SoloLectura = isreadonly || iseditable;
+                                        campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Clientes + "}";
+                                        campoverificacion.Obligatorio = true;
+                                    }
+                                    @Html.Partial("CampoverificacionUI", campoverificacion)
+                                </div>
+                                <div class="col-md-10 col-md-offset-2">
+                                    @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*Importe Giro, Asignado, Pagado*@
+                            <div class="form-group">
+                                @Html.LabelFor(f => Model.Importegiro, new { @class = "control-label col-md-2", style = "font-weight: bold;" })
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(f => Model.Importegiro, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.ValidationMessageFor(f => Model.Importegiro, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(f => Model.Fechavencimiento, new { @class = "control-label col-md-2", style = "font-weight: bold;" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(f => Model.Fechavencimiento)
+                                </div>
+                            </div>
+
+@if (isNuevo)
+{
     <div class="form-group">
-        @Html.LabelFor(f => Model.Fkcuentas, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(f => Model.Fkseriescontablesremesa, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @{
-                campoverificacion.Name = "Fkcuentas";
-                campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
-                campoverificacion.Valor = Model.Fkcuentas;
-                campoverificacion.Titulo = Clientes.TituloEntidadSingular;
-                campoverificacion.SoloLectura = isreadonly || iseditable;
-                campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Clientes + "}";
-                campoverificacion.Obligatorio = true;
+                cvserie.Name = "Fkseriescontablesremesa";
+                cvserie.Url = Url.Action("SeriesContablesApi", "Api");
+                cvserie.Valor = Model.Fkseriescontablesremesa;
+                cvserie.Titulo = "Series contables";
+                cvserie.Params = "{\"tipodocumento\":\"REM\"}";
+                cvserie.Obligatorio = true;
             }
-            @Html.Partial("CampoverificacionUI", campoverificacion)
+
+            @Html.Partial("CampoverificacionUI", cvserie)
         </div>
         <div class="col-md-10 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Fkcuentas, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(f => Model.Fkseriescontablesremesa, "", new { @class = "text-danger" })
         </div>
     </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(f => Model.Fkseriescontablesremesa)
+                    <div class="form-group">
+                        @Html.LabelFor(f => Model.Referenciaremesa, new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(f => Model.Referenciaremesa, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                }
 
-    @*Importe Giro, Asignado, Pagado*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Importegiro, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">
-            @Html.TextBoxFor(f => Model.Importegiro, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
-        </div>
-        <div class="col-md-2 col-md-offset-2">
-            @Html.ValidationMessageFor(f => Model.Importegiro, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    @*Estado, Fecha Vto*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Fechavencimiento, new { @class = "control-label col-md-2", style = "font-weight: bold;" })
-        <div class="col-md-4">
-            @Html.EditorFor(f => Model.Fechavencimiento)
-        </div>
-    </div>
+                            @*Observaciones*@
+                            <div class="form-group">
+                                @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(f => Model.Comentario, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } :
+                                                                  (object)new { @class = "form-control", @autofocus = "" })
+                                    @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-    @*Observaciones*@
-    <div class="form-group">
-        @Html.LabelFor(f => Model.Comentario, new { @class = "control-label col-md-2"})
-        <div class="col-md-10">
-            @Html.TextAreaFor(f => Model.Comentario, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @readonly = "readonly" } :
-                                                                  (object)new { @class = "form-control", @autofocus = ""})
-            @Html.ValidationMessageFor(f => Model.Comentario, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @{
-        if (isNuevo || iseditable)
-        {
-            <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
-            <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
-        }
-    }
+                            @{
+                                if (isNuevo || iseditable)
+                                {
+                                    <script src="@Url.Content("~/components/bootbox.js/bootbox.min.js")"></script>
+                                    <script src="@Url.Content("~/Scripts/Model/Misc/VerificaPk.js")"></script>
+                                }
+                            }

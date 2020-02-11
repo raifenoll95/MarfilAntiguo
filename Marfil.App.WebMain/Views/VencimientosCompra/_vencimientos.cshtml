@@ -23,8 +23,8 @@
 @Html.HiddenFor(f => Model.Monedabase)
 @Html.HiddenFor(f => Model.Monedagiro)
 @Html.HiddenFor(f => Model.Id)
-@Html.HiddenFor(f => Model.Importefactura)
-@Html.HiddenFor(f => Model.Cambioaplicado)
+@*@Html.HiddenFor(f => Model.Importefactura)
+@Html.HiddenFor(f => Model.Cambioaplicado)*@
 
 <div ng-controller="VencimientosCtrl" ng-init="init('@Url.Action("BancosMandatosApi","Api")', @Model.Fkcuentas)">
 
@@ -33,6 +33,7 @@
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
             <li><a data-toggle="tab" href="#gestion">@General.LblGestion</a></li>
             <li><a data-toggle="tab" href="#seguimiento">@General.LblVencimientosSeguimientos</a></li>
+            <li><a data-toggle="tab" href="#cartera">@General.LblCartera</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -44,6 +45,9 @@
         </div>
         <div id="seguimiento" class="tab-pane fade margin-bottom">
             @Html.Partial("_seguimiento", Model)
+        </div>
+        <div id="cartera" class="tab-pane fade margin-bottom">
+            @Html.Partial("_cartera", Model)
         </div>
     </div>
 </div>

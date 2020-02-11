@@ -35,7 +35,26 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public List<BancosMandatosLinModel> GetBancosMandatos(string fkcuentas)
         {
-            return _db.Set<BancosMandatos>().Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).ToList().Select(f => _converterModel.GetModelView(f) as BancosMandatosLinModel).ToList();
+            //return _db.Set<BancosMandatos>().Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).ToList().Select(f => _converterModel.GetModelView(f) as BancosMandatosLinModel).ToList();
+            //List<BancosMandatosLinModel> mandatos = new List<BancosMandatosLinModel>();
+            //var mandatosDB = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).ToList().ToList();
+
+            //foreach(var mandato in mandatosDB)
+            //{
+            //    mandatos.Add(get(mandato.))
+            //}
+
+            var mandatos = _db.BancosMandatos.Where(f => f.empresa == Empresa && f.fkcuentas == fkcuentas).ToList().Select(f => new BancosMandatosLinModel()
+            {
+                Empresa = Empresa,
+                Id = f.id,
+                Descripcion = f.descripcion,
+                Idmandato = f.idmandato,
+                Tipoadeudo = (TipoAdeudo?)f.tipoadeudo,
+                Esquema = (Esquema?)f.esquema
+            }).ToList();
+
+            return mandatos;
         }
 
        

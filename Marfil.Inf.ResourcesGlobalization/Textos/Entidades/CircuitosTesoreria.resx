@@ -119,7 +119,7 @@
     <value>Generar asiento contable</value>
   </data>
   <data name="Fecharemesa" xml:space="preserve">
-    <value>Actualizar fecha remesa</value>
+    <value>Documento remesa</value>
   </data>
   <data name="Fechapago" xml:space="preserve">
     <value>Actualizar fecha pago</value>
@@ -140,7 +140,7 @@
     <value>Cargo 2</value>
   </data>
   <data name="Cuentacargorel" xml:space="preserve">
-    <value>Cargo </value>
+    <value>Cargo 3</value>
   </data>
   <data name="Cuentaabono1" xml:space="preserve">
     <value>Abono 1</value>
@@ -149,7 +149,7 @@
     <value>Abono 2</value>
   </data>
   <data name="Cuentaabonorel" xml:space="preserve">
-    <value>Abono</value>
+    <value>Abono 3</value>
   </data>
   <data name="Importelineapunteada" xml:space="preserve">
     <value>1. IMPORTE LÍNEA PUNTEADA</value>
@@ -186,5 +186,14 @@
   </data>
   <data name="Blanco" xml:space="preserve">
     <value></value>
+  </data>
+  <data name="DescripcionAsiento" xml:space="preserve">
+    <value>Asiento</value>
+  </data>
+  <data name="Documentocartera" xml:space="preserve">
+    <value>Documento cartera</value>
+  </data>
+  <data name="Actualizarcobrador" xml:space="preserve">
+    <value>Actualizar Cta. Tesorería</value>
   </data>
 </root>

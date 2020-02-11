@@ -25,7 +25,15 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> registroivacerradohasta { get; set; }
         public Nullable<int> criterioiva { get; set; }
         public Nullable<int> fkejercicios { get; set; }
-        public string fkseriescontables { get; set; }
+        public string fkseriescontablesAST { get; set; }
+        public string fkseriescontablesIVS { get; set; }
+        public string fkseriescontablesIVP { get; set; }
+        public string fkseriescontablesPRC { get; set; }
+        public string fkseriescontablesPRP { get; set; }
+        public string fkseriescontablesINM { get; set; }
+        public string fkseriescontablesCRC { get; set; }
+        public string fkseriescontablesCRP { get; set; }
+        public string fkseriescontablesREM { get; set; }
     
         public virtual CostesVariablesPeriodo CostesVariablesPeriodo { get; set; }
     }

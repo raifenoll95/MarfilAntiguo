@@ -34,6 +34,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Seccionesanaliticas), typeof(SeccionesanaliticasConverterService));
             _converterServicesTypes.Add(typeof(Carpetas), typeof(CarpetasConverterService));
             _converterServicesTypes.Add(typeof(Ficheros), typeof(FicherosConverterService));
+            _converterServicesTypes.Add(typeof(Bancos), typeof(BancosConverterService));
             _converterServicesTypes.Add(typeof(BancosMandatos), typeof(BancosMandatosConverterService));
             _converterServicesTypes.Add(typeof(Roles), typeof(RolesConverterService));
             _converterServicesTypes.Add(typeof(Tablasvarias), typeof(TablasVariasConverterService<TablasVariasPaisesModel, TablasvariasLin>));

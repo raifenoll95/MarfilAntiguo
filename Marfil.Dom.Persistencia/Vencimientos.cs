@@ -14,6 +14,12 @@ namespace Marfil.Dom.Persistencia
     
     public partial class Vencimientos
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Vencimientos()
+        {
+            this.PrevisionesCartera = new HashSet<PrevisionesCartera>();
+        }
+    
         public string empresa { get; set; }
         public int id { get; set; }
         public string traza { get; set; }
@@ -29,17 +35,24 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> fechapago { get; set; }
         public Nullable<int> monedabase { get; set; }
         public Nullable<int> monedagiro { get; set; }
-        public Nullable<double> importegiro { get; set; }
-        public Nullable<double> cambioaplicado { get; set; }
-        public Nullable<double> importefactura { get; set; }
         public Nullable<int> monedafactura { get; set; }
         public string fkcuentatesoreria { get; set; }
         public string mandato { get; set; }
-        public Nullable<double> importeasignado { get; set; }
-        public Nullable<double> importepagado { get; set; }
         public Nullable<int> estado { get; set; }
         public string situacion { get; set; }
         public string comentario { get; set; }
         public Nullable<int> fkformaspago { get; set; }
+        public string fkseriescontables { get; set; }
+        public string referencia { get; set; }
+        public string identificadorsegmento { get; set; }
+        public Nullable<System.DateTime> fecha { get; set; }
+        public Nullable<double> importegiro { get; set; }
+        public Nullable<double> cambioaplicado { get; set; }
+        public Nullable<double> importefactura { get; set; }
+        public Nullable<double> importeasignado { get; set; }
+        public Nullable<double> importepagado { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrevisionesCartera> PrevisionesCartera { get; set; }
     }
 }

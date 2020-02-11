@@ -13,6 +13,7 @@ using Marfil.Dom.Persistencia.Model.Iva;
 using Marfil.Dom.Persistencia.Model.Stock;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
+using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 {
@@ -104,6 +105,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
                 Tipo = ""
 
             };
+
+            if (typeof(T) == typeof(BancosModel)) return new CampoverificacionModel()
+            {
+                CampoIdentificador = "Id",
+                CampoDescripcion = "Nombre",
+                Titulo = Inf.ResourcesGlobalization.Textos.Entidades.Bancos.TituloEntidad,
+                Longitud = "4",
+                Tipo = "2"
+
+            };
+
             if (typeof(T)==typeof(BancosMandatosModel )) return new CampoverificacionModel()
             {
                 CampoIdentificador = "Id",
@@ -251,6 +263,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
                 Titulo = Inf.ResourcesGlobalization.Textos.Entidades.SituacionesTesoreria.TituloEntidad,
                 Longitud = "1",
                 Tipo = "0"
+            };
+
+            if (typeof(T) == typeof(CircuitoTesoreriaCobrosModel)) return new CampoverificacionModel()
+            {
+                CampoIdentificador = "Id",
+                CampoDescripcion = "Descripcion",
+                Titulo = "Circuitos de tesorería",
+                Longitud = "0",
+                Tipo = ""
             };
 
             if (typeof(T)==typeof(CuentasModel )) return new CampoverificacionModel()

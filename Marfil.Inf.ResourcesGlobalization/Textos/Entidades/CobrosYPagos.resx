@@ -104,7 +104,7 @@
     <value>Empresa</value>
   </data>
   <data name="Fkfacturas" xml:space="preserve">
-    <value>Nº Doc.</value>
+    <value>Doc.</value>
   </data>
   <data name="Tipo" xml:space="preserve">
     <value>Tipo</value>
@@ -128,7 +128,7 @@
     <value>Fecha registro factura</value>
   </data>
   <data name="Fechavencimiento" xml:space="preserve">
-    <value>Vencimiento</value>
+    <value>Fecha Vto.</value>
   </data>
   <data name="Fechadescuento" xml:space="preserve">
     <value>Fecha de descuento</value>
@@ -140,7 +140,7 @@
     <value>Moneda de vencimiento</value>
   </data>
   <data name="Importegiro" xml:space="preserve">
-    <value>Imp. Vencimiento</value>
+    <value>Importe Vto.</value>
   </data>
   <data name="Cambioaplicado" xml:space="preserve">
     <value>Cambio aplicado</value>
@@ -203,7 +203,7 @@
     <value>Cubierto total</value>
   </data>
   <data name="Pagado" xml:space="preserve">
-    <value>Pagado</value>
+    <value>PAGADO</value>
   </data>
   <data name="TituloEntidad2" xml:space="preserve">
     <value>Previsión de pagos</value>
@@ -218,6 +218,117 @@
     <value>Entrada manual</value>
   </data>
   <data name="TituloCartera" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="AsistenteAsignacionCartera" xml:space="preserve">
+    <value>Asistente de asignación de cartera</value>
+  </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>asignación de cartera</value>
+  </data>
+  <data name="Circuitotesoreria" xml:space="preserve">
+    <value>Circuito de tesorería</value>
+  </data>
+  <data name="Importe" xml:space="preserve">
+    <value>Importe</value>
+  </data>
+  <data name="SituacionFinal" xml:space="preserve">
+    <value>Situación</value>
+  </data>
+  <data name="CuentaTesoreria" xml:space="preserve">
+    <value>Cta. Tesorería</value>
+  </data>
+  <data name="FechaContable" xml:space="preserve">
+    <value>Fecha contable</value>
+  </data>
+  <data name="Letra" xml:space="preserve">
+    <value>Nº cheque/letra</value>
+  </data>
+  <data name="Banco" xml:space="preserve">
+    <value>Banco librado</value>
+  </data>
+  <data name="Fkseries" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="FechaCreacionCartera" xml:space="preserve">
+    <value>Fecha registro</value>
+  </data>
+  <data name="Idvencimiento" xml:space="preserve">
+    <value>Previsión</value>
+  </data>
+  <data name="Idcartera" xml:space="preserve">
+    <value>En cartera</value>
+  </data>
+  <data name="FkcuentasDescripcion" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Cartera" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="PAGARE/CHEQUE ENVIADO" xml:space="preserve">
+    <value>PAGARE/CHEQUE ENVIADO</value>
+  </data>
+  <data name="IMPAGADO" xml:space="preserve">
+    <value>IMPAGADO</value>
+  </data>
+  <data name="REMESA" xml:space="preserve">
+    <value>REMESA</value>
+  </data>
+  <data name="PENDIENTE DE COBRO" xml:space="preserve">
+    <value>PENDIENTE DE COBRO</value>
+  </data>
+  <data name="PENDIENTE DE PAGO" xml:space="preserve">
+    <value>PENDIENTE DE PAGO</value>
+  </data>
+  <data name="AsistenteMovimientosTesoreria" xml:space="preserve">
+    <value>Asistente de movimientos de tesorería</value>
+  </data>
+  <data name="MovimientosTesoreria" xml:space="preserve">
+    <value>movimientos de tesorería</value>
+  </data>
+  <data name="Importe2Importe3" xml:space="preserve">
+    <value>Importe</value>
+  </data>
+  <data name="Importe2Importe6" xml:space="preserve">
+    <value>Importe</value>
+  </data>
+  <data name="FechaPagoActualizar" xml:space="preserve">
+    <value>Actualizar fecha de pago</value>
+  </data>
+  <data name="CuentaTesoreriaCobrador" xml:space="preserve">
+    <value>Cobrador</value>
+  </data>
+  <data name="Fecharemesa" xml:space="preserve">
+    <value>Fecha remesa</value>
+  </data>
+  <data name="Cuentacargo2" xml:space="preserve">
+    <value>Cuenta Cargo 2</value>
+  </data>
+  <data name="Cuentaabono2" xml:space="preserve">
+    <value>Cuenta Abono 2</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>Desde vencimiento</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>Hasta vencimiento</value>
+  </data>
+  <data name="Fkmodospago" xml:space="preserve">
+    <value>Modo de pago</value>
+  </data>
+  <data name="Referenciaremesa" xml:space="preserve">
+    <value>Remesa</value>
+  </data>
+  <data name="Giroimporte" xml:space="preserve">
+    <value>Importe Vto.</value>
+  </data>
+  <data name="Asignadoimporte" xml:space="preserve">
+    <value>Asignado</value>
+  </data>
+  <data name="Pagadoimporte" xml:space="preserve">
+    <value>Pagado</value>
+  </data>
+  <data name="TituloEntidadCartera" xml:space="preserve">
     <value>Cartera</value>
   </data>
 </root>

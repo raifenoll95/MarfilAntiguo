@@ -10,6 +10,10 @@ using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Inf.ResourcesGlobalization.Textos.Entidades;
+using Marfil.Dom.Persistencia.ServicesView.Interfaces;
+using System.Collections.Generic;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -53,6 +57,9 @@ namespace Marfil.App.WebMain.Controllers
             {
                 ((IToolbar)model).Toolbar = GenerateToolbar(service, TipoOperacion.Alta, model);
             }
+
+            model.Usuario = ContextService.Usuario;
+            model.Fecha = DateTime.Now;
             return View(model);
 
         }
@@ -64,6 +71,7 @@ namespace Marfil.App.WebMain.Controllers
         [ValidateAntiForgeryToken]
         public override ActionResult CreateOperacion(CarteraVencimientosModel model)
         {
+            model.Fecha = DateTime.Now;
             try
             {
                 if (ModelState.IsValid)
@@ -105,13 +113,18 @@ namespace Marfil.App.WebMain.Controllers
                 if (TempData["model"] != null)
                     return View(TempData["model"]);
 
-                var model = gestionService.get(id);
+                var model = gestionService.get(id) as CarteraVencimientosModel;
                 if (model == null)
                 {
                     return HttpNotFound();
                 }
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
-                return View(urlDocumento(model));
+
+                foreach (var vencimiento in model.LineasPrevisiones)
+                {
+                    vencimiento.urlDocumento = model.Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
+                }
+                return View(model);
             }
         }
 
@@ -159,23 +172,64 @@ namespace Marfil.App.WebMain.Controllers
             using (var gestionService = createService(newModel))
             {
 
-                var model = gestionService.get(id);
+                var model = gestionService.get(id) as CarteraVencimientosModel;
                 if (model == null)
                 {
                     return HttpNotFound();
                 }
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
-                return View(urlDocumento(model));
+
+                foreach(var vencimiento in model.LineasPrevisiones)
+                {
+                    vencimiento.urlDocumento = model.Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
+                }
+                return View(model);
             }
         }
 
-        public IModelView urlDocumento(IModelView obj)
+        public ActionResult AsistenteAsignacionCartera(string id)
         {
-            var model = obj as CarteraVencimientosModel;
-            var service = new CarteraVencimientosService(ContextService);
-            model.urlDocumento = Url.Action("Details", "Cuentastesoreria", new { id = model.Fkcuentatesoreria });
-            return (model);
+            return View(new AsistenteAsignacionModel(ContextService));
         }
+
+        #region imprimir
+
+        protected override ToolbarModel GenerateToolbar(IGestionService service, TipoOperacion operacion, dynamic model = null)
+        {
+            var result = base.GenerateToolbar(service, operacion, model as object);
+            result.Titulo = "Cartera";
+            return result;
+        }
+
+        protected override IEnumerable<IToolbaritem> VerToolbar(IGestionService service, IModelView model)
+        {
+            var objModel = model as CarteraVencimientosModel;
+            var result = base.VerToolbar(service, model).ToList();
+            result.Add(new ToolbarSeparatorModel());
+            result.Add(CreateComboImprimir(objModel));
+            return result;
+        }
+
+        private ToolbarActionComboModel CreateComboImprimir(CarteraVencimientosModel objModel)
+        {
+            objModel.DocumentosImpresion = objModel.GetListFormatos();
+            return new ToolbarActionComboModel()
+            {
+                Icono = "fa fa-print",
+                Texto = General.LblImprimir,
+                Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referencia, tipo = TipoDocumentos.CarteraVencimientos, reportId = objModel.DocumentosImpresion.Defecto }),
+                Target = "_blank",
+                Items = objModel.DocumentosImpresion.Lineas.Select(f => new ToolbarActionModel()
+                {
+                    Url = Url.Action("Visualizar", "Designer", new { primaryKey = objModel.Referencia, tipo = TipoDocumentos.CarteraVencimientos, reportId = f }),
+                    Texto = f,
+                    Target = "_blank"
+                })
+            };
+        }
+        #endregion
+
+
     }
 }

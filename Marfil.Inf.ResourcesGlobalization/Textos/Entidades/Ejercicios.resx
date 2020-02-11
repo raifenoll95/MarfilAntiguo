@@ -128,12 +128,42 @@
     <value>Criterio de IVA</value>
   </data>
   <data name="Fkejercicios" xml:space="preserve">
-    <value>Ejercicio siguiente</value>
+    <value>Ejercicio anterior</value>
   </data>
   <data name="Gestion" xml:space="preserve">
     <value>Gestión</value>
   </data>
-  <data name="Fkseriescontables" xml:space="preserve">
+  <data name="FkseriescontablesAST" xml:space="preserve">
     <value>Serie contable</value>
+  </data>
+  <data name="FkseriescontablesIVS" xml:space="preserve">
+    <value>Iva soportado</value>
+  </data>
+  <data name="FkseriescontablesIVP" xml:space="preserve">
+    <value>Iva repercutido</value>
+  </data>
+  <data name="FkseriescontablesPRC" xml:space="preserve">
+    <value>Previsión cobros</value>
+  </data>
+  <data name="FkseriescontablesPRP" xml:space="preserve">
+    <value>Previsión pagos</value>
+  </data>
+  <data name="FkseriescontablesINM" xml:space="preserve">
+    <value>Inmovilizado</value>
+  </data>
+  <data name="FkseriescontablesCRC" xml:space="preserve">
+    <value>Cartera cobros</value>
+  </data>
+  <data name="FkseriescontablesCRP" xml:space="preserve">
+    <value>Cartera pagos</value>
+  </data>
+  <data name="FkseriescontablesREM" xml:space="preserve">
+    <value>Gestión remesas</value>
+  </data>
+  <data name="EstadoEjercicioAbierto" xml:space="preserve">
+    <value>Abierto</value>
+  </data>
+  <data name="EstadoEjercicioCerrado" xml:space="preserve">
+    <value>Cerrado</value>
   </data>
 </root>

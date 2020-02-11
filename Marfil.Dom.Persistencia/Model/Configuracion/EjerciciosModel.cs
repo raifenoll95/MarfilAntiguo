@@ -54,8 +54,32 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         [Display(ResourceType = typeof(REjecicios), Name = "Hasta")]
         public DateTime? Hasta { get; set; }
 
-        [Display(ResourceType = typeof(REjecicios), Name = "Fkseriescontables")]
-        public string Fkseriescontables { get; set; }
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesAST")]
+        public string FkseriescontablesAST { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesIVS")]
+        public string FkseriescontablesIVS { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesIVP")]
+        public string FkseriescontablesIVP { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesPRC")]
+        public string FkseriescontablesPRC { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesPRP")]
+        public string FkseriescontablesPRP { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesCRC")]
+        public string FkseriescontablesCRC { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesCRP")]
+        public string FkseriescontablesCRP { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesREM")]
+        public string FkseriescontablesREM { get; set; }
+
+        [Display(ResourceType = typeof(REjecicios), Name = "FkseriescontablesINM")]
+        public string FkseriescontablesINM { get; set; }
 
         public string DesdeCadena {
             get { return Desde?.ToShortDateString().ToString(CultureInfo.CurrentUICulture) ?? string.Empty; }

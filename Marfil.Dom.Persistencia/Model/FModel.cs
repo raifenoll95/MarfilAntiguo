@@ -22,7 +22,6 @@ using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
 using Marfil.Dom.Persistencia.Model.Documentos.FacturasCompras;
 using Marfil.Dom.Persistencia.Model.Documentos.Inventarios;
 using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
-using Marfil.Dom.Persistencia.Model.Contabilidad;
 using Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras;
 using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos;
 using Marfil.Dom.Persistencia.Model.Documentos.PresupuestosCompras;
@@ -52,6 +51,7 @@ using Marfil.Dom.Persistencia.Model.CRM;
 using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
 using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Model
 {
@@ -379,6 +379,7 @@ namespace Marfil.Dom.Persistencia.Model
                 var configuracion = appService.GetConfiguracion();
                 var empresa = appService.GetCurrentEmpresa();
                 var almacen = appService.GetCurrentAlmacen();
+
                 result.Empresa = empresa.Id;
 
                 result.Fkejercicio = Funciones.Qint(context.Ejercicio).Value;
@@ -1127,6 +1128,13 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Empresa = empresa.Id;
                 return result as T;
             }
+            else if (typeof(PrevisionesCarteraModel) == typeof(T))
+            {
+                var result = new PrevisionesCarteraModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
             else if(typeof(GuiasBalancesModel) == typeof(T))
             {
                 var result = new GuiasBalancesModel(context);
@@ -1147,7 +1155,6 @@ namespace Marfil.Dom.Persistencia.Model
             //    result.Empresa = empresa.Id;
             //    return result as T;
             //}
-
             var ctor = typeof(T).GetConstructor(new[] { typeof(IContextService) });
             return ctor.Invoke(new object[] { context }) as T;
 

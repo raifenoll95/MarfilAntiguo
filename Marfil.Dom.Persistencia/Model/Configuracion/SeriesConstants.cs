@@ -16,6 +16,7 @@ using RMateriales = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Materiale
 using RImputacionCostes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.ImputacionCostes;
 using RAlmacenes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Almacenes;
 using RFamilias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Familiasproductos;
+using RCobrosYPagos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.CobrosYPagos;
 
 namespace Marfil.Dom.Persistencia.Model.Configuracion
 {
@@ -68,6 +69,8 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         [StringValue(typeof(RAlmacenes), "TituloEntidad")]
         Almacenes,
         [StringValue(typeof(RFamilias), "TituloEntidad")]
-        Familias
+        Familias,
+        [StringValue(typeof(RCobrosYPagos), "TituloEntidadCartera")]
+        CarteraVencimientos
     }
 }

@@ -30,7 +30,7 @@ namespace Marfil.App.WebMain.Controllers
             {
                 var result = new ResultBusquedas<BancosModel>()
                 {
-                    values = service.getAll().Select(f=>(BancosModel)f),
+                    values = service.getAll().Select(f=>(BancosModel)f).ToList(),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},

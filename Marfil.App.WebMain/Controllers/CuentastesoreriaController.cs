@@ -16,6 +16,7 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos.Helper;
 using Newtonsoft.Json;
 using Resources;
+using System.Web.Script.Serialization;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -129,5 +130,16 @@ namespace Marfil.App.WebMain.Controllers
         }
 
         #endregion
+
+        public ActionResult obtenerCuentaTesoreria(string cuenta)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioCuentasTesoreria = FService.Instance.GetService(typeof(CuentasModel), ContextService) as CuentasService;
+            var CuentaModel = servicioCuentasTesoreria.get(cuenta) as CuentasModel;
+            var data = JsonConvert.SerializeObject(CuentaModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

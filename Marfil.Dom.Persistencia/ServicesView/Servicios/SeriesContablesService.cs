@@ -104,6 +104,45 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.SeriesContables.Where(f => f.empresa == Empresa && f.id == id).ToList().Select(f => _converterModel.GetModelView(f) as SeriesContablesModel);
         }
 
+        public List<SeriesContablesModel> getSerie(string tipo)
+        {
+
+            List<SeriesContablesModel> series = new List<SeriesContablesModel>();
+
+            if(tipo == "0")
+            {
+                series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRC").
+                    Select(f => new SeriesContablesModel() { Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion }).ToList());
+            }
+
+            else
+            {
+               series.AddRange(_db.SeriesContables.Where(f => f.empresa == Empresa && f.tipodocumento == "PRP").
+                    Select(f => new SeriesContablesModel() {Tipodocumento = f.tipodocumento, Id = f.id, Descripcion = f.descripcion}).ToList());
+            }
+
+            return series;            
+        }
+
+
+        public string getSerieEjercicio(string tipodocumento)
+        {
+            string id = "";
+            var ejercicio = Int32.Parse(_context.Ejercicio);
+
+            if (tipodocumento == "PRC")
+            {
+                id = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == ejercicio).Select(f => f.fkseriescontablesPRC).SingleOrDefault();
+            }
+
+            if (tipodocumento == "PRP")
+            {
+                id = _db.Ejercicios.Where(f => f.empresa == Empresa && f.id == ejercicio).Select(f => f.fkseriescontablesPRP).SingleOrDefault();
+            }
+
+            return id;
+        }
+
         //public static string GetSerieContableCodigo(TipoDocumento tipo)
         //{
         //    switch (tipo)
