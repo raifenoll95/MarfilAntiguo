@@ -30,6 +30,11 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
         }
     }
 
+    public enum GenerarMovimientoAPartirDe
+    {
+       AsignarCartera
+    }
+
 
     public class MovsModel : BaseModel<MovsModel, Persistencia.Movs>
     {
@@ -45,10 +50,10 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
 
         public MovsModel(IContextService context) : base(context)
         {
-            using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
-            {
-                Fkseriescontables = db.SeriesContables.Where(f => f.empresa == context.Empresa && f.fkejercicios == context.Ejercicio).Select(f => f.id).SingleOrDefault();
-            }
+            //using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
+            //{
+            //    Fkseriescontables = db.SeriesContables.Where(f => f.empresa == context.Empresa && f.fkejercicios == context.Ejercicio).Select(f => f.id)/*.SingleOrDefault()*/;
+            //}
         }
 
         #endregion
@@ -140,6 +145,8 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad.Movs
         public double? Tipocambio { get; set; }
 
         public int Decimalesmonedas { get; set; }
+
+        public GenerarMovimientoAPartirDe Generar { get; set; }
 
 
         [Display(ResourceType = typeof(RMovs), Name = "Bloqueado")]

@@ -19,7 +19,6 @@
 <script src="@Url.Content("~/Scripts/Model/Facturas/VencimientosController.js")"></script>
 
 @Html.HiddenFor(f => Model.Empresa)
-@Html.HiddenFor(f => Model.Tipo)
 @Html.HiddenFor(f => Model.Monedabase)
 @Html.HiddenFor(f => Model.Monedagiro)
 @Html.HiddenFor(f => Model.Id)
@@ -32,6 +31,7 @@
             <li class="active"><a data-toggle="tab" href="#general">@General.LblGeneral</a></li>
             <li><a data-toggle="tab" href="#gestion">@General.LblGestion</a></li>
             <li><a data-toggle="tab" href="#seguimiento">@General.LblVencimientosSeguimientos</a></li>
+            <li><a data-toggle="tab" href="#previsiones">@General.LblPrevisiones</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -43,6 +43,9 @@
         </div>
         <div id="seguimiento" class="tab-pane fade margin-bottom">
             @Html.Partial("_seguimiento", Model)
+        </div>
+        <div id="previsiones" class="tab-pane fade margin-bottom">
+            @Html.Partial("_previsiones", Model)
         </div>
     </div>
 </div>

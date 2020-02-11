@@ -23,7 +23,7 @@
     <AssemblyVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
-    <AssemblyVersion>2019.1.105.0</AssemblyVersion>
+    <AssemblyVersion>2020.1.479.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +83,7 @@
     <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.CodeParser.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v16.2.UI, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -376,6 +377,12 @@
     <Compile Include="GruposIvaLin.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GuiasBalances.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GuiasBalancesLineas.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Guiascontables.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -428,7 +435,10 @@
     <Compile Include="Listados\Base\ListadoResultado.cs" />
     <Compile Include="Listados\Base\ListadosModel.cs" />
     <Compile Include="Listados\FListadosModel.cs" />
+    <Compile Include="Listados\ListadoAcomuladorPeriodos.cs" />
     <Compile Include="Listados\ListadoCrm.cs" />
+    <Compile Include="Listados\ListadoGuiasBalances.cs" />
+    <Compile Include="Listados\ListadoGuiasBalancesLineas.cs" />
     <Compile Include="Listados\ListadoMargen.cs" />
     <Compile Include="Listados\ListadosBalanceSumasYSaldos.cs" />
     <Compile Include="Listados\ListadosMayor.cs" />
@@ -518,6 +528,8 @@
     <Compile Include="Model\Configuracion\Cuentas\GuiascontablesModel.cs" />
     <Compile Include="Model\Configuracion\TablasVarias\Derivados\TablasVariasEstadosStock.cs" />
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
+    <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
+    <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
     <Compile Include="Model\Contabilidad\SelectSumasYSaldos.cs" />
     <Compile Include="Model\CRM\CampañasModel.cs" />
     <Compile Include="Model\CRM\CostesVariablesPeriodoModel.cs" />
@@ -525,10 +537,12 @@
     <Compile Include="Model\CRM\ProyectosModel.cs" />
     <Compile Include="Model\CRM\OportunidadesModel.cs" />
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
+    <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosCarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\ValidDataAttribute.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CircuitosTesoreriaCobrosModel.cs" />
+    <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosModel.cs" />
     <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesModel.cs" />
     <Compile Include="Model\Documentos\FacturasCompras\FacturasDuaValidation.cs" />
@@ -758,6 +772,9 @@
     <Compile Include="PresupuestosTotales.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrevisionesCartera.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prospectos.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
@@ -818,10 +835,16 @@
     <Compile Include="ServicesView\Servicios\ArticulosTerceroService.cs" />
     <Compile Include="ServicesView\Servicios\Cartera\VencimientosService.cs" />
     <Compile Include="ServicesView\Servicios\ConsultaVisualService.cs" />
+    <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesLineasService.cs" />
+    <Compile Include="ServicesView\Servicios\Contabilidad\GuiasBalancesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\IMaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MovsService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\TipoAsientoContable.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\BancosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\PrevisionesCarteraConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CircuitosTesoreriaCobrosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
@@ -851,6 +874,8 @@
     <Compile Include="ServicesView\Servicios\Validation\CarteraValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CircuitosTesoreriaCobrosValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\CarteraVencimientosValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesLineasValidation.cs" />
+    <Compile Include="ServicesView\Servicios\Validation\GuiasBalancesValidation.cs" />
     <Compile Include="ServicesView\Servicios\Validation\VencimientosValidation.cs" />
     <Compile Include="ServicesView\Servicios\CircuitosTesoreriaCobrosService.cs" />
     <Compile Include="ServicesView\Servicios\CarteraVencimientosService.cs" />
@@ -1205,6 +1230,12 @@
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TarifasLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoGuia.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoInforme.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Tiposcuentas.cs">

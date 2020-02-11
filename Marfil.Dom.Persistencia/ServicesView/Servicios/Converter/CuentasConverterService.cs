@@ -92,8 +92,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             if (viewmodel.Nivel == 0)
             {
                 result.fkPais = viewmodel.FkPais;
-                result.nif = viewmodel.Nif.Nif;
-                result.fktipoidentificacion_nif = viewmodel.Nif.TipoNif;
+                result.nif = viewmodel.Nif?.Nif;
+                result.fktipoidentificacion_nif = viewmodel.Nif?.TipoNif;
                 result.contrapartida = viewmodel.Contrapartida;
                 result.tipocuenta = viewmodel.Tiposcuentas;
 

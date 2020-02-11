@@ -383,6 +383,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel==0 && (f.id.StartsWith("4300") || f.id.StartsWith("4000") || f.id.StartsWith("4100"))).Select(f=> new CuentasModel() { Id = f.id, Descripcion = f.descripcion, BloqueoModel = new BloqueoEntidadModel() { Bloqueada = f.bloqueada ?? false, Fecha = f.fechamodificacionbloqueo ?? DateTime.MinValue, FkMotivobloqueo = f.fkMotivosbloqueo } });
         }
 
+        public IEnumerable<CuentasBusqueda> GetCuentasAsistenteAsignacionCobrosPagos(string tipoasignacion)
+        {
+            var result = new List<CuentasBusqueda>();
+            var service = FService.Instance.GetService(typeof(CuentasModel), _context, _db) as CuentasService;
+
+            if (tipoasignacion=="0")
+            {
+                result.AddRange(service.GetCuentas(TiposCuentas.Clientes).Where(f => !(f.Bloqueado ?? false)));
+            }
+
+            if (tipoasignacion=="1")
+            {
+                result.AddRange(service.GetCuentas(TiposCuentas.Proveedores).Where(f => !(f.Bloqueado ?? false)));
+                result.AddRange(service.GetCuentas(TiposCuentas.Acreedores).Where(f => !(f.Bloqueado ?? false)));
+            }
+
+            return result;
+        }
+
         public IEnumerable<CuentasModel> GetCuentasNivel0()
         {
             return _db.Cuentas.Where(f => f.empresa == Empresa && f.nivel == 0).Select(f => new CuentasModel() { Id = f.id, Descripcion = f.descripcion, BloqueoModel = new BloqueoEntidadModel() { Bloqueada = f.bloqueada ?? false, Fecha = f.fechamodificacionbloqueo ?? DateTime.MinValue, FkMotivobloqueo = f.fkMotivosbloqueo } });

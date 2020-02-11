@@ -88,6 +88,7 @@ namespace Marfil.Dom.Persistencia.Model
 
 
         public string BloqueoColumn { get; set; }
+        public string ColumnaColor { get; set; }
 
         #endregion
 

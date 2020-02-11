@@ -30,7 +30,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override bool Exists(string id)
         {
             var intid = Funciones.Qint(id);
-            return _db.DivisionLotes.Any(f => f.empresa == Context.Empresa && f.id == intid);
+            return _db.ImputacionCostes.Any(f => f.empresa == Context.Empresa && f.id == intid);
         }
 
         public override IModelView CreateView(string id)

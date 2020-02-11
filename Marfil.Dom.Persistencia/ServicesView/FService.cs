@@ -39,6 +39,8 @@ using Marfil.Dom.Persistencia.Model.CRM;
 using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
 using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.ServicesView
 {
@@ -156,6 +158,8 @@ namespace Marfil.Dom.Persistencia.ServicesView
             //contabilidad
             _servicesTypes.Add(typeof(MovsModel), typeof(MovsService));
             _servicesTypes.Add(typeof(MaesModel), typeof(MaesService));
+            _servicesTypes.Add(typeof(GuiasBalancesModel),typeof(GuiasBalancesService));
+            _servicesTypes.Add(typeof(GuiasBalancesLineasModel), typeof(GuiasBalancesLineasService));
 
             _servicesTypes.Add(typeof(VencimientosModel), typeof(VencimientosService));
             _servicesTypes.Add(typeof(CircuitoTesoreriaCobrosModel), typeof(CircuitosTesoreriaCobrosService));

@@ -15,6 +15,8 @@ using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos;
 using Resources;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -64,7 +66,16 @@ namespace Marfil.App.WebMain.Controllers
             }
             return RedirectToAction("Edit", new { id = id });
 
+        }
 
+
+        public ActionResult obtenerSerieContable(string tipo)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioSerieContable = FService.Instance.GetService(typeof(SeriesContablesModel), ContextService) as SeriesContablesService;
+            var SerieModel = servicioSerieContable.getSerie(tipo)[0] as SeriesContablesModel;
+            var data = JsonConvert.SerializeObject(SerieModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

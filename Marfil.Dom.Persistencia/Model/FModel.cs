@@ -51,6 +51,7 @@ using Marfil.Dom.Persistencia.Model.CRM;
 using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
 using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
+using Marfil.Dom.Persistencia.Model.Contabilidad;
 
 namespace Marfil.Dom.Persistencia.Model
 {
@@ -378,6 +379,7 @@ namespace Marfil.Dom.Persistencia.Model
                 var configuracion = appService.GetConfiguracion();
                 var empresa = appService.GetCurrentEmpresa();
                 var almacen = appService.GetCurrentAlmacen();
+
                 result.Empresa = empresa.Id;
 
                 result.Fkejercicio = Funciones.Qint(context.Ejercicio).Value;
@@ -1124,6 +1126,19 @@ namespace Marfil.Dom.Persistencia.Model
                 var result = new CarteraVencimientosModel(context);
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if (typeof(PrevisionesCarteraModel) == typeof(T))
+            {
+                var result = new PrevisionesCarteraModel(context);
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
+                return result as T;
+            }
+            else if(typeof(GuiasBalancesModel) == typeof(T))
+            {
+                var result = new GuiasBalancesModel(context);
+                var empresa = appService.GetCurrentEmpresa();
                 return result as T;
             }
             //else if (typeof(CarteraModel) == typeof(T))

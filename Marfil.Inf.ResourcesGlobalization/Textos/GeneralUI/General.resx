@@ -904,4 +904,25 @@
   <data name="VencimientosPagos" xml:space="preserve">
     <value>Gestión de previsión de pagos</value>
   </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>Asignar a cartera</value>
+  </data>
+  <data name="Contabilidad" xml:space="preserve">
+    <value>Contabilidad</value>
+  </data>
+  <data name="LblPrevisiones" xml:space="preserve">
+    <value>Previsión</value>
+  </data>
+  <data name="LblCartera" xml:space="preserve">
+    <value>Cartera</value>
+  </data>
+  <data name="MovimientosTesoreria" xml:space="preserve">
+    <value>Movimientos de tesorería</value>
+  </data>
+  <data name="GenerarMovimiento" xml:space="preserve">
+    <value>Generar movimiento</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Configurador de documentos: Cartera</value>
+  </data>
 </root>

@@ -22,17 +22,18 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Usuario, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(f => Model.Usuario, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.TextBoxFor(f => Model.Usuario, (object)new { @aria_label = "codigo", @class = "form-control", @readonly = true })
     </div>
     <div class="col-md-2">
         @Html.ValidationMessageFor(f => Model.Usuario, "", new { @class = "text-danger" })
     </div>
 
-    @Html.LabelFor(f => Model.Fechacreacion, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Fecha, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
-        @Html.TextBoxFor(model => model.Fechacreacion, isNuevo ? (object)new { @type = "date", @class = "form-control", @autofocus = "" } :
-                                                        Model.Fechacreacion == null ? (object)new { @type = "date", @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } :
-                                                        (object)new { @Value = Model.Fechacreacion.Value.ToString("yyyy-MM-dd"), @type = "date", @aria_label = "codigo", @class = "form-control", @readonly = "readonly" })
+        @Html.EditorFor(f => Model.Fecha, (object)new {@readonly = true })
+    </div>
+    <div class="col-md-2">
+        @Html.ValidationMessageFor(f => Model.Fecha, "", new { @class = "text-danger" })
     </div>
 </div>
 

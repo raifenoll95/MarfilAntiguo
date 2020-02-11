@@ -45,5 +45,8 @@ namespace Marfil.Dom.Persistencia
         public string desccuentaabono2 { get; set; }
         public string desccuentaabonorel { get; set; }
         public Nullable<int> tipocircuito { get; set; }
+        public string codigodescripcionasiento { get; set; }
+        public Nullable<bool> documentocartera { get; set; }
+        public Nullable<bool> actualizarcobrador { get; set; }
     }
 }

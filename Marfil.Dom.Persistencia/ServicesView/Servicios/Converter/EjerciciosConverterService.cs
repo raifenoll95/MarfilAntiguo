@@ -26,7 +26,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
         public override IEnumerable<IModelView> GetAll()
         {
-            return _db.Ejercicios.Where(f => f.empresa == Empresa).ToList().Select(f => GetModelView(f));
+            var result = new List<EjerciciosModel>();
+            var list = _db.Ejercicios.Where(f => f.empresa == Empresa);
+
+            foreach(var ejercicio in list)
+            {
+                var ejercicioModel = GetModelView(ejercicio) as EjerciciosModel;
+                result.Add(ejercicioModel);
+            }
+            return result;
         }
 
         public override IModelView CreateView(string id)
@@ -88,30 +96,33 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         //    return result;
         //}
 
-        public override IModelView GetModelView(Ejercicios obj)
+        public override IModelView GetModelView(Ejercicios viewmodel)
         {
-            var instance = new EjerciciosModel();
-            var objProperties = obj.GetType().GetProperties();
-            foreach (var item in objProperties)
+            var result = new EjerciciosModel
             {
-                if (obj.GetType().GetProperty(item.Name).PropertyType.IsGenericType &&
-                    obj.GetType().GetProperty(item.Name).PropertyType.GetGenericTypeDefinition() !=
-                    typeof(ICollection<>))
-                {
-                    instance.set(item.Name.FirstToUpper(), obj.GetType().GetProperty(item.Name)?.GetValue(obj, null));
-                }
-                else if (obj.GetType().GetProperty(item.Name).PropertyType.IsEnum)
-                {
-                    instance.set(item.Name.FirstToUpper(), (int)obj.GetType().GetProperty(item.Name)?.GetValue(obj, null));
-                }
-                else if (!obj.GetType().GetProperty(item.Name).PropertyType.IsGenericType && item.Name != "CostesVariablesPeriodo")
-                {
-                    instance.set(item.Name.FirstToUpper(), obj.GetType().GetProperty(item.Name)?.GetValue(obj, null));
-                }
+                Empresa = viewmodel.empresa,
+                Id = viewmodel.id,
+                Descripcion = viewmodel.descripcion,
+                Descripcioncorta = viewmodel.descripcioncorta,
+                Desde = viewmodel.desde,
+                Hasta = viewmodel.hasta,
+                FkseriescontablesAST = viewmodel.fkseriescontablesAST,
+                FkseriescontablesIVS = viewmodel.fkseriescontablesIVS,
+                FkseriescontablesIVP = viewmodel.fkseriescontablesIVP,
+                FkseriescontablesPRC = viewmodel.fkseriescontablesPRC,
+                FkseriescontablesPRP = viewmodel.fkseriescontablesPRP,
+                FkseriescontablesCRC = viewmodel.fkseriescontablesCRC,
+                FkseriescontablesCRP = viewmodel.fkseriescontablesCRP,
+                FkseriescontablesREM = viewmodel.fkseriescontablesREM,
+                FkseriescontablesINM = viewmodel.fkseriescontablesINM,
+                Estado = (EstadoEjercicio)viewmodel.estado,
+                Contabilidadcerradahasta = viewmodel.contabilidadcerradahasta,
+                Registroivacerradohasta = viewmodel.registroivacerradohasta,
+                Criterioiva = viewmodel.criterioiva,
+                Fkejercicios = viewmodel.fkejercicios
+            };
 
-            }
-
-            return instance;
+            return result;
         }
     }
 }

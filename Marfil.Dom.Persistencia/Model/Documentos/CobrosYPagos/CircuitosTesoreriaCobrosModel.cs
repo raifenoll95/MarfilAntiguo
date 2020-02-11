@@ -5,6 +5,7 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Resources;
 using RCircuitosTesoreria = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.CircuitosTesoreria;
+using RMovs = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Movs;
 using Marfil.Inf.Genericos;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
@@ -80,8 +81,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Situacionfinal")]
         public string Situacionfinaldescripcion { get; set; }
 
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "DescripcionAsiento")]
+        public string Codigodescripcionasiento { get; set; }
+
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Datos")]
-        public int Datos { get; set; }
+        public int? Datos { get; set; }
 
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Asientocontable")]
         public bool Asientocontable { get; set; }
@@ -100,6 +104,12 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Datosdocumento")]
         public bool Datosdocumento { get; set; }
+
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Actualizarcobrador")]
+        public bool Actualizarcobrador { get; set; }
+
+        [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Documentocartera")]
+        public bool Documentocartera { get; set; }
 
         [Display(ResourceType = typeof(RCircuitosTesoreria), Name = "Cuentacargo1")]
         public String Cuentacargo1 { get; set; }

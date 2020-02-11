@@ -19,7 +19,7 @@
     customSettings.CallbackRouteValues = new { Controller = "Designer", Action = "ReportViewerPartial" };
     customSettings.ExportRouteValues = new { Controller = "Designer", Action = "ExportDocumentViewer" };
 
-    if (Model.Parameters != null)
+    if(Model.Parameters != null)
     {
         foreach (var p in Model.Parameters)
         {

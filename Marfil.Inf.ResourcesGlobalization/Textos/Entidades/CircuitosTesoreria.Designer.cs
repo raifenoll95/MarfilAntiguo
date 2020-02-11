@@ -61,6 +61,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actualizar Cta. Tesorería.
+        /// </summary>
+        public static string Actualizarcobrador {
+            get {
+                return ResourceManager.GetString("Actualizarcobrador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generar asiento contable.
         /// </summary>
         public static string Asientocontable {
@@ -115,7 +124,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abono.
+        ///   Looks up a localized string similar to Abono 3.
         /// </summary>
         public static string Cuentaabonorel {
             get {
@@ -142,7 +151,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cargo .
+        ///   Looks up a localized string similar to Cargo 3.
         /// </summary>
         public static string Cuentacargorel {
             get {
@@ -178,6 +187,24 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asiento.
+        /// </summary>
+        public static string DescripcionAsiento {
+            get {
+                return ResourceManager.GetString("DescripcionAsiento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Documento cartera.
+        /// </summary>
+        public static string Documentocartera {
+            get {
+                return ResourceManager.GetString("Documentocartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actualizar fecha pago.
         /// </summary>
         public static string Fechapago {
@@ -187,7 +214,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actualizar fecha remesa.
+        ///   Looks up a localized string similar to Documento remesa.
         /// </summary>
         public static string Fecharemesa {
             get {

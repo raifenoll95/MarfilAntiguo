@@ -16,6 +16,7 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvfp = FCampoverificacion.Instance.GetModel<FormasPagoModel>(WebHelper.ContextService);
+    var cvbancos = FCampoverificacion.Instance.GetModel<BancosModel>(WebHelper.ContextService);
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -45,13 +46,13 @@
 
 @*Cuenta tesoreria*@
 <div class="form-group">
-    @Html.LabelFor(f => Model.Fkcuentatesoreria, new { @class = "control-label col-md-2" })
+    @Html.LabelFor(f => Model.Fkcuentastesoreria, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
 
         @{
             campoverificacion.Name = "Fkcuentatesoreria";
             campoverificacion.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
-            campoverificacion.Valor = Model.Fkcuentatesoreria;
+            campoverificacion.Valor = Model.Fkcuentastesoreria;
             campoverificacion.Titulo = Operarios.Fkcuentatesoreria;
             campoverificacion.SoloLectura = isreadonly;
             campoverificacion.Params = "{\"tipocuenta\":" + (int)TiposCuentas.Cuentastesoreria + "}";
@@ -61,11 +62,11 @@
 
     </div>
     <div class="col-md-10 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.Fkcuentatesoreria, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(f => Model.Fkcuentastesoreria, "", new { @class = "text-danger" })
     </div>
 </div>
 
-@*Fecha registro, Fecha desuento, fecha pago*@
+@*Fecha desuento, fecha pago, remesa*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Fechadescuento, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
@@ -74,6 +75,38 @@
     @Html.LabelFor(f => Model.Fechapago, new { @class = "control-label col-md-2" })
     <div class="col-md-2">
         @Html.EditorFor(f => Model.Fechapago)
+    </div>
+    @Html.LabelFor(f => Model.Fecharemesa, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.EditorFor(f => Model.Fecharemesa)
+    </div>
+</div>
+
+@*Enlace bancos, repasar*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Banco, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvbancos.Name = "Banco";
+            cvbancos.Url = Url.Action("BancosApi", "Api");
+            cvbancos.Valor = Model.Banco;
+            cvbancos.Titulo = "Banco librado";
+            cvbancos.Obligatorio = true;
+            cvbancos.SoloLectura = isreadonly;
+        }
+        @Html.Partial("CampoverificacionUI", cvbancos)
+
+    </div>
+    <div class="col-md-10 col-md-offset-2">
+        @Html.ValidationMessageFor(f => Model.Banco, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Letra*@
+<div class="form-group">
+    @Html.LabelFor(f => Model.Letra, new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.TextBoxFor(f => Model.Letra, isreadonly || iseditable ? (object)new { @aria_label = "codigo", @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control", @autofocus = "" })
     </div>
 </div>
 

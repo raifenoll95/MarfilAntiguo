@@ -36,6 +36,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var model = base.GetListIndexModel(t, canEliminar, canModificar, controller);
             var propiedadesVisibles = new[] {  "Descripcion", "Descripcioncorta", "Desde", "Hasta", "Estado", "Contabilidadcerradahasta", "Registroivacerradohasta" };
             var propiedades = Helpers.Helper.getProperties<EjerciciosModel>();
+            model.PrimaryColumnns = new[] { "Id" };       
             model.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
 
@@ -104,7 +105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal() {
 
-            return string.Format("select id, descripcion from Ejercicios where empresa='{0}'", Empresa);
+            return string.Format("select * from Ejercicios where empresa='{0}'", Empresa);
         }
     }
 }

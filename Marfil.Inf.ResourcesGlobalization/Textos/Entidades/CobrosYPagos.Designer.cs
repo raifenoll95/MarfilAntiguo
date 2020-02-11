@@ -61,11 +61,74 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Asignado.
+        /// </summary>
+        public static string Asignadoimporte {
+            get {
+                return ResourceManager.GetString("Asignadoimporte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to asignación de cartera.
+        /// </summary>
+        public static string AsignarCartera {
+            get {
+                return ResourceManager.GetString("AsignarCartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asistente de asignación de cartera.
+        /// </summary>
+        public static string AsistenteAsignacionCartera {
+            get {
+                return ResourceManager.GetString("AsistenteAsignacionCartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asistente de movimientos de tesorería.
+        /// </summary>
+        public static string AsistenteMovimientosTesoreria {
+            get {
+                return ResourceManager.GetString("AsistenteMovimientosTesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banco librado.
+        /// </summary>
+        public static string Banco {
+            get {
+                return ResourceManager.GetString("Banco", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cambio aplicado.
         /// </summary>
         public static string Cambioaplicado {
             get {
                 return ResourceManager.GetString("Cambioaplicado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cartera.
+        /// </summary>
+        public static string Cartera {
+            get {
+                return ResourceManager.GetString("Cartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circuito de tesorería.
+        /// </summary>
+        public static string Circuitotesoreria {
+            get {
+                return ResourceManager.GetString("Circuitotesoreria", resourceCulture);
             }
         }
         
@@ -102,6 +165,42 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Cubierto {
             get {
                 return ResourceManager.GetString("Cubierto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuenta Abono 2.
+        /// </summary>
+        public static string Cuentaabono2 {
+            get {
+                return ResourceManager.GetString("Cuentaabono2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuenta Cargo 2.
+        /// </summary>
+        public static string Cuentacargo2 {
+            get {
+                return ResourceManager.GetString("Cuentacargo2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cta. Tesorería.
+        /// </summary>
+        public static string CuentaTesoreria {
+            get {
+                return ResourceManager.GetString("CuentaTesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cobrador.
+        /// </summary>
+        public static string CuentaTesoreriaCobrador {
+            get {
+                return ResourceManager.GetString("CuentaTesoreriaCobrador", resourceCulture);
             }
         }
         
@@ -160,11 +259,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fecha contable.
+        /// </summary>
+        public static string FechaContable {
+            get {
+                return ResourceManager.GetString("FechaContable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha registro vencimiento.
         /// </summary>
         public static string Fechacreacion {
             get {
                 return ResourceManager.GetString("Fechacreacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha registro.
+        /// </summary>
+        public static string FechaCreacionCartera {
+            get {
+                return ResourceManager.GetString("FechaCreacionCartera", resourceCulture);
             }
         }
         
@@ -178,11 +295,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desde vencimiento.
+        /// </summary>
+        public static string FechaDesde {
+            get {
+                return ResourceManager.GetString("FechaDesde", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha de factura.
         /// </summary>
         public static string Fechafactura {
             get {
                 return ResourceManager.GetString("Fechafactura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hasta vencimiento.
+        /// </summary>
+        public static string FechaHasta {
+            get {
+                return ResourceManager.GetString("FechaHasta", resourceCulture);
             }
         }
         
@@ -196,6 +331,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actualizar fecha de pago.
+        /// </summary>
+        public static string FechaPagoActualizar {
+            get {
+                return ResourceManager.GetString("FechaPagoActualizar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha registro factura.
         /// </summary>
         public static string Fecharegistrofactura {
@@ -205,7 +349,16 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vencimiento.
+        ///   Looks up a localized string similar to Fecha remesa.
+        /// </summary>
+        public static string Fecharemesa {
+            get {
+                return ResourceManager.GetString("Fecharemesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha Vto..
         /// </summary>
         public static string Fechavencimiento {
             get {
@@ -223,6 +376,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        public static string FkcuentasDescripcion {
+            get {
+                return ResourceManager.GetString("FkcuentasDescripcion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cta. de Tesorería.
         /// </summary>
         public static string Fkcuentastesoreria {
@@ -232,11 +394,92 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nº Doc..
+        ///   Looks up a localized string similar to Doc..
         /// </summary>
         public static string Fkfacturas {
             get {
                 return ResourceManager.GetString("Fkfacturas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modo de pago.
+        /// </summary>
+        public static string Fkmodospago {
+            get {
+                return ResourceManager.GetString("Fkmodospago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serie.
+        /// </summary>
+        public static string Fkseries {
+            get {
+                return ResourceManager.GetString("Fkseries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importe Vto..
+        /// </summary>
+        public static string Giroimporte {
+            get {
+                return ResourceManager.GetString("Giroimporte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En cartera.
+        /// </summary>
+        public static string Idcartera {
+            get {
+                return ResourceManager.GetString("Idcartera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previsión.
+        /// </summary>
+        public static string Idvencimiento {
+            get {
+                return ResourceManager.GetString("Idvencimiento", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IMPAGADO.
+        /// </summary>
+        public static string IMPAGADO {
+            get {
+                return ResourceManager.GetString("IMPAGADO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importe.
+        /// </summary>
+        public static string Importe {
+            get {
+                return ResourceManager.GetString("Importe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importe.
+        /// </summary>
+        public static string Importe2Importe3 {
+            get {
+                return ResourceManager.GetString("Importe2Importe3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importe.
+        /// </summary>
+        public static string Importe2Importe6 {
+            get {
+                return ResourceManager.GetString("Importe2Importe6", resourceCulture);
             }
         }
         
@@ -259,7 +502,7 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Imp. Vencimiento.
+        ///   Looks up a localized string similar to Importe Vto..
         /// </summary>
         public static string Importegiro {
             get {
@@ -282,6 +525,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string Inicial {
             get {
                 return ResourceManager.GetString("Inicial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nº cheque/letra.
+        /// </summary>
+        public static string Letra {
+            get {
+                return ResourceManager.GetString("Letra", resourceCulture);
             }
         }
         
@@ -322,6 +574,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to movimientos de tesorería.
+        /// </summary>
+        public static string MovimientosTesoreria {
+            get {
+                return ResourceManager.GetString("MovimientosTesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Origen.
         /// </summary>
         public static string Origen {
@@ -331,11 +592,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pagado.
+        ///   Looks up a localized string similar to PAGADO.
         /// </summary>
         public static string Pagado {
             get {
                 return ResourceManager.GetString("Pagado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pagado.
+        /// </summary>
+        public static string Pagadoimporte {
+            get {
+                return ResourceManager.GetString("Pagadoimporte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAGARE/CHEQUE ENVIADO.
+        /// </summary>
+        public static string PAGARE_CHEQUE_ENVIADO {
+            get {
+                return ResourceManager.GetString("PAGARE/CHEQUE ENVIADO", resourceCulture);
             }
         }
         
@@ -349,6 +628,33 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PENDIENTE DE COBRO.
+        /// </summary>
+        public static string PENDIENTE_DE_COBRO {
+            get {
+                return ResourceManager.GetString("PENDIENTE DE COBRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PENDIENTE DE PAGO.
+        /// </summary>
+        public static string PENDIENTE_DE_PAGO {
+            get {
+                return ResourceManager.GetString("PENDIENTE DE PAGO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remesa.
+        /// </summary>
+        public static string Referenciaremesa {
+            get {
+                return ResourceManager.GetString("Referenciaremesa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rég. IVA.
         /// </summary>
         public static string RegIVA {
@@ -358,11 +664,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to REMESA.
+        /// </summary>
+        public static string REMESA {
+            get {
+                return ResourceManager.GetString("REMESA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Situación.
         /// </summary>
         public static string Situación {
             get {
                 return ResourceManager.GetString("Situación", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Situación.
+        /// </summary>
+        public static string SituacionFinal {
+            get {
+                return ResourceManager.GetString("SituacionFinal", resourceCulture);
             }
         }
         

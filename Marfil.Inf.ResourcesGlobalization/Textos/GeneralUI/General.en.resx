@@ -615,4 +615,7 @@
   <data name="LblFichero" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="AsignarCartera" xml:space="preserve">
+    <value>Asignar a cartera</value>
+  </data>
 </root>

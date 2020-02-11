@@ -1045,6 +1045,21 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        public IEnumerable<TipoInforme> GetListTipoInforme()
+        {
+            using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListTipoInforme();
+            }
+        }
+        public IEnumerable<TipoGuia> GetListTipoGuia()
+        {
+            using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetListTipoGuia();
+            }
+        }
+
         public IEnumerable<TablasVariasGeneralModel> GetListGrupoIncidencias()
         {
             using (var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))

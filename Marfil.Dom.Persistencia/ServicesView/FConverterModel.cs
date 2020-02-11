@@ -34,6 +34,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _converterServicesTypes.Add(typeof(Seccionesanaliticas), typeof(SeccionesanaliticasConverterService));
             _converterServicesTypes.Add(typeof(Carpetas), typeof(CarpetasConverterService));
             _converterServicesTypes.Add(typeof(Ficheros), typeof(FicherosConverterService));
+            _converterServicesTypes.Add(typeof(Bancos), typeof(BancosConverterService));
             _converterServicesTypes.Add(typeof(BancosMandatos), typeof(BancosMandatosConverterService));
             _converterServicesTypes.Add(typeof(Roles), typeof(RolesConverterService));
             _converterServicesTypes.Add(typeof(Tablasvarias), typeof(TablasVariasConverterService<TablasVariasPaisesModel, TablasvariasLin>));
@@ -117,6 +118,8 @@ namespace Marfil.Dom.Persistencia.ServicesView
             //contabilidad
             _converterServicesTypes.Add(typeof(Movs), typeof(MovsConverterService));
             _converterServicesTypes.Add(typeof(Maes), typeof(MaesConverterService));
+            _converterServicesTypes.Add(typeof(GuiasBalances), typeof(GuiasBalancesConvertService));
+            _converterServicesTypes.Add(typeof(GuiasBalancesLineas), typeof(GuiasBalancesLineasConvertService));
 
             _converterServicesTypes.Add(typeof(Vencimientos), typeof(VencimientosConverterService));
             _converterServicesTypes.Add(typeof(CircuitosTesoreriaCobros), typeof(CircuitosTesoreriaConverterCobrosConverterService));

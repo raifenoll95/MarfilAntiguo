@@ -196,5 +196,14 @@ namespace Marfil.App.WebMain.Controllers
             var data = JsonConvert.SerializeObject(pago, Formatting.Indented);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult obtenerUltimaSituacionCircuito(string circuito)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var servicioSituacionTesoreria = FService.Instance.GetService(typeof(SituacionesTesoreriaModel), ContextService) as SituacionesTesoreriaService;
+            var situacionModel = servicioSituacionTesoreria.getSituacion(circuito);
+            var data = JsonConvert.SerializeObject(situacionModel, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -117,6 +117,9 @@ namespace Marfil.Dom.Persistencia.Listados
         //public const string IvaRepercutido = "IVA Repercutido";
         //public const string PrevisionCobros = "Previsión cobros";
         //public const string PrevisionPagos = "Previsión pagos";
+        public const string ListadoGuiasBalances = "GuiasBalances";
+        public const string ListadoGuiasBalancesLineas = "GuiasBalancesLineas";
+        public const string ListadoAcomuladorPeriodos = "AcomuladorPeriodos";
 
         // CRM
         public const string ListadoCrm = "ListadoCrm";

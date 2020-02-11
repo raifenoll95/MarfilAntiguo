@@ -793,25 +793,36 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="traza" Type="varchar" MaxLength="25" />
-          <Property Name="tipo" Type="int" />
-          <Property Name="usuario" Type="nvarchar" MaxLength="20" />
+          <Property Name="tipovencimiento" Type="int" />
+          <Property Name="usuario" Type="varchar" MaxLength="30" />
           <Property Name="fkcuentas" Type="varchar" MaxLength="15" />
           <Property Name="fechacreacion" Type="datetime" />
           <Property Name="fechavencimiento" Type="datetime" />
           <Property Name="fechadescuento" Type="datetime" />
           <Property Name="fechapago" Type="datetime" />
+          <Property Name="fecharemesa" Type="datetime" />
           <Property Name="monedabase" Type="int" />
           <Property Name="monedagiro" Type="int" />
           <Property Name="importegiro" Type="float" />
           <Property Name="cambioaplicado" Type="float" />
-          <Property Name="fkcuentatesoreria" Type="varchar" MaxLength="15" />
-          <Property Name="mandato" Type="nvarchar" MaxLength="35" />
+          <Property Name="fkcuentastesoreria" Type="varchar" MaxLength="15" />
+          <Property Name="mandato" Type="varchar" MaxLength="50" />
           <Property Name="situacion" Type="varchar" MaxLength="1" />
           <Property Name="comentario" Type="ntext" />
-          <Property Name="codigoremesa" Type="varchar" MaxLength="15" />
+          <Property Name="codigoremesa" Type="varchar" MaxLength="40" />
           <Property Name="tiponumerofactura" Type="int" />
+          <Property Name="fkformaspago" Type="int" />
+          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
+          <Property Name="referencia" Type="varchar" MaxLength="30" />
+          <Property Name="identificadorsegmento" Type="varchar" MaxLength="12" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="letra" Type="varchar" MaxLength="30" />
+          <Property Name="banco" Type="varchar" MaxLength="40" />
+          <Property Name="fkseriescontablesremesa" Type="varchar" MaxLength="12" />
+          <Property Name="referenciaremesa" Type="varchar" MaxLength="30" />
+          <Property Name="identificadorsegmentoremesa" Type="varchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="CircuitosTesoreriaCobros">
           <Key>
@@ -849,6 +860,9 @@
           <Property Name="desccuentaabono2" Type="varchar" MaxLength="50" />
           <Property Name="desccuentaabonorel" Type="varchar" MaxLength="50" />
           <Property Name="tipocircuito" Type="int" />
+          <Property Name="codigodescripcionasiento" Type="varchar" MaxLength="3" />
+          <Property Name="documentocartera" Type="bit" />
+          <Property Name="actualizarcobrador" Type="bit" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -1310,7 +1324,15 @@
           <Property Name="registroivacerradohasta" Type="datetime" />
           <Property Name="criterioiva" Type="int" />
           <Property Name="fkejercicios" Type="int" />
-          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesAST" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesIVS" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesIVP" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesPRC" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesPRP" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesINM" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesCRC" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesCRP" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesREM" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Empresas">
           <Key>
@@ -1912,6 +1934,35 @@
           <Property Name="fktiposivasinrecargo" Type="varchar" MaxLength="3" />
           <Property Name="fktiposivaconrecargo" Type="varchar" MaxLength="3" />
           <Property Name="fktiposivaexentoiva" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="GuiasBalances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
+          <Property Name="textogrupo" Type="nvarchar" MaxLength="255" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="actpas" Type="nvarchar" MaxLength="255" />
+          <Property Name="detfor" Type="nvarchar" MaxLength="255" />
+          <Property Name="formula" Type="nvarchar" MaxLength="255" />
+          <Property Name="regdig" Type="nvarchar" MaxLength="255" />
+          <Property Name="descrip" Type="nvarchar" MaxLength="255" />
+          <Property Name="listado" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="GuiasBalancesLineas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InformeId" Type="int" />
+          <Property Name="GuiaId" Type="int" />
+          <Property Name="GuiasBalancesId" Type="int" />
+          <Property Name="orden" Type="nvarchar" MaxLength="255" />
+          <Property Name="cuenta" Type="nvarchar" MaxLength="255" />
+          <Property Name="signo" Type="nvarchar" MaxLength="255" />
+          <Property Name="signoea" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Guiascontables">
           <Key>
@@ -3073,6 +3124,19 @@
           <Property Name="subtotal" Type="float" />
           <Property Name="decimalesmonedas" Type="int" />
         </EntityType>
+        <EntityType Name="PrevisionesCartera">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codvencimiento" />
+            <PropertyRef Name="codcartera" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codvencimiento" Type="int" Nullable="false" />
+          <Property Name="codcartera" Type="int" Nullable="false" />
+          <Property Name="imputado" Type="float" />
+        </EntityType>
         <EntityType Name="Prospectos">
           <Key>
             <PropertyRef Name="empresa" />
@@ -3703,6 +3767,20 @@
           <Property Name="descuento" Type="float" />
           <Property Name="Unidades" Type="nvarchar" MaxLength="2" />
         </EntityType>
+        <EntityType Name="TipoGuia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tiposcuentas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4283,18 +4361,22 @@
           <Property Name="fechapago" Type="datetime" />
           <Property Name="monedabase" Type="int" />
           <Property Name="monedagiro" Type="int" />
-          <Property Name="importegiro" Type="float" />
-          <Property Name="cambioaplicado" Type="float" />
-          <Property Name="importefactura" Type="float" />
           <Property Name="monedafactura" Type="int" />
           <Property Name="fkcuentatesoreria" Type="varchar" MaxLength="15" />
           <Property Name="mandato" Type="nvarchar" MaxLength="35" />
-          <Property Name="importeasignado" Type="float" />
-          <Property Name="importepagado" Type="float" />
           <Property Name="estado" Type="int" />
           <Property Name="situacion" Type="varchar" MaxLength="1" />
           <Property Name="comentario" Type="ntext" />
           <Property Name="fkformaspago" Type="int" />
+          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
+          <Property Name="referencia" Type="nvarchar" MaxLength="30" />
+          <Property Name="identificadorsegmento" Type="nvarchar" MaxLength="12" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="importegiro" Type="float" />
+          <Property Name="cambioaplicado" Type="float" />
+          <Property Name="importefactura" Type="float" />
+          <Property Name="importeasignado" Type="float" />
+          <Property Name="importepagado" Type="float" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'marfilestable.dbo.Diariostock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -4574,6 +4656,34 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             <Dependent Role="PedidosCostesFabricacion">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkpedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrevisionesCarte__5CC287E9">
+          <End Role="Vencimientos" Type="Self.Vencimientos" Multiplicity="1" />
+          <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrevisionesCarte__5DB6AC22">
+          <End Role="CarteraVencimientos" Type="Self.CarteraVencimientos" Multiplicity="1" />
+          <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarteraVencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codcartera" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4986,6 +5096,66 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             <Dependent Role="GruposIvaLin">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="fkgruposiva" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalances_TipoGuia">
+          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalances_TipoInforme">
+          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
+          <End Role="GuiasBalances" Type="Self.GuiasBalances" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuiasBalances">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoGuia">
+          <End Role="TipoGuia" Type="Self.TipoGuia" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoInforme">
+          <End Role="TipoInforme" Type="Self.TipoInforme" Multiplicity="0..1" />
+          <End Role="GuiasBalancesLineas" Type="Self.GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="InformeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5494,6 +5664,8 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="GrupoMateriales" EntityType="Self.GrupoMateriales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GruposIva" EntityType="Self.GruposIva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GruposIvaLin" EntityType="Self.GruposIvaLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GuiasBalances" EntityType="Self.GuiasBalances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GuiasBalancesLineas" EntityType="Self.GuiasBalancesLineas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Guiascontables" EntityType="Self.Guiascontables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GuiascontablesLin" EntityType="Self.GuiascontablesLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImputacionCostes" EntityType="Self.ImputacionCostes" Schema="dbo" store:Type="Tables" />
@@ -5533,6 +5705,7 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="PresupuestosComprasTotales" EntityType="Self.PresupuestosComprasTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresupuestosLin" EntityType="Self.PresupuestosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresupuestosTotales" EntityType="Self.PresupuestosTotales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrevisionesCartera" EntityType="Self.PrevisionesCartera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prospectos" EntityType="Self.Prospectos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provincias" EntityType="Self.Provincias" Schema="dbo" store:Type="Tables" />
@@ -5559,6 +5732,8 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="Tarifas" EntityType="Self.Tarifas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tarifasbase" EntityType="Self.Tarifasbase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TarifasLin" EntityType="Self.TarifasLin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoGuia" EntityType="Self.TipoGuia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoInforme" EntityType="Self.TipoInforme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tiposcuentas" EntityType="Self.Tiposcuentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposcuentasLin" EntityType="Self.TiposcuentasLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TiposIva" EntityType="Self.TiposIva" Schema="dbo" store:Type="Tables" />
@@ -5727,6 +5902,14 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="PedidosCostesFabricacion" EntitySet="PedidosCostesFabricacion" />
           </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__5CC287E9" Association="Self.FK__PrevisionesCarte__5CC287E9">
+            <End Role="Vencimientos" EntitySet="Vencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__5DB6AC22" Association="Self.FK__PrevisionesCarte__5DB6AC22">
+            <End Role="CarteraVencimientos" EntitySet="CarteraVencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
           <AssociationSet Name="FK__SeguimientosCorr__65C1E23E" Association="Self.FK__SeguimientosCorr__65C1E23E">
             <End Role="Seguimientos" EntitySet="Seguimientos" />
             <End Role="SeguimientosCorreo" EntitySet="SeguimientosCorreo" />
@@ -5846,6 +6029,26 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <AssociationSet Name="FK_GruposIvaLin_GruposIva" Association="Self.FK_GruposIvaLin_GruposIva">
             <End Role="GruposIva" EntitySet="GruposIva" />
             <End Role="GruposIvaLin" EntitySet="GruposIvaLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoGuia" Association="Self.FK_GuiasBalances_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoInforme" Association="Self.FK_GuiasBalances_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="Self.FK_GuiasBalancesLineas_GuiasBalances">
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoGuia" Association="Self.FK_GuiasBalancesLineas_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoInforme" Association="Self.FK_GuiasBalancesLineas_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
           <AssociationSet Name="FK_GuiascontablesLin_Guiascontables" Association="Self.FK_GuiascontablesLin_Guiascontables">
             <End Role="Guiascontables" EntitySet="Guiascontables" />
@@ -6311,7 +6514,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="PedidosCostesFabricacion" EntitySet="PedidosCostesFabricacion" />
           </AssociationSet>
-          <EntitySet Name="Ejercicios" EntityType="MarfilModel.Ejercicios" />
           <EntitySet Name="Empresas" EntityType="MarfilModel.Empresas" />
           <EntitySet Name="MovsLin" EntityType="MarfilModel.MovsLin" />
           <EntitySet Name="Seccionesanaliticas" EntityType="MarfilModel.Seccionesanaliticas" />
@@ -6330,10 +6532,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="PeticionesAsincronas" EntityType="MarfilModel.PeticionesAsincronas" />
           <EntitySet Name="CostesVariablesPeriodo" EntityType="MarfilModel.CostesVariablesPeriodo" />
           <EntitySet Name="CostesVariablesPeriodoLin" EntityType="MarfilModel.CostesVariablesPeriodoLin" />
-          <AssociationSet Name="fk_costes_variables" Association="MarfilModel.fk_costes_variables">
-            <End Role="Ejercicios" EntitySet="Ejercicios" />
-            <End Role="CostesVariablesPeriodo" EntitySet="CostesVariablesPeriodo" />
-          </AssociationSet>
           <AssociationSet Name="fkcabecera" Association="MarfilModel.fkcabecera">
             <End Role="CostesVariablesPeriodo" EntitySet="CostesVariablesPeriodo" />
             <End Role="CostesVariablesPeriodoLin" EntitySet="CostesVariablesPeriodoLin" />
@@ -6403,9 +6601,47 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <EntitySet Name="Lotes" EntityType="MarfilModel.Lotes" />
           <FunctionImport Name="spLotes" ReturnType="Collection(MarfilModel.spLotes_Result)" />
           <EntitySet Name="Cartera" EntityType="MarfilModel.Cartera" />
-          <EntitySet Name="Vencimientos" EntityType="MarfilModel.Vencimientos" />
           <EntitySet Name="CircuitosTesoreriaCobros" EntityType="MarfilModel.CircuitosTesoreriaCobros" />
+          <EntitySet Name="Ejercicios" EntityType="MarfilModel.Ejercicios" />
+          <AssociationSet Name="fk_costes_variables" Association="MarfilModel.fk_costes_variables">
+            <End Role="Ejercicios" EntitySet="Ejercicios" />
+            <End Role="CostesVariablesPeriodo" EntitySet="CostesVariablesPeriodo" />
+          </AssociationSet>
           <EntitySet Name="CarteraVencimientos" EntityType="MarfilModel.CarteraVencimientos" />
+          <EntitySet Name="PrevisionesCartera" EntityType="MarfilModel.PrevisionesCartera" />
+          <EntitySet Name="Vencimientos" EntityType="MarfilModel.Vencimientos" />
+          <AssociationSet Name="FK__PrevisionesCarte__5DB6AC22" Association="MarfilModel.FK__PrevisionesCarte__5DB6AC22">
+            <End Role="CarteraVencimientos" EntitySet="CarteraVencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__5CC287E9" Association="MarfilModel.FK__PrevisionesCarte__5CC287E9">
+            <End Role="Vencimientos" EntitySet="Vencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <EntitySet Name="GuiasBalances" EntityType="MarfilModel.GuiasBalances" />
+          <EntitySet Name="GuiasBalancesLineas" EntityType="MarfilModel.GuiasBalancesLineas" />
+          <EntitySet Name="TipoGuia" EntityType="MarfilModel.TipoGuia" />
+          <EntitySet Name="TipoInforme" EntityType="MarfilModel.TipoInforme" />
+          <AssociationSet Name="FK_GuiasBalances_TipoGuia" Association="MarfilModel.FK_GuiasBalances_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalances_TipoInforme" Association="MarfilModel.FK_GuiasBalances_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_GuiasBalances" Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances">
+            <End Role="GuiasBalances" EntitySet="GuiasBalances" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoGuia" Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia">
+            <End Role="TipoGuia" EntitySet="TipoGuia" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuiasBalancesLineas_TipoInforme" Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme">
+            <End Role="TipoInforme" EntitySet="TipoInforme" />
+            <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -10703,25 +10939,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Ejercicios">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="descripcioncorta" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="desde" Type="DateTime" Precision="3" />
-          <Property Name="hasta" Type="DateTime" Precision="3" />
-          <Property Name="estado" Type="Int32" />
-          <Property Name="contabilidadcerradahasta" Type="DateTime" Precision="3" />
-          <Property Name="registroivacerradohasta" Type="DateTime" Precision="3" />
-          <Property Name="criterioiva" Type="Int32" />
-          <Property Name="fkejercicios" Type="Int32" />
-          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CostesVariablesPeriodo" Relationship="MarfilModel.fk_costes_variables" FromRole="Ejercicios" ToRole="CostesVariablesPeriodo" />
-        </EntityType>
         <EntityType Name="Empresas">
           <Key>
             <PropertyRef Name="id" />
@@ -10985,8 +11202,8 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           </Key>
           <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="fkejercicio" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ejercicios" Relationship="MarfilModel.fk_costes_variables" FromRole="CostesVariablesPeriodo" ToRole="Ejercicios" />
           <NavigationProperty Name="CostesVariablesPeriodoLin" Relationship="MarfilModel.fkcabecera" FromRole="CostesVariablesPeriodo" ToRole="CostesVariablesPeriodoLin" />
+          <NavigationProperty Name="Ejercicios" Relationship="MarfilModel.fk_costes_variables" FromRole="CostesVariablesPeriodo" ToRole="Ejercicios" />
         </EntityType>
         <EntityType Name="CostesVariablesPeriodoLin">
           <Key>
@@ -11002,20 +11219,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="precio" Type="Double" Nullable="false" />
           <NavigationProperty Name="CostesVariablesPeriodo" Relationship="MarfilModel.fkcabecera" FromRole="CostesVariablesPeriodoLin" ToRole="CostesVariablesPeriodo" />
         </EntityType>
-        <Association Name="fk_costes_variables">
-          <End Type="MarfilModel.Ejercicios" Role="Ejercicios" Multiplicity="1" />
-          <End Type="MarfilModel.CostesVariablesPeriodo" Role="CostesVariablesPeriodo" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ejercicios">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CostesVariablesPeriodo">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkejercicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fkcabecera">
           <End Type="MarfilModel.CostesVariablesPeriodo" Role="CostesVariablesPeriodo" Multiplicity="1" />
           <End Type="MarfilModel.CostesVariablesPeriodoLin" Role="CostesVariablesPeriodoLin" Multiplicity="*" />
@@ -11796,39 +11999,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
           <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Vencimientos">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="tipo" Type="Int32" />
-          <Property Name="origen" Type="Int32" />
-          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="fechacreacion" Type="DateTime" Precision="3" />
-          <Property Name="fechafactura" Type="DateTime" Precision="3" />
-          <Property Name="fecharegistrofactura" Type="DateTime" Precision="3" />
-          <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
-          <Property Name="fechadescuento" Type="DateTime" Precision="3" />
-          <Property Name="fechapago" Type="DateTime" Precision="3" />
-          <Property Name="monedabase" Type="Int32" />
-          <Property Name="monedagiro" Type="Int32" />
-          <Property Name="importegiro" Type="Double" />
-          <Property Name="cambioaplicado" Type="Double" />
-          <Property Name="importefactura" Type="Double" />
-          <Property Name="monedafactura" Type="Int32" />
-          <Property Name="fkcuentatesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="mandato" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
-          <Property Name="importeasignado" Type="Double" />
-          <Property Name="importepagado" Type="Double" />
-          <Property Name="estado" Type="Int32" />
-          <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="fkformaspago" Type="Int32" />
-        </EntityType>
         <EntityType Name="CircuitosTesoreriaCobros">
           <Key>
             <PropertyRef Name="empresa" />
@@ -11865,8 +12035,105 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="desccuentaabono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="desccuentaabonorel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="tipocircuito" Type="Int32" />
+          <Property Name="codigodescripcionasiento" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="documentocartera" Type="Boolean" />
+          <Property Name="actualizarcobrador" Type="Boolean" />
         </EntityType>
+        <EntityType Name="Ejercicios">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="descripcioncorta" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="desde" Type="DateTime" Precision="3" />
+          <Property Name="hasta" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="contabilidadcerradahasta" Type="DateTime" Precision="3" />
+          <Property Name="registroivacerradohasta" Type="DateTime" Precision="3" />
+          <Property Name="criterioiva" Type="Int32" />
+          <Property Name="fkejercicios" Type="Int32" />
+          <Property Name="fkseriescontablesAST" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesIVS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesIVP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesPRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesPRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesINM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CostesVariablesPeriodo" Relationship="MarfilModel.fk_costes_variables" FromRole="Ejercicios" ToRole="CostesVariablesPeriodo" />
+          <Property Name="fkseriescontablesCRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesCRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesREM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="fk_costes_variables">
+          <End Type="MarfilModel.Ejercicios" Role="Ejercicios" Multiplicity="1" />
+          <End Type="MarfilModel.CostesVariablesPeriodo" Role="CostesVariablesPeriodo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ejercicios">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CostesVariablesPeriodo">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkejercicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="CarteraVencimientos">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="tipovencimiento" Type="Int32" />
+          <Property Name="usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="fechacreacion" Type="DateTime" Precision="3" />
+          <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
+          <Property Name="fechadescuento" Type="DateTime" Precision="3" />
+          <Property Name="fechapago" Type="DateTime" Precision="3" />
+          <Property Name="fecharemesa" Type="DateTime" Precision="3" />
+          <Property Name="monedabase" Type="Int32" />
+          <Property Name="monedagiro" Type="Int32" />
+          <Property Name="importegiro" Type="Double" />
+          <Property Name="cambioaplicado" Type="Double" />
+          <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="mandato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="codigoremesa" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="tiponumerofactura" Type="Int32" />
+          <Property Name="fkformaspago" Type="Int32" />
+          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="letra" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="banco" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="referenciaremesa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="identificadorsegmentoremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PrevisionesCartera" Relationship="MarfilModel.FK__PrevisionesCarte__5DB6AC22" FromRole="CarteraVencimientos" ToRole="PrevisionesCartera" />
+        </EntityType>
+        <EntityType Name="PrevisionesCartera">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codvencimiento" />
+            <PropertyRef Name="codcartera" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codvencimiento" Type="Int32" Nullable="false" />
+          <Property Name="codcartera" Type="Int32" Nullable="false" />
+          <Property Name="imputado" Type="Double" />
+          <NavigationProperty Name="CarteraVencimientos" Relationship="MarfilModel.FK__PrevisionesCarte__5DB6AC22" FromRole="PrevisionesCartera" ToRole="CarteraVencimientos" />
+          <NavigationProperty Name="Vencimientos" Relationship="MarfilModel.FK__PrevisionesCarte__5CC287E9" FromRole="PrevisionesCartera" ToRole="Vencimientos" />
+        </EntityType>
+        <EntityType Name="Vencimientos">
           <Key>
             <PropertyRef Name="empresa" />
             <PropertyRef Name="id" />
@@ -11875,23 +12142,176 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="tipo" Type="Int32" />
+          <Property Name="origen" Type="Int32" />
           <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="fechacreacion" Type="DateTime" Precision="3" />
+          <Property Name="fechafactura" Type="DateTime" Precision="3" />
+          <Property Name="fecharegistrofactura" Type="DateTime" Precision="3" />
           <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
           <Property Name="fechadescuento" Type="DateTime" Precision="3" />
           <Property Name="fechapago" Type="DateTime" Precision="3" />
           <Property Name="monedabase" Type="Int32" />
           <Property Name="monedagiro" Type="Int32" />
-          <Property Name="importegiro" Type="Double" />
-          <Property Name="cambioaplicado" Type="Double" />
+          <Property Name="monedafactura" Type="Int32" />
           <Property Name="fkcuentatesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="mandato" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Int32" />
           <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="codigoremesa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="tiponumerofactura" Type="Int32" />
+          <Property Name="fkformaspago" Type="Int32" />
+          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="referencia" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="identificadorsegmento" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="importegiro" Type="Double" />
+          <Property Name="cambioaplicado" Type="Double" />
+          <Property Name="importefactura" Type="Double" />
+          <Property Name="importeasignado" Type="Double" />
+          <Property Name="importepagado" Type="Double" />
+          <NavigationProperty Name="PrevisionesCartera" Relationship="MarfilModel.FK__PrevisionesCarte__5CC287E9" FromRole="Vencimientos" ToRole="PrevisionesCartera" />
         </EntityType>
+        <Association Name="FK__PrevisionesCarte__5DB6AC22">
+          <End Type="MarfilModel.CarteraVencimientos" Role="CarteraVencimientos" Multiplicity="1" />
+          <End Type="MarfilModel.PrevisionesCartera" Role="PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarteraVencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codcartera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrevisionesCarte__5CC287E9">
+          <End Type="MarfilModel.Vencimientos" Role="Vencimientos" Multiplicity="1" />
+          <End Type="MarfilModel.PrevisionesCartera" Role="PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GuiasBalances">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
+          <Property Name="textogrupo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="actpas" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="detfor" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="formula" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="regdig" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="descrip" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="listado" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TipoGuia" Relationship="MarfilModel.FK_GuiasBalances_TipoGuia" FromRole="GuiasBalances" ToRole="TipoGuia" />
+          <NavigationProperty Name="TipoInforme" Relationship="MarfilModel.FK_GuiasBalances_TipoInforme" FromRole="GuiasBalances" ToRole="TipoInforme" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalances" ToRole="GuiasBalancesLineas" />
+        </EntityType>
+        <EntityType Name="GuiasBalancesLineas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InformeId" Type="Int32" />
+          <Property Name="GuiaId" Type="Int32" />
+          <Property Name="GuiasBalancesId" Type="Int32" />
+          <Property Name="orden" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cuenta" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="signoea" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" FromRole="GuiasBalancesLineas" ToRole="GuiasBalances" />
+          <NavigationProperty Name="TipoGuia" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" FromRole="GuiasBalancesLineas" ToRole="TipoGuia" />
+          <NavigationProperty Name="TipoInforme" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" FromRole="GuiasBalancesLineas" ToRole="TipoInforme" />
+        </EntityType>
+        <EntityType Name="TipoGuia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalances_TipoGuia" FromRole="TipoGuia" ToRole="GuiasBalances" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" FromRole="TipoGuia" ToRole="GuiasBalancesLineas" />
+        </EntityType>
+        <EntityType Name="TipoInforme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GuiasBalances" Relationship="MarfilModel.FK_GuiasBalances_TipoInforme" FromRole="TipoInforme" ToRole="GuiasBalances" />
+          <NavigationProperty Name="GuiasBalancesLineas" Relationship="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" FromRole="TipoInforme" ToRole="GuiasBalancesLineas" />
+        </EntityType>
+        <Association Name="FK_GuiasBalances_TipoGuia">
+          <End Type="MarfilModel.TipoGuia" Role="TipoGuia" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalances_TipoInforme">
+          <End Type="MarfilModel.TipoInforme" Role="TipoInforme" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalances">
+              <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_GuiasBalances">
+          <End Type="MarfilModel.GuiasBalances" Role="GuiasBalances" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuiasBalances">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiasBalancesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoGuia">
+          <End Type="MarfilModel.TipoGuia" Role="TipoGuia" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoGuia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="GuiaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuiasBalancesLineas_TipoInforme">
+          <End Type="MarfilModel.TipoInforme" Role="TipoInforme" Multiplicity="0..1" />
+          <End Type="MarfilModel.GuiasBalancesLineas" Role="GuiasBalancesLineas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoInforme">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GuiasBalancesLineas">
+              <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -15356,24 +15776,6 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ejercicios">
-            <EntityTypeMapping TypeName="MarfilModel.Ejercicios">
-              <MappingFragment StoreEntitySet="Ejercicios">
-                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
-                <ScalarProperty Name="fkejercicios" ColumnName="fkejercicios" />
-                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
-                <ScalarProperty Name="registroivacerradohasta" ColumnName="registroivacerradohasta" />
-                <ScalarProperty Name="contabilidadcerradahasta" ColumnName="contabilidadcerradahasta" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="hasta" ColumnName="hasta" />
-                <ScalarProperty Name="desde" ColumnName="desde" />
-                <ScalarProperty Name="descripcioncorta" ColumnName="descripcioncorta" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Empresas">
             <EntityTypeMapping TypeName="MarfilModel.Empresas">
               <MappingFragment StoreEntitySet="Empresas">
@@ -16187,42 +16589,12 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vencimientos">
-            <EntityTypeMapping TypeName="MarfilModel.Vencimientos">
-              <MappingFragment StoreEntitySet="Vencimientos">
-                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
-                <ScalarProperty Name="comentario" ColumnName="comentario" />
-                <ScalarProperty Name="situacion" ColumnName="situacion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="importepagado" ColumnName="importepagado" />
-                <ScalarProperty Name="importeasignado" ColumnName="importeasignado" />
-                <ScalarProperty Name="mandato" ColumnName="mandato" />
-                <ScalarProperty Name="fkcuentatesoreria" ColumnName="fkcuentatesoreria" />
-                <ScalarProperty Name="monedafactura" ColumnName="monedafactura" />
-                <ScalarProperty Name="importefactura" ColumnName="importefactura" />
-                <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
-                <ScalarProperty Name="importegiro" ColumnName="importegiro" />
-                <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
-                <ScalarProperty Name="monedabase" ColumnName="monedabase" />
-                <ScalarProperty Name="fechapago" ColumnName="fechapago" />
-                <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
-                <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
-                <ScalarProperty Name="fecharegistrofactura" ColumnName="fecharegistrofactura" />
-                <ScalarProperty Name="fechafactura" ColumnName="fechafactura" />
-                <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
-                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="origen" ColumnName="origen" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="traza" ColumnName="traza" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CircuitosTesoreriaCobros">
             <EntityTypeMapping TypeName="MarfilModel.CircuitosTesoreriaCobros">
               <MappingFragment StoreEntitySet="CircuitosTesoreriaCobros">
+                <ScalarProperty Name="actualizarcobrador" ColumnName="actualizarcobrador" />
+                <ScalarProperty Name="documentocartera" ColumnName="documentocartera" />
+                <ScalarProperty Name="codigodescripcionasiento" ColumnName="codigodescripcionasiento" />
                 <ScalarProperty Name="tipocircuito" ColumnName="tipocircuito" />
                 <ScalarProperty Name="desccuentaabonorel" ColumnName="desccuentaabonorel" />
                 <ScalarProperty Name="desccuentaabono2" ColumnName="desccuentaabono2" />
@@ -16257,29 +16629,161 @@ warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary k
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Ejercicios">
+            <EntityTypeMapping TypeName="MarfilModel.Ejercicios">
+              <MappingFragment StoreEntitySet="Ejercicios">
+                <ScalarProperty Name="fkseriescontablesREM" ColumnName="fkseriescontablesREM" />
+                <ScalarProperty Name="fkseriescontablesCRP" ColumnName="fkseriescontablesCRP" />
+                <ScalarProperty Name="fkseriescontablesCRC" ColumnName="fkseriescontablesCRC" />
+                <ScalarProperty Name="fkseriescontablesINM" ColumnName="fkseriescontablesINM" />
+                <ScalarProperty Name="fkseriescontablesPRP" ColumnName="fkseriescontablesPRP" />
+                <ScalarProperty Name="fkseriescontablesPRC" ColumnName="fkseriescontablesPRC" />
+                <ScalarProperty Name="fkseriescontablesIVP" ColumnName="fkseriescontablesIVP" />
+                <ScalarProperty Name="fkseriescontablesIVS" ColumnName="fkseriescontablesIVS" />
+                <ScalarProperty Name="fkseriescontablesAST" ColumnName="fkseriescontablesAST" />
+                <ScalarProperty Name="fkejercicios" ColumnName="fkejercicios" />
+                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
+                <ScalarProperty Name="registroivacerradohasta" ColumnName="registroivacerradohasta" />
+                <ScalarProperty Name="contabilidadcerradahasta" ColumnName="contabilidadcerradahasta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="hasta" ColumnName="hasta" />
+                <ScalarProperty Name="desde" ColumnName="desde" />
+                <ScalarProperty Name="descripcioncorta" ColumnName="descripcioncorta" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CarteraVencimientos">
             <EntityTypeMapping TypeName="MarfilModel.CarteraVencimientos">
               <MappingFragment StoreEntitySet="CarteraVencimientos">
+                <ScalarProperty Name="identificadorsegmentoremesa" ColumnName="identificadorsegmentoremesa" />
+                <ScalarProperty Name="referenciaremesa" ColumnName="referenciaremesa" />
+                <ScalarProperty Name="fkseriescontablesremesa" ColumnName="fkseriescontablesremesa" />
+                <ScalarProperty Name="banco" ColumnName="banco" />
+                <ScalarProperty Name="letra" ColumnName="letra" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
+                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
                 <ScalarProperty Name="tiponumerofactura" ColumnName="tiponumerofactura" />
                 <ScalarProperty Name="codigoremesa" ColumnName="codigoremesa" />
                 <ScalarProperty Name="comentario" ColumnName="comentario" />
                 <ScalarProperty Name="situacion" ColumnName="situacion" />
                 <ScalarProperty Name="mandato" ColumnName="mandato" />
-                <ScalarProperty Name="fkcuentatesoreria" ColumnName="fkcuentatesoreria" />
+                <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
                 <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
                 <ScalarProperty Name="importegiro" ColumnName="importegiro" />
                 <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
                 <ScalarProperty Name="monedabase" ColumnName="monedabase" />
+                <ScalarProperty Name="fecharemesa" ColumnName="fecharemesa" />
                 <ScalarProperty Name="fechapago" ColumnName="fechapago" />
                 <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
                 <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
                 <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
                 <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="tipovencimiento" ColumnName="tipovencimiento" />
+                <ScalarProperty Name="traza" ColumnName="traza" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrevisionesCartera">
+            <EntityTypeMapping TypeName="MarfilModel.PrevisionesCartera">
+              <MappingFragment StoreEntitySet="PrevisionesCartera">
+                <ScalarProperty Name="imputado" ColumnName="imputado" />
+                <ScalarProperty Name="codcartera" ColumnName="codcartera" />
+                <ScalarProperty Name="codvencimiento" ColumnName="codvencimiento" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vencimientos">
+            <EntityTypeMapping TypeName="MarfilModel.Vencimientos">
+              <MappingFragment StoreEntitySet="Vencimientos">
+                <ScalarProperty Name="importepagado" ColumnName="importepagado" />
+                <ScalarProperty Name="importeasignado" ColumnName="importeasignado" />
+                <ScalarProperty Name="importefactura" ColumnName="importefactura" />
+                <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
+                <ScalarProperty Name="importegiro" ColumnName="importegiro" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
+                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="situacion" ColumnName="situacion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="mandato" ColumnName="mandato" />
+                <ScalarProperty Name="fkcuentatesoreria" ColumnName="fkcuentatesoreria" />
+                <ScalarProperty Name="monedafactura" ColumnName="monedafactura" />
+                <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
+                <ScalarProperty Name="monedabase" ColumnName="monedabase" />
+                <ScalarProperty Name="fechapago" ColumnName="fechapago" />
+                <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
+                <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
+                <ScalarProperty Name="fecharegistrofactura" ColumnName="fecharegistrofactura" />
+                <ScalarProperty Name="fechafactura" ColumnName="fechafactura" />
+                <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
+                <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="origen" ColumnName="origen" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="traza" ColumnName="traza" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuiasBalances">
+            <EntityTypeMapping TypeName="MarfilModel.GuiasBalances">
+              <MappingFragment StoreEntitySet="GuiasBalances">
+                <ScalarProperty Name="listado" ColumnName="listado" />
+                <ScalarProperty Name="descrip" ColumnName="descrip" />
+                <ScalarProperty Name="regdig" ColumnName="regdig" />
+                <ScalarProperty Name="formula" ColumnName="formula" />
+                <ScalarProperty Name="detfor" ColumnName="detfor" />
+                <ScalarProperty Name="actpas" ColumnName="actpas" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="textogrupo" ColumnName="textogrupo" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuiasBalancesLineas">
+            <EntityTypeMapping TypeName="MarfilModel.GuiasBalancesLineas">
+              <MappingFragment StoreEntitySet="GuiasBalancesLineas">
+                <ScalarProperty Name="signoea" ColumnName="signoea" />
+                <ScalarProperty Name="signo" ColumnName="signo" />
+                <ScalarProperty Name="cuenta" ColumnName="cuenta" />
+                <ScalarProperty Name="orden" ColumnName="orden" />
+                <ScalarProperty Name="GuiasBalancesId" ColumnName="GuiasBalancesId" />
+                <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
+                <ScalarProperty Name="InformeId" ColumnName="InformeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoGuia">
+            <EntityTypeMapping TypeName="MarfilModel.TipoGuia">
+              <MappingFragment StoreEntitySet="TipoGuia">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoInforme">
+            <EntityTypeMapping TypeName="MarfilModel.TipoInforme">
+              <MappingFragment StoreEntitySet="TipoInforme">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

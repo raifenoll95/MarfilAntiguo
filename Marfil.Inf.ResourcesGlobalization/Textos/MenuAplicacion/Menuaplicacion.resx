@@ -561,4 +561,13 @@
   <data name="carteravencimientos" xml:space="preserve">
     <value>Cartera</value>
   </data>
+  <data name="asignacioncartera" xml:space="preserve">
+    <value>Asignación de cartera</value>
+  </data>
+  <data name="movimientostesoreria" xml:space="preserve">
+    <value>Movimientos de tesorería</value>
+  </data>
+  <data name="configurardocumentoscartera" xml:space="preserve">
+    <value>Conf. de documentos: Cartera</value>
+  </data>
 </root>

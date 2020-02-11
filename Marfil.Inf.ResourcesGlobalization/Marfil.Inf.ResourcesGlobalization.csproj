@@ -273,6 +273,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Gruposusuarios.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalances.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalances.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\GuiasBalancesLineas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GuiasBalancesLineas.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Guiascontables.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -297,6 +307,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Kit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Textos\Entidades\ListadoAcomuladoPeriodos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListadoAcomuladoPeriodos.resx</DependentUpon>
     </Compile>
     <Compile Include="Textos\Entidades\ListadoComisiones.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -830,6 +845,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Gruposusuarios.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalances.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalances.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\GuiasBalancesLineas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiasBalancesLineas.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Guiascontables.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\Guiascontables.fr.resx" />
     <EmbeddedResource Include="Textos\Entidades\Guiascontables.resx">
@@ -857,6 +880,10 @@
     <EmbeddedResource Include="Textos\Entidades\Kit.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Kit.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\ListadoAcomuladoPeriodos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListadoAcomuladoPeriodos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.en.resx" />
     <EmbeddedResource Include="Textos\Entidades\ListadoComisiones.fr.resx" />

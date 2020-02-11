@@ -5,6 +5,8 @@
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
 @using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion;
+@using Marfil.Dom.Persistencia.Model.Configuracion
 @using Resources
 
 @*Rai*@
@@ -16,6 +18,7 @@
     var isNuevo = !isreadonly && !iseditable;
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvsituaciones = FCampoverificacion.Instance.GetModel<SituacionesTesoreriaModel>(WebHelper.ContextService);
+    var cvserie = FCampoverificacion.Instance.GetModel<SeriesContablesModel>(WebHelper.ContextService);
 }
 
 <script src="@Url.Content("~/Scripts/jquery.redirect.js")"></script>
@@ -43,6 +46,41 @@
     </div>
 </div>
 
+@if (isNuevo)
+{
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Fkseriescontables, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @{
+                cvserie.Name = "Fkseriescontables";
+                cvserie.Url = Url.Action("SeriesContablesApi", "Api");
+                cvserie.Valor = Model.Fkseriescontables;
+                cvserie.Titulo = "Series contables";
+                cvserie.Params = "{\"tipodocumento\":\"Y\"}";
+                cvserie.Obligatorio = true;
+                cvserie.SoloLectura = true;
+            }
+
+            @Html.Partial("CampoverificacionUI", cvserie)
+        </div>
+        <div class="col-md-10 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Fkseriescontables, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+                }
+                else
+                {
+                    @Html.HiddenFor(f => Model.Fkseriescontables)
+                    <div class="form-group">
+                        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                }
+
+
 @*Origen*@
 <div class="form-group">
     @Html.LabelFor(f => Model.Origen, new { @class = "control-label col-md-2" })
@@ -64,7 +102,7 @@
     @if (Model.urlDocumento != null && (isreadonly || iseditable))
     {
         <div class="col-md-2">
-            <a class="btn-xs btn btn-info" align="right" href="@Model.urlDocumento" target="_blank">
+            <a class="btn-xs btn btn-info" align="right" href="@Model.urlDocumentoGeneral" target="_blank">
                 <i class="fa fa-eye">
                     Ver documento
                 </i>

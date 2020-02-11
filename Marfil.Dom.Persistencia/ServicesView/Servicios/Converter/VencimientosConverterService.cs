@@ -32,6 +32,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var result = _db.Set<Persistencia.Vencimientos>().Create();
             result.id = viewmodel.Id.Value;
             result.empresa = viewmodel.Empresa;
+            result.fkseriescontables = viewmodel.Fkseriescontables;
+            result.referencia = viewmodel.Referencia;
+            result.identificadorsegmento = viewmodel.Identificadorsegmento;
+            result.fecha = viewmodel.Fecha;
             result.traza = viewmodel.Traza;          
             result.tipo = (int)viewmodel.Tipo;
             result.origen = (int)viewmodel.Origen;
@@ -46,8 +50,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.monedabase = viewmodel.Monedabase;
             result.monedagiro = viewmodel.Monedagiro;
             result.importegiro = viewmodel.Importegiro;
-            result.importefactura = viewmodel.Importefactura;
-            result.cambioaplicado = viewmodel.Cambioaplicado;
+            //result.importefactura = viewmodel.Importefactura;
+            //result.cambioaplicado = viewmodel.Cambioaplicado;
             result.monedafactura = viewmodel.Monedafactura;
             result.fkformaspago = viewmodel.Fkformaspago;
             result.fkcuentatesoreria = viewmodel.Fkcuentatesoreria;
@@ -65,6 +69,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var viewmodel = obj as VencimientosModel;
             var result = _db.Vencimientos.Where(f => f.id == viewmodel.Id && f.empresa == Empresa).Single();
             result.empresa = viewmodel.Empresa;
+            result.fkseriescontables = viewmodel.Fkseriescontables;
+            result.referencia = viewmodel.Referencia;
+            result.identificadorsegmento = viewmodel.Identificadorsegmento;
+            result.fecha = viewmodel.Fecha;
             result.traza = viewmodel.Traza;
             result.tipo = (int)viewmodel.Tipo;
             result.origen = (int)viewmodel.Origen;
@@ -79,8 +87,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.monedabase = viewmodel.Monedabase;
             result.monedagiro = viewmodel.Monedagiro;
             result.importegiro = viewmodel.Importegiro;
-            result.importefactura = viewmodel.Importefactura;
-            result.cambioaplicado = viewmodel.Cambioaplicado;
+            //result.importefactura = viewmodel.Importefactura;
+            //result.cambioaplicado = viewmodel.Cambioaplicado;
             result.monedafactura = viewmodel.Monedafactura;
             result.fkcuentatesoreria = viewmodel.Fkcuentatesoreria;
             result.fkformaspago = viewmodel.Fkformaspago;
@@ -100,6 +108,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Empresa = viewmodel.empresa,
                 Id = viewmodel.id,
                 Traza = viewmodel.traza,
+                Fkseriescontables = viewmodel.fkseriescontables,
+                Referencia = viewmodel.referencia,
+                Identificadorsegmento = viewmodel.identificadorsegmento,
+                Fecha = viewmodel.fecha,
                 Tipo = (TipoVencimiento)viewmodel.tipo,
                 Origen = (TipoOrigen)viewmodel.origen,
                 Usuario = viewmodel.usuario,
@@ -113,8 +125,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Monedabase = viewmodel.monedabase.Value,
                 Monedagiro = viewmodel.monedagiro.Value,
                 Importegiro = viewmodel.importegiro.Value,
-                Importefactura = viewmodel.importefactura.Value,
-                Cambioaplicado = viewmodel.cambioaplicado.Value,
+                //Importefactura = viewmodel.importefactura.Value,
+                //Cambioaplicado = viewmodel.cambioaplicado.Value,
                 Monedafactura = viewmodel.monedafactura.Value,
                 Fkcuentatesoreria = viewmodel.fkcuentatesoreria,
                 Fkformaspago = viewmodel.fkformaspago,
