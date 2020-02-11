@@ -3427,6 +3427,32 @@
           <Property Name="FkUsuarios" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FkRoles" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="SaldosAcomuladosPeriodos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Empresa" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Ejercicio" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Settings" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EnProceso" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaHora" Type="smalldatetime" Nullable="false" />
+          <Property Name="Recalculo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaldosAcumuladosPeriodosLin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalAcomPerId" Type="int" Nullable="false" />
+          <Property Name="Cuenta" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioActual" Type="money" Nullable="false" />
+          <Property Name="ImporteHaberEjercicioActual" Type="money" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioAnterior" Type="money" Nullable="false" />
+          <Property Name="ImporteHaberEjercicioAnterior" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="Seccionesanaliticas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -5648,6 +5674,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="ReservasstockTotales" EntityType="Self.ReservasstockTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolesUsuarios" EntityType="Self.RolesUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="Self.SaldosAcomuladosPeriodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaldosAcumuladosPeriodosLin" EntityType="Self.SaldosAcumuladosPeriodosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccionesanaliticas" EntityType="Self.Seccionesanaliticas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seguimientos" EntityType="Self.Seguimientos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SeguimientosCorreo" EntityType="Self.SeguimientosCorreo" Schema="dbo" store:Type="Tables" />
@@ -6556,6 +6584,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="TipoInforme" EntitySet="TipoInforme" />
             <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
           </AssociationSet>
+          <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="MarfilModel.SaldosAcomuladosPeriodos" />
+          <EntitySet Name="SaldosAcumuladosPeriodosLin" EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" />
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -12155,6 +12185,32 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SaldosAcomuladosPeriodos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Ejercicio" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Settings" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EnProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Recalculo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SaldosAcumuladosPeriodosLin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalAcomPerId" Type="Int32" Nullable="false" />
+          <Property Name="Cuenta" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioActual" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteHaberEjercicioActual" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteDebeEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteHaberEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16554,6 +16610,34 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="GuiasBalancesId" ColumnName="GuiasBalancesId" />
                 <ScalarProperty Name="GuiaId" ColumnName="GuiaId" />
                 <ScalarProperty Name="InformeId" ColumnName="InformeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaldosAcomuladosPeriodos">
+            <EntityTypeMapping TypeName="MarfilModel.SaldosAcomuladosPeriodos">
+              <MappingFragment StoreEntitySet="SaldosAcomuladosPeriodos">
+                <ScalarProperty Name="Recalculo" ColumnName="Recalculo" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
+                <ScalarProperty Name="Settings" ColumnName="Settings" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Ejercicio" ColumnName="Ejercicio" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaldosAcumuladosPeriodosLin">
+            <EntityTypeMapping TypeName="MarfilModel.SaldosAcumuladosPeriodosLin">
+              <MappingFragment StoreEntitySet="SaldosAcumuladosPeriodosLin">
+                <ScalarProperty Name="ImporteHaberEjercicioAnterior" ColumnName="ImporteHaberEjercicioAnterior" />
+                <ScalarProperty Name="ImporteDebeEjercicioAnterior" ColumnName="ImporteDebeEjercicioAnterior" />
+                <ScalarProperty Name="ImporteHaberEjercicioActual" ColumnName="ImporteHaberEjercicioActual" />
+                <ScalarProperty Name="ImporteDebeEjercicioActual" ColumnName="ImporteDebeEjercicioActual" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
+                <ScalarProperty Name="SalAcomPerId" ColumnName="SalAcomPerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

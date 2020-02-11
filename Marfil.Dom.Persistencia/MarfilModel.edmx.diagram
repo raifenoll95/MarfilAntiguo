@@ -241,6 +241,8 @@
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_GuiasBalances" />
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoGuia" />
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" />
+        <EntityTypeShape EntityType="MarfilModel.SaldosAcomuladosPeriodos" Width="1.5" PointX="32.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" Width="1.5" PointX="14.375" PointY="33.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

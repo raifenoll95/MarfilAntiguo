@@ -529,6 +529,7 @@
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
+    <Compile Include="Model\Contabilidad\SaldosAcomuladosPeriodosModel.cs" />
     <Compile Include="Model\Contabilidad\SelectSumasYSaldos.cs" />
     <Compile Include="Model\CRM\CampañasModel.cs" />
     <Compile Include="Model\CRM\CostesVariablesPeriodoModel.cs" />
@@ -800,6 +801,12 @@
     <Compile Include="Roles.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SaldosAcomuladosPeriodos.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SaldosAcumuladosPeriodosLin.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Seccionesanaliticas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
@@ -834,6 +841,7 @@
     <Compile Include="ServicesView\Servicios\Contabilidad\IMaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MovsService.cs" />
+    <Compile Include="ServicesView\Servicios\Contabilidad\SaldosAcomuladosPeriodosService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\TipoAsientoContable.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CircuitosTesoreriaCobrosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
