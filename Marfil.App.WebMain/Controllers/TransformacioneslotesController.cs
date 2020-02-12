@@ -1,45 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using DevExpress.Web.Mvc;
 using Marfil.App.WebMain.Misc;
 using Marfil.Dom.ControlsUI.Toolbar;
-using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Helpers;
-using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras;
 using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes;
 
-using Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes;
-using Marfil.Dom.Persistencia.Model.Documentos.Facturas;
-using Marfil.Dom.Persistencia.Model.Documentos.Pedidos;
-using Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras;
-
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
-using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
-using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.StateMachine;
 using Marfil.Inf.Genericos.Helper;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Resources;
-using Articulos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Articulos;
 using RTransformacioneslotes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Transformacioneslotes;
-using RTransformaciones = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Transformaciones;
-using Marfil.Dom.Persistencia.Model.Stock;
-using Marfil.Dom.Persistencia.ServicesView.Servicios.Stock;
 
 namespace Marfil.App.WebMain.Controllers
 {

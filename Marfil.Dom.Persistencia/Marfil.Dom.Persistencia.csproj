@@ -23,7 +23,7 @@
     <AssemblyVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
-    <AssemblyVersion>2020.1.479.0</AssemblyVersion>
+    <AssemblyVersion>2020.1.480.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
