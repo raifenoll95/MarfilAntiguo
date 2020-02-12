@@ -5447,6 +5447,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+          <End Role="SaldosAcomuladosPeriodos" Type="Self.SaldosAcomuladosPeriodos" Multiplicity="1" />
+          <End Role="SaldosAcumuladosPeriodosLin" Type="Self.SaldosAcumuladosPeriodosLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaldosAcomuladosPeriodos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SaldosAcumuladosPeriodosLin">
+              <PropertyRef Name="SalAcomPerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TablasvariasLin_Tablasvarias">
           <End Role="Tablasvarias" Type="Self.Tablasvarias" Multiplicity="1" />
           <End Role="TablasvariasLin" Type="Self.TablasvariasLin" Multiplicity="*" />
@@ -6135,6 +6147,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="RolesUsuarios" EntitySet="RolesUsuarios" />
           </AssociationSet>
+          <AssociationSet Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" Association="Self.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+            <End Role="SaldosAcomuladosPeriodos" EntitySet="SaldosAcomuladosPeriodos" />
+            <End Role="SaldosAcumuladosPeriodosLin" EntitySet="SaldosAcumuladosPeriodosLin" />
+          </AssociationSet>
           <AssociationSet Name="FK_TablasvariasLin_Tablasvarias" Association="Self.FK_TablasvariasLin_Tablasvarias">
             <End Role="Tablasvarias" EntitySet="Tablasvarias" />
             <End Role="TablasvariasLin" EntitySet="TablasvariasLin" />
@@ -6644,6 +6660,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK__PrevisionesCarte__7869D707" Association="MarfilModel.FK__PrevisionesCarte__7869D707">
             <End Role="Vencimientos" EntitySet="Vencimientos" />
             <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" Association="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+            <End Role="SaldosAcomuladosPeriodos" EntitySet="SaldosAcomuladosPeriodos" />
+            <End Role="SaldosAcumuladosPeriodosLin" EntitySet="SaldosAcumuladosPeriodosLin" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
@@ -12258,6 +12278,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="EnProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Recalculo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SaldosAcumuladosPeriodosLin" Relationship="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" FromRole="SaldosAcomuladosPeriodos" ToRole="SaldosAcumuladosPeriodosLin" />
         </EntityType>
         <EntityType Name="SaldosAcumuladosPeriodosLin">
           <Key>
@@ -12271,6 +12292,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="ImporteHaberEjercicioActual" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ImporteDebeEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ImporteHaberEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="SaldosAcomuladosPeriodos" Relationship="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" FromRole="SaldosAcumuladosPeriodosLin" ToRole="SaldosAcomuladosPeriodos" />
         </EntityType>
         <EntityType Name="PrevisionesCartera">
           <Key>
@@ -12312,6 +12334,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <Dependent Role="PrevisionesCartera">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+          <End Type="MarfilModel.SaldosAcomuladosPeriodos" Role="SaldosAcomuladosPeriodos" Multiplicity="1" />
+          <End Type="MarfilModel.SaldosAcumuladosPeriodosLin" Role="SaldosAcumuladosPeriodosLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaldosAcomuladosPeriodos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SaldosAcumuladosPeriodosLin">
+              <PropertyRef Name="SalAcomPerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
