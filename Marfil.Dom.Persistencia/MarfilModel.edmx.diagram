@@ -243,6 +243,9 @@
         <AssociationConnector Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme" />
         <EntityTypeShape EntityType="MarfilModel.SaldosAcomuladosPeriodos" Width="1.5" PointX="32.375" PointY="12.75" />
         <EntityTypeShape EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" Width="1.5" PointX="14.375" PointY="33.75" />
+        <EntityTypeShape EntityType="MarfilModel.PrevisionesCartera" Width="1.5" PointX="36.625" PointY="25.75" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__795DFB40" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__7869D707" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -14,6 +14,12 @@ namespace Marfil.Dom.Persistencia
     
     public partial class CarteraVencimientos
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CarteraVencimientos()
+        {
+            this.PrevisionesCartera = new HashSet<PrevisionesCartera>();
+        }
+    
         public string empresa { get; set; }
         public int id { get; set; }
         public string traza { get; set; }
@@ -34,5 +40,8 @@ namespace Marfil.Dom.Persistencia
         public string comentario { get; set; }
         public string codigoremesa { get; set; }
         public Nullable<int> tiponumerofactura { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrevisionesCartera> PrevisionesCartera { get; set; }
     }
 }

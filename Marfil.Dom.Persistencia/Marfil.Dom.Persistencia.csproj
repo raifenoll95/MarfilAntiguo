@@ -770,6 +770,9 @@
     <Compile Include="PresupuestosTotales.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrevisionesCartera.cs">
+      <DependentUpon>MarfilModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prospectos.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>

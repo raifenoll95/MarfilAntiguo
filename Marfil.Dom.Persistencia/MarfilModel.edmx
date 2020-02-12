@@ -3102,6 +3102,19 @@
           <Property Name="subtotal" Type="float" />
           <Property Name="decimalesmonedas" Type="int" />
         </EntityType>
+        <EntityType Name="PrevisionesCartera">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codvencimiento" />
+            <PropertyRef Name="codcartera" />
+          </Key>
+          <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codvencimiento" Type="int" Nullable="false" />
+          <Property Name="codcartera" Type="int" Nullable="false" />
+          <Property Name="imputado" Type="float" />
+        </EntityType>
         <EntityType Name="Prospectos">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4646,6 +4659,34 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PrevisionesCarte__7869D707">
+          <End Role="Vencimientos" Type="Self.Vencimientos" Multiplicity="1" />
+          <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrevisionesCarte__795DFB40">
+          <End Role="CarteraVencimientos" Type="Self.CarteraVencimientos" Multiplicity="1" />
+          <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarteraVencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codcartera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SeguimientosCorr__35DCF99B">
           <End Role="Seguimientos" Type="Self.Seguimientos" Multiplicity="1" />
           <End Role="SeguimientosCorreo" Type="Self.SeguimientosCorreo" Multiplicity="*" />
@@ -5663,6 +5704,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="PresupuestosComprasTotales" EntityType="Self.PresupuestosComprasTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresupuestosLin" EntityType="Self.PresupuestosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PresupuestosTotales" EntityType="Self.PresupuestosTotales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrevisionesCartera" EntityType="Self.PrevisionesCartera" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prospectos" EntityType="Self.Prospectos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Provincias" EntityType="Self.Provincias" Schema="dbo" store:Type="Tables" />
@@ -5860,6 +5902,14 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK__PedidosCostesFab__297722B6" Association="Self.FK__PedidosCostesFab__297722B6">
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="PedidosCostesFabricacion" EntitySet="PedidosCostesFabricacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__7869D707" Association="Self.FK__PrevisionesCarte__7869D707">
+            <End Role="Vencimientos" EntitySet="Vencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__795DFB40" Association="Self.FK__PrevisionesCarte__795DFB40">
+            <End Role="CarteraVencimientos" EntitySet="CarteraVencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
           </AssociationSet>
           <AssociationSet Name="FK__SeguimientosCorr__35DCF99B" Association="Self.FK__SeguimientosCorr__35DCF99B">
             <End Role="Seguimientos" EntitySet="Seguimientos" />
@@ -6586,6 +6636,15 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           </AssociationSet>
           <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="MarfilModel.SaldosAcomuladosPeriodos" />
           <EntitySet Name="SaldosAcumuladosPeriodosLin" EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" />
+          <EntitySet Name="PrevisionesCartera" EntityType="MarfilModel.PrevisionesCartera" />
+          <AssociationSet Name="FK__PrevisionesCarte__795DFB40" Association="MarfilModel.FK__PrevisionesCarte__795DFB40">
+            <End Role="CarteraVencimientos" EntitySet="CarteraVencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PrevisionesCarte__7869D707" Association="MarfilModel.FK__PrevisionesCarte__7869D707">
+            <End Role="Vencimientos" EntitySet="Vencimientos" />
+            <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
           <Key>
@@ -12008,6 +12067,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="fkformaspago" Type="Int32" />
+          <NavigationProperty Name="PrevisionesCartera" Relationship="MarfilModel.FK__PrevisionesCarte__7869D707" FromRole="Vencimientos" ToRole="PrevisionesCartera" />
         </EntityType>
         <EntityType Name="CircuitosTesoreriaCobros">
           <Key>
@@ -12071,6 +12131,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="codigoremesa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="tiponumerofactura" Type="Int32" />
+          <NavigationProperty Name="PrevisionesCartera" Relationship="MarfilModel.FK__PrevisionesCarte__795DFB40" FromRole="CarteraVencimientos" ToRole="PrevisionesCartera" />
         </EntityType>
         <EntityType Name="TipoGuia">
           <Key>
@@ -12211,6 +12272,49 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="ImporteDebeEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ImporteHaberEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
+        <EntityType Name="PrevisionesCartera">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+            <PropertyRef Name="codvencimiento" />
+            <PropertyRef Name="codcartera" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codvencimiento" Type="Int32" Nullable="false" />
+          <Property Name="codcartera" Type="Int32" Nullable="false" />
+          <Property Name="imputado" Type="Double" />
+          <NavigationProperty Name="CarteraVencimientos" Relationship="MarfilModel.FK__PrevisionesCarte__795DFB40" FromRole="PrevisionesCartera" ToRole="CarteraVencimientos" />
+          <NavigationProperty Name="Vencimientos" Relationship="MarfilModel.FK__PrevisionesCarte__7869D707" FromRole="PrevisionesCartera" ToRole="Vencimientos" />
+        </EntityType>
+        <Association Name="FK__PrevisionesCarte__795DFB40">
+          <End Type="MarfilModel.CarteraVencimientos" Role="CarteraVencimientos" Multiplicity="1" />
+          <End Type="MarfilModel.PrevisionesCartera" Role="PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarteraVencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codcartera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PrevisionesCarte__7869D707">
+          <End Type="MarfilModel.Vencimientos" Role="Vencimientos" Multiplicity="1" />
+          <End Type="MarfilModel.PrevisionesCartera" Role="PrevisionesCartera" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vencimientos">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PrevisionesCartera">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16639,6 +16743,17 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
                 <ScalarProperty Name="SalAcomPerId" ColumnName="SalAcomPerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrevisionesCartera">
+            <EntityTypeMapping TypeName="MarfilModel.PrevisionesCartera">
+              <MappingFragment StoreEntitySet="PrevisionesCartera">
+                <ScalarProperty Name="imputado" ColumnName="imputado" />
+                <ScalarProperty Name="codcartera" ColumnName="codcartera" />
+                <ScalarProperty Name="codvencimiento" ColumnName="codvencimiento" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
