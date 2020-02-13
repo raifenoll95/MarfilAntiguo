@@ -4378,8 +4378,8 @@
           <Property Name="importeasignado" Type="float" />
           <Property Name="importepagado" Type="float" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.Diariostock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.Diariostock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Diariostock">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4440,8 +4440,8 @@ warning 6002: The table/view 'marfilestable.dbo.Diariostock' does not have a pri
           <Property Name="Documentoreferencia" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.ListadoStockValorado' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.ListadoStockValorado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ListadoStockValorado">
           <Key>
             <PropertyRef Name="Cod. Artículo" />
@@ -4477,8 +4477,8 @@ warning 6002: The table/view 'marfilestable.dbo.ListadoStockValorado' does not h
           <Property Name="PrecioNetoCompraUM" Type="float" Nullable="false" />
           <Property Name="CosteTotalUM" Type="float" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'marfilestable.dbo.Lotes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Lotes">
           <Key>
             <PropertyRef Name="empresa" />
