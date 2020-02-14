@@ -54,6 +54,8 @@ namespace Marfil.Dom.Persistencia.Listados
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "IncluirProrrateoAmortizaciones")]
         public bool IncluirProrrateoAmortizaciones { get; set; }
+        public string fkEjercicio { get; set; }
+        public string Empresa { get; set; }
         #endregion
         public ListadoAcomuladorPeriodos()
         {
@@ -61,7 +63,8 @@ namespace Marfil.Dom.Persistencia.Listados
         }
         public ListadoAcomuladorPeriodos(IContextService context):base(context)
         {
-            
+            fkEjercicio = context.Ejercicio;
+            Empresa = context.Empresa;
         }
         internal override string GenerarFiltrosColumnas()
         {
@@ -124,7 +127,7 @@ namespace Marfil.Dom.Persistencia.Listados
 
             if(flag)
             {
-                filtro += $" AND tipoasiento in({valor})";
+                filtro += $" AND tipoasiento in({valor}) AND empresa = {Empresa} AND fkejercicio = {fkEjercicio} ";
             }
             sb.Append(filtro);
             return sb.ToString();
