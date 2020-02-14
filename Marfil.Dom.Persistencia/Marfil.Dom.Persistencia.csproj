@@ -806,12 +806,6 @@
     <Compile Include="Roles.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SaldosAcomuladosPeriodos.cs">
-      <DependentUpon>MarfilModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SaldosAcumuladosPeriodosLin.cs">
-      <DependentUpon>MarfilModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Seccionesanaliticas.cs">
       <DependentUpon>MarfilModel.tt</DependentUpon>
     </Compile>

@@ -149,7 +149,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Tareas> Tareas { get; set; }
         public virtual DbSet<TareasLin> TareasLin { get; set; }
         public virtual DbSet<PedidosCostesFabricacion> PedidosCostesFabricacion { get; set; }
-        public virtual DbSet<Ejercicios> Ejercicios { get; set; }
         public virtual DbSet<Empresas> Empresas { get; set; }
         public virtual DbSet<MovsLin> MovsLin { get; set; }
         public virtual DbSet<Seccionesanaliticas> Seccionesanaliticas { get; set; }
@@ -184,16 +183,15 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<ListadoStockValorado> ListadoStockValorado { get; set; }
         public virtual DbSet<Lotes> Lotes { get; set; }
         public virtual DbSet<Cartera> Cartera { get; set; }
-        public virtual DbSet<Vencimientos> Vencimientos { get; set; }
         public virtual DbSet<CircuitosTesoreriaCobros> CircuitosTesoreriaCobros { get; set; }
+        public virtual DbSet<Ejercicios> Ejercicios { get; set; }
         public virtual DbSet<CarteraVencimientos> CarteraVencimientos { get; set; }
-        public virtual DbSet<TipoGuia> TipoGuia { get; set; }
-        public virtual DbSet<TipoInforme> TipoInforme { get; set; }
+        public virtual DbSet<PrevisionesCartera> PrevisionesCartera { get; set; }
+        public virtual DbSet<Vencimientos> Vencimientos { get; set; }
         public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
         public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
-        public virtual DbSet<SaldosAcomuladosPeriodos> SaldosAcomuladosPeriodos { get; set; }
-        public virtual DbSet<SaldosAcumuladosPeriodosLin> SaldosAcumuladosPeriodosLin { get; set; }
-        public virtual DbSet<PrevisionesCartera> PrevisionesCartera { get; set; }
+        public virtual DbSet<TipoGuia> TipoGuia { get; set; }
+        public virtual DbSet<TipoInforme> TipoInforme { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {
