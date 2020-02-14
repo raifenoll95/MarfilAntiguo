@@ -61,7 +61,7 @@ namespace Marfil.Dom.Persistencia.Listados
         }
         public ListadoAcomuladorPeriodos(IContextService context):base(context)
         {
-
+            
         }
         internal override string GenerarFiltrosColumnas()
         {
@@ -74,7 +74,6 @@ namespace Marfil.Dom.Persistencia.Listados
             {
                 filtro = $" convert(nvarchar(10),fecha,103) BETWEEN '{FechaDesde.ToShortDateString()}' AND '{FechaHasta.ToShortDateString()}'";
             }
-
             if (Ejercicio)
             {
                 if (flag)

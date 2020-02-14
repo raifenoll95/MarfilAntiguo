@@ -850,6 +850,7 @@
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GrosoresConverterService.cs" />
