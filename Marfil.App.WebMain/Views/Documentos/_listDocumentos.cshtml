@@ -3,8 +3,11 @@
 @using Marfil.App.WebMain.Misc
 @using Newtonsoft.Json
 @using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+@using Marfil.Dom.Persistencia.Model.Diseñador
 @using Resources
-@model  Marfil.Dom.Persistencia.Model.Diseñador.DocumentosWrapperModel
+
+@*@model  Marfil.Dom.Persistencia.Model.Diseñador.DocumentosWrapperModel*@
+@model  IEnumerable<Marfil.Dom.Persistencia.Model.Diseñador.DocumentosModel>
 @{
     Html.EnableClientValidation(true);
     Html.EnableUnobtrusiveJavaScript(true);
@@ -30,7 +33,7 @@
         settings.SettingsBehavior.AllowFocusedRow = false;
         settings.SettingsBehavior.AllowSelectByRowClick = false;
         settings.AccessibilityCompliant = WebHelper.DevexpressAA;
-        settings.EncodeHtml = false;
+        //settings.EncodeHtml = false;
         //#endregion
 
         settings.Columns.Add(c =>
@@ -81,42 +84,40 @@
             c.Caption = Documentos.Nombre;
         });
 
-        settings.CustomUnboundColumnData = (s, e) =>
-        {
-            if (e.Column.FieldName == "Action")
-            {
-                e.Value = (e.GetListSourceFieldValue("CustomId")).ToString() ?? "";
-            }
-        };
-
         settings.Columns.Add(c =>
         {
-
             c.FieldName = "Action";
             c.Width = Unit.Pixel(200);
             c.UnboundType = DevExpress.Data.UnboundColumnType.String;
             c.Caption = " ";
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Settings.AllowAutoFilter = DefaultBoolean.False;
-            c.UnboundType = DevExpress.Data.UnboundColumnType.String;
 
             c.SetDataItemTemplateContent(n =>
             {
+                var customId = DataBinder.Eval(n.DataItem, "CustomId").ToString();
+                var tipo = (int)DataBinder.Eval(n.DataItem, "Tipo");
 
-                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Index", "Designer", new { nuevo = false, reportId = n.Text, returnUrl = Url.Action("Index", "Documentos", new { id = (int)Model.Tipo }) }) + "\">" +
-                    "<i class=\"ace-icon fa fa-pencil\"></i>" +
-                    General.LblEditar +
-                    "</a> ");
-
-                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Delete", "Documentos", new { id = n.Text, returnUrl = Url.Action("Index", "Documentos", new { id = (int)Model.Tipo }) }) + "\">" +
+                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Index", "Designer", new { nuevo = false, reportId = customId, returnUrl = Url.Action("Index", "Documentos", new { id = tipo }) }) + "\">" +
+                        "<i class=\"ace-icon fa fa-pencil\"></i>" +
+                        General.LblEditar +
+                        "</a> ");
+                ViewContext.Writer.Write("<a class=\"btn btn-xs btn-info\" title=\"Editar\" href =\"" + Url.Action("Delete", "Documentos", new { id = customId, returnUrl = Url.Action("Index", "Documentos", new { id = tipo }) }) + "\">" +
                         "<i class=\"ace-icon fa fa-trash\"></i>" +
                         General.LblBorrar +
                         "</a> ");
-
             });
 
         });
 
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            var a = 2;
+            if (e.Column.FieldName == "Action")
+            {
+                e.Value = (e.GetListSourceFieldValue("CustomId")).ToString() ?? "";
+            }
+        };
 
         settings.ClientSideEvents.Init = "function(s,e) { GridView.Focus();}";
 
@@ -136,7 +137,8 @@
         settings.SettingsPager.PageSize = 50;
     });
 
-    @grid.Bind(Model.Lineas.ToList()).GetHtml();
+    @*@grid.Bind(Model.Lineas.ToList()).GetHtml();*@
+    @grid.Bind(Model).GetHtml();
 }
 
 <script type="text/javascript">

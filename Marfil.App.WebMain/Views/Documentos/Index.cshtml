@@ -2,6 +2,7 @@
 @using Marfil.Dom.Persistencia.Model;
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos
 @using Resources
+@using Marfil.Dom.Persistencia.Model.Diseñador
 @model  Marfil.Dom.Persistencia.Model.Diseñador.DocumentosWrapperModel
 @{
     ViewBag.Title = Model.Titulo;
@@ -11,7 +12,7 @@
 
 
 <div class="row margin-bottom">
-    @Html.Partial("_listDocumentos", Model)
+    @Html.Partial("_listDocumentos", Model.Lineas)
 </div>
 
 @section GridView
