@@ -793,36 +793,25 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="empresa" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="traza" Type="varchar" MaxLength="25" />
-          <Property Name="tipovencimiento" Type="int" />
-          <Property Name="usuario" Type="varchar" MaxLength="30" />
+          <Property Name="tipo" Type="int" />
+          <Property Name="usuario" Type="nvarchar" MaxLength="20" />
           <Property Name="fkcuentas" Type="varchar" MaxLength="15" />
           <Property Name="fechacreacion" Type="datetime" />
           <Property Name="fechavencimiento" Type="datetime" />
           <Property Name="fechadescuento" Type="datetime" />
           <Property Name="fechapago" Type="datetime" />
-          <Property Name="fecharemesa" Type="datetime" />
           <Property Name="monedabase" Type="int" />
           <Property Name="monedagiro" Type="int" />
           <Property Name="importegiro" Type="float" />
           <Property Name="cambioaplicado" Type="float" />
-          <Property Name="fkcuentastesoreria" Type="varchar" MaxLength="15" />
-          <Property Name="mandato" Type="varchar" MaxLength="50" />
+          <Property Name="fkcuentatesoreria" Type="varchar" MaxLength="15" />
+          <Property Name="mandato" Type="nvarchar" MaxLength="35" />
           <Property Name="situacion" Type="varchar" MaxLength="1" />
           <Property Name="comentario" Type="ntext" />
-          <Property Name="codigoremesa" Type="varchar" MaxLength="40" />
+          <Property Name="codigoremesa" Type="varchar" MaxLength="15" />
           <Property Name="tiponumerofactura" Type="int" />
-          <Property Name="fkformaspago" Type="int" />
-          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
-          <Property Name="referencia" Type="varchar" MaxLength="30" />
-          <Property Name="identificadorsegmento" Type="varchar" MaxLength="12" />
-          <Property Name="fecha" Type="datetime" />
-          <Property Name="letra" Type="varchar" MaxLength="30" />
-          <Property Name="banco" Type="varchar" MaxLength="40" />
-          <Property Name="fkseriescontablesremesa" Type="varchar" MaxLength="12" />
-          <Property Name="referenciaremesa" Type="varchar" MaxLength="30" />
-          <Property Name="identificadorsegmentoremesa" Type="varchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="CircuitosTesoreriaCobros">
           <Key>
@@ -860,9 +849,9 @@
           <Property Name="desccuentaabono2" Type="varchar" MaxLength="50" />
           <Property Name="desccuentaabonorel" Type="varchar" MaxLength="50" />
           <Property Name="tipocircuito" Type="int" />
-          <Property Name="codigodescripcionasiento" Type="varchar" MaxLength="3" />
           <Property Name="documentocartera" Type="bit" />
           <Property Name="actualizarcobrador" Type="bit" />
+          <Property Name="codigodescripcionasiento" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -1324,15 +1313,16 @@
           <Property Name="registroivacerradohasta" Type="datetime" />
           <Property Name="criterioiva" Type="int" />
           <Property Name="fkejercicios" Type="int" />
+          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesAST" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesIVS" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesIVP" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesPRC" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesPRP" Type="varchar" MaxLength="3" />
-          <Property Name="fkseriescontablesINM" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesCRC" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesCRP" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesREM" Type="varchar" MaxLength="3" />
+          <Property Name="fkseriescontablesINM" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Empresas">
           <Key>
@@ -3462,6 +3452,32 @@
           <Property Name="FkUsuarios" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FkRoles" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="SaldosAcomuladosPeriodos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Empresa" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Ejercicio" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Settings" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EnProceso" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaHora" Type="smalldatetime" Nullable="false" />
+          <Property Name="Recalculo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaldosAcumuladosPeriodosLin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalAcomPerId" Type="int" Nullable="false" />
+          <Property Name="Cuenta" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Nivel" Type="int" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioActual" Type="money" Nullable="false" />
+          <Property Name="ImporteHaberEjercicioActual" Type="money" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioAnterior" Type="money" Nullable="false" />
+          <Property Name="ImporteHaberEjercicioAnterior" Type="money" Nullable="false" />
+        </EntityType>
         <EntityType Name="Seccionesanaliticas">
           <Key>
             <PropertyRef Name="empresa" />
@@ -4361,22 +4377,18 @@
           <Property Name="fechapago" Type="datetime" />
           <Property Name="monedabase" Type="int" />
           <Property Name="monedagiro" Type="int" />
+          <Property Name="importegiro" Type="float" />
+          <Property Name="cambioaplicado" Type="float" />
+          <Property Name="importefactura" Type="float" />
           <Property Name="monedafactura" Type="int" />
           <Property Name="fkcuentatesoreria" Type="varchar" MaxLength="15" />
           <Property Name="mandato" Type="nvarchar" MaxLength="35" />
+          <Property Name="importeasignado" Type="float" />
+          <Property Name="importepagado" Type="float" />
           <Property Name="estado" Type="int" />
           <Property Name="situacion" Type="varchar" MaxLength="1" />
           <Property Name="comentario" Type="ntext" />
           <Property Name="fkformaspago" Type="int" />
-          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
-          <Property Name="referencia" Type="nvarchar" MaxLength="30" />
-          <Property Name="identificadorsegmento" Type="nvarchar" MaxLength="12" />
-          <Property Name="fecha" Type="datetime" />
-          <Property Name="importegiro" Type="float" />
-          <Property Name="cambioaplicado" Type="float" />
-          <Property Name="importefactura" Type="float" />
-          <Property Name="importeasignado" Type="float" />
-          <Property Name="importepagado" Type="float" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'marfilestable.dbo.Diariostock' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -4533,7 +4545,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="EnStock" Type="int" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="int" />
         </EntityType>
-        <Association Name="FK__ArticulosCompone__2552576E">
+        <Association Name="FK__ArticulosCompone__090A5324">
           <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
           <End Role="ArticulosComponentes" Type="Self.ArticulosComponentes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4547,7 +4559,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ArticulosTercero__2275EAC3">
+        <Association Name="FK__ArticulosTercero__09FE775D">
           <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
           <End Role="ArticulosTercero" Type="Self.ArticulosTercero" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4561,7 +4573,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CampañasTercero__1A6AB4A7">
+        <Association Name="FK__CampañasTercero__0BE6BFCF">
           <End Role="Campañas" Type="Self.Campañas" Multiplicity="1" />
           <End Role="CampañasTercero" Type="Self.CampañasTercero" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4575,7 +4587,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotescos__37A611D3">
+        <Association Name="FK__DivisionLotescos__1387E197">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotescostesadicionales" Type="Self.DivisionLotescostesadicionales" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4589,7 +4601,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotesent__31ED387D">
+        <Association Name="FK__DivisionLotesent__147C05D0">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotesentradalin" Type="Self.DivisionLotesentradalin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4603,7 +4615,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DivisionLotessal__34C9A528">
+        <Association Name="FK__DivisionLotessal__15702A09">
           <End Role="DivisionLotes" Type="Self.DivisionLotes" Multiplicity="1" />
           <End Role="DivisionLotessalidalin" Type="Self.DivisionLotessalidalin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4617,21 +4629,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ImputacionCostes__377107A9">
-          <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
-          <End Role="ImputacionCostesLin" Type="Self.ImputacionCostesLin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImputacionCostes">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="ImputacionCostesLin">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkimputacioncostes" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ImputacionCostes__489B93AB">
+        <Association Name="FK__ImputacionCostes__1FEDB87C">
           <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
           <End Role="ImputacionCostescostesadicionales" Type="Self.ImputacionCostescostesadicionales" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4645,7 +4643,21 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PedidosCostesFab__7953D99F">
+        <Association Name="FK__ImputacionCostes__20E1DCB5">
+          <End Role="ImputacionCostes" Type="Self.ImputacionCostes" Multiplicity="1" />
+          <End Role="ImputacionCostesLin" Type="Self.ImputacionCostesLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImputacionCostes">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImputacionCostesLin">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkimputacioncostes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PedidosCostesFab__297722B6">
           <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
           <End Role="PedidosCostesFabricacion" Type="Self.PedidosCostesFabricacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4659,7 +4671,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrevisionesCarte__5CC287E9">
+        <Association Name="FK__PrevisionesCarte__7869D707">
           <End Role="Vencimientos" Type="Self.Vencimientos" Multiplicity="1" />
           <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4673,7 +4685,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PrevisionesCarte__5DB6AC22">
+        <Association Name="FK__PrevisionesCarte__795DFB40">
           <End Role="CarteraVencimientos" Type="Self.CarteraVencimientos" Multiplicity="1" />
           <End Role="PrevisionesCartera" Type="Self.PrevisionesCartera" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4687,7 +4699,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SeguimientosCorr__65C1E23E">
+        <Association Name="FK__SeguimientosCorr__35DCF99B">
           <End Role="Seguimientos" Type="Self.Seguimientos" Multiplicity="1" />
           <End Role="SeguimientosCorreo" Type="Self.SeguimientosCorreo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4703,7 +4715,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TareasLin__15F0184D">
+        <Association Name="FK__TareasLin__37C5420D">
           <End Role="Tareas" Type="Self.Tareas" Multiplicity="1" />
           <End Role="TareasLin" Type="Self.TareasLin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -4717,7 +4729,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TrabajosLin__5BAE681F">
+        <Association Name="FK__TrabajosLin__3AA1AEB8">
           <End Role="Trabajos" Type="Self.Trabajos" Multiplicity="1" />
           <End Role="TrabajosLin" Type="Self.TrabajosLin" Multiplicity="*" />
           <ReferentialConstraint>
@@ -5447,6 +5459,18 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+          <End Role="SaldosAcomuladosPeriodos" Type="Self.SaldosAcomuladosPeriodos" Multiplicity="1" />
+          <End Role="SaldosAcumuladosPeriodosLin" Type="Self.SaldosAcumuladosPeriodosLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaldosAcomuladosPeriodos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SaldosAcumuladosPeriodosLin">
+              <PropertyRef Name="SalAcomPerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TablasvariasLin_Tablasvarias">
           <End Role="Tablasvarias" Type="Self.Tablasvarias" Multiplicity="1" />
           <End Role="TablasvariasLin" Type="Self.TablasvariasLin" Multiplicity="*" />
@@ -5588,7 +5612,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
         <Function Name="f_fn_enum_TipoAlmacenlote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="_fn_enum_TipoAlmacenlote" ReturnType="varchar(max)">
           <Parameter Name="Codigo" Type="int" Mode="In" />
         </Function>
-        <Function Name="spLotes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MarfilModelStoreContainer">
           <EntitySet Name="Acabados" EntityType="Self.Acabados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Acreedores" EntityType="Self.Acreedores" Schema="dbo" store:Type="Tables" />
@@ -5717,6 +5740,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySet Name="ReservasstockTotales" EntityType="Self.ReservasstockTotales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolesUsuarios" EntityType="Self.RolesUsuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="Self.SaldosAcomuladosPeriodos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaldosAcumuladosPeriodosLin" EntityType="Self.SaldosAcumuladosPeriodosLin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccionesanaliticas" EntityType="Self.Seccionesanaliticas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seguimientos" EntityType="Self.Seguimientos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SeguimientosCorreo" EntityType="Self.SeguimientosCorreo" Schema="dbo" store:Type="Tables" />
@@ -5866,59 +5891,59 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
     [Lotes].[tipoalmacenlote] AS [tipoalmacenlote]
     FROM [dbo].[Lotes] AS [Lotes]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__ArticulosCompone__2552576E" Association="Self.FK__ArticulosCompone__2552576E">
+          <AssociationSet Name="FK__ArticulosCompone__090A5324" Association="Self.FK__ArticulosCompone__090A5324">
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosComponentes" EntitySet="ArticulosComponentes" />
           </AssociationSet>
-          <AssociationSet Name="FK__ArticulosTercero__2275EAC3" Association="Self.FK__ArticulosTercero__2275EAC3">
+          <AssociationSet Name="FK__ArticulosTercero__09FE775D" Association="Self.FK__ArticulosTercero__09FE775D">
             <End Role="Articulos" EntitySet="Articulos" />
             <End Role="ArticulosTercero" EntitySet="ArticulosTercero" />
           </AssociationSet>
-          <AssociationSet Name="FK__CampañasTercero__1A6AB4A7" Association="Self.FK__CampañasTercero__1A6AB4A7">
+          <AssociationSet Name="FK__CampañasTercero__0BE6BFCF" Association="Self.FK__CampañasTercero__0BE6BFCF">
             <End Role="Campañas" EntitySet="Campañas" />
             <End Role="CampañasTercero" EntitySet="CampañasTercero" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotescos__37A611D3" Association="Self.FK__DivisionLotescos__37A611D3">
+          <AssociationSet Name="FK__DivisionLotescos__1387E197" Association="Self.FK__DivisionLotescos__1387E197">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotescostesadicionales" EntitySet="DivisionLotescostesadicionales" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotesent__31ED387D" Association="Self.FK__DivisionLotesent__31ED387D">
+          <AssociationSet Name="FK__DivisionLotesent__147C05D0" Association="Self.FK__DivisionLotesent__147C05D0">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotesentradalin" EntitySet="DivisionLotesentradalin" />
           </AssociationSet>
-          <AssociationSet Name="FK__DivisionLotessal__34C9A528" Association="Self.FK__DivisionLotessal__34C9A528">
+          <AssociationSet Name="FK__DivisionLotessal__15702A09" Association="Self.FK__DivisionLotessal__15702A09">
             <End Role="DivisionLotes" EntitySet="DivisionLotes" />
             <End Role="DivisionLotessalidalin" EntitySet="DivisionLotessalidalin" />
           </AssociationSet>
-          <AssociationSet Name="FK__ImputacionCostes__377107A9" Association="Self.FK__ImputacionCostes__377107A9">
-            <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
-            <End Role="ImputacionCostesLin" EntitySet="ImputacionCostesLin" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ImputacionCostes__489B93AB" Association="Self.FK__ImputacionCostes__489B93AB">
+          <AssociationSet Name="FK__ImputacionCostes__1FEDB87C" Association="Self.FK__ImputacionCostes__1FEDB87C">
             <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
             <End Role="ImputacionCostescostesadicionales" EntitySet="ImputacionCostescostesadicionales" />
           </AssociationSet>
-          <AssociationSet Name="FK__PedidosCostesFab__7953D99F" Association="Self.FK__PedidosCostesFab__7953D99F">
+          <AssociationSet Name="FK__ImputacionCostes__20E1DCB5" Association="Self.FK__ImputacionCostes__20E1DCB5">
+            <End Role="ImputacionCostes" EntitySet="ImputacionCostes" />
+            <End Role="ImputacionCostesLin" EntitySet="ImputacionCostesLin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PedidosCostesFab__297722B6" Association="Self.FK__PedidosCostesFab__297722B6">
             <End Role="Pedidos" EntitySet="Pedidos" />
             <End Role="PedidosCostesFabricacion" EntitySet="PedidosCostesFabricacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrevisionesCarte__5CC287E9" Association="Self.FK__PrevisionesCarte__5CC287E9">
+          <AssociationSet Name="FK__PrevisionesCarte__7869D707" Association="Self.FK__PrevisionesCarte__7869D707">
             <End Role="Vencimientos" EntitySet="Vencimientos" />
             <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
           </AssociationSet>
-          <AssociationSet Name="FK__PrevisionesCarte__5DB6AC22" Association="Self.FK__PrevisionesCarte__5DB6AC22">
+          <AssociationSet Name="FK__PrevisionesCarte__795DFB40" Association="Self.FK__PrevisionesCarte__795DFB40">
             <End Role="CarteraVencimientos" EntitySet="CarteraVencimientos" />
             <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
           </AssociationSet>
-          <AssociationSet Name="FK__SeguimientosCorr__65C1E23E" Association="Self.FK__SeguimientosCorr__65C1E23E">
+          <AssociationSet Name="FK__SeguimientosCorr__35DCF99B" Association="Self.FK__SeguimientosCorr__35DCF99B">
             <End Role="Seguimientos" EntitySet="Seguimientos" />
             <End Role="SeguimientosCorreo" EntitySet="SeguimientosCorreo" />
           </AssociationSet>
-          <AssociationSet Name="FK__TareasLin__15F0184D" Association="Self.FK__TareasLin__15F0184D">
+          <AssociationSet Name="FK__TareasLin__37C5420D" Association="Self.FK__TareasLin__37C5420D">
             <End Role="Tareas" EntitySet="Tareas" />
             <End Role="TareasLin" EntitySet="TareasLin" />
           </AssociationSet>
-          <AssociationSet Name="FK__TrabajosLin__5BAE681F" Association="Self.FK__TrabajosLin__5BAE681F">
+          <AssociationSet Name="FK__TrabajosLin__3AA1AEB8" Association="Self.FK__TrabajosLin__3AA1AEB8">
             <End Role="Trabajos" EntitySet="Trabajos" />
             <End Role="TrabajosLin" EntitySet="TrabajosLin" />
           </AssociationSet>
@@ -6133,6 +6158,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_RolesUsuarios_Usuarios" Association="Self.FK_RolesUsuarios_Usuarios">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="RolesUsuarios" EntitySet="RolesUsuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" Association="Self.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+            <End Role="SaldosAcomuladosPeriodos" EntitySet="SaldosAcomuladosPeriodos" />
+            <End Role="SaldosAcumuladosPeriodosLin" EntitySet="SaldosAcumuladosPeriodosLin" />
           </AssociationSet>
           <AssociationSet Name="FK_TablasvariasLin_Tablasvarias" Association="Self.FK_TablasvariasLin_Tablasvarias">
             <End Role="Tablasvarias" EntitySet="Tablasvarias" />
@@ -6641,6 +6670,12 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK_GuiasBalancesLineas_TipoInforme" Association="MarfilModel.FK_GuiasBalancesLineas_TipoInforme">
             <End Role="TipoInforme" EntitySet="TipoInforme" />
             <End Role="GuiasBalancesLineas" EntitySet="GuiasBalancesLineas" />
+          </AssociationSet>
+          <EntitySet Name="SaldosAcomuladosPeriodos" EntityType="MarfilModel.SaldosAcomuladosPeriodos" />
+          <EntitySet Name="SaldosAcumuladosPeriodosLin" EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" />
+          <AssociationSet Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" Association="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+            <End Role="SaldosAcomuladosPeriodos" EntitySet="SaldosAcomuladosPeriodos" />
+            <End Role="SaldosAcumuladosPeriodosLin" EntitySet="SaldosAcumuladosPeriodosLin" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
@@ -12065,6 +12100,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="fkseriescontablesCRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="fkseriescontablesCRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="fkseriescontablesREM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_costes_variables">
           <End Type="MarfilModel.Ejercicios" Role="Ejercicios" Multiplicity="1" />
@@ -12089,7 +12125,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="traza" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="tipovencimiento" Type="Int32" />
-          <Property Name="usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="fkcuentas" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="fechacreacion" Type="DateTime" Precision="3" />
           <Property Name="fechavencimiento" Type="DateTime" Precision="3" />
@@ -12101,10 +12137,10 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="importegiro" Type="Double" />
           <Property Name="cambioaplicado" Type="Double" />
           <Property Name="fkcuentastesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="mandato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mandato" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
           <Property Name="situacion" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="codigoremesa" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="codigoremesa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="tiponumerofactura" Type="Int32" />
           <Property Name="fkformaspago" Type="Int32" />
           <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
@@ -12117,6 +12153,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="referenciaremesa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="identificadorsegmentoremesa" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PrevisionesCartera" Relationship="MarfilModel.FK__PrevisionesCarte__5DB6AC22" FromRole="CarteraVencimientos" ToRole="PrevisionesCartera" />
+          <Property Name="tipo" Type="Int32" />
+          <Property Name="fkcuentatesoreria" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PrevisionesCartera">
           <Key>
@@ -12309,6 +12347,46 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             </Principal>
             <Dependent Role="GuiasBalancesLineas">
               <PropertyRef Name="InformeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SaldosAcomuladosPeriodos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Ejercicio" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Settings" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EnProceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Recalculo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SaldosAcumuladosPeriodosLin" Relationship="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" FromRole="SaldosAcomuladosPeriodos" ToRole="SaldosAcumuladosPeriodosLin" />
+        </EntityType>
+        <EntityType Name="SaldosAcumuladosPeriodosLin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalAcomPerId" Type="Int32" Nullable="false" />
+          <Property Name="Cuenta" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Nivel" Type="Int32" Nullable="false" />
+          <Property Name="ImporteDebeEjercicioActual" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteHaberEjercicioActual" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteDebeEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ImporteHaberEjercicioAnterior" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="SaldosAcomuladosPeriodos" Relationship="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" FromRole="SaldosAcumuladosPeriodosLin" ToRole="SaldosAcomuladosPeriodos" />
+        </EntityType>
+        <Association Name="FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos">
+          <End Type="MarfilModel.SaldosAcomuladosPeriodos" Role="SaldosAcomuladosPeriodos" Multiplicity="1" />
+          <End Type="MarfilModel.SaldosAcumuladosPeriodosLin" Role="SaldosAcumuladosPeriodosLin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaldosAcomuladosPeriodos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SaldosAcumuladosPeriodosLin">
+              <PropertyRef Name="SalAcomPerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16543,41 +16621,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spLotes" FunctionName="MarfilModel.Store.spLotes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MarfilModel.spLotes_Result">
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Articulo" ColumnName="Articulo" />
-                <ScalarProperty Name="Codarticulo" ColumnName="Codarticulo" />
-                <ScalarProperty Name="lote" ColumnName="lote" />
-                <ScalarProperty Name="loteid" ColumnName="loteid" />
-                <ScalarProperty Name="CantidadProduccion" ColumnName="CantidadProduccion" />
-                <ScalarProperty Name="LargoProduccion" ColumnName="LargoProduccion" />
-                <ScalarProperty Name="AnchoProduccion" ColumnName="AnchoProduccion" />
-                <ScalarProperty Name="GruesoProduccion" ColumnName="GruesoProduccion" />
-                <ScalarProperty Name="MetrosProduccion" ColumnName="MetrosProduccion" />
-                <ScalarProperty Name="CantidadEntrada" ColumnName="CantidadEntrada" />
-                <ScalarProperty Name="LargoEntrada" ColumnName="LargoEntrada" />
-                <ScalarProperty Name="AnchoEntrada" ColumnName="AnchoEntrada" />
-                <ScalarProperty Name="GruesoEntrada" ColumnName="GruesoEntrada" />
-                <ScalarProperty Name="MetrosEntrada" ColumnName="MetrosEntrada" />
-                <ScalarProperty Name="CantidadSalida" ColumnName="CantidadSalida" />
-                <ScalarProperty Name="LargoSalida" ColumnName="LargoSalida" />
-                <ScalarProperty Name="AnchoSalida" ColumnName="AnchoSalida" />
-                <ScalarProperty Name="GruesoSalida" ColumnName="GruesoSalida" />
-                <ScalarProperty Name="MetrosSalida" ColumnName="MetrosSalida" />
-                <ScalarProperty Name="Unidades" ColumnName="Unidades" />
-                <ScalarProperty Name="Decimales" ColumnName="Decimales" />
-                <ScalarProperty Name="Kit" ColumnName="Kit" />
-                <ScalarProperty Name="Bundle" ColumnName="Bundle" />
-                <ScalarProperty Name="EnStock" ColumnName="EnStock" />
-                <ScalarProperty Name="tipoalmacenlote" ColumnName="tipoalmacenlote" />
-                <ScalarProperty Name="CantidadDisponible" ColumnName="CantidadDisponible" />
-                <ScalarProperty Name="MetrosDisponibles" ColumnName="MetrosDisponibles" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Cartera">
             <EntityTypeMapping TypeName="MarfilModel.Cartera">
               <MappingFragment StoreEntitySet="Cartera">
@@ -16632,6 +16675,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Ejercicios">
             <EntityTypeMapping TypeName="MarfilModel.Ejercicios">
               <MappingFragment StoreEntitySet="Ejercicios">
+                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
                 <ScalarProperty Name="fkseriescontablesREM" ColumnName="fkseriescontablesREM" />
                 <ScalarProperty Name="fkseriescontablesCRP" ColumnName="fkseriescontablesCRP" />
                 <ScalarProperty Name="fkseriescontablesCRC" ColumnName="fkseriescontablesCRC" />
@@ -16658,34 +16702,23 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="CarteraVencimientos">
             <EntityTypeMapping TypeName="MarfilModel.CarteraVencimientos">
               <MappingFragment StoreEntitySet="CarteraVencimientos">
-                <ScalarProperty Name="identificadorsegmentoremesa" ColumnName="identificadorsegmentoremesa" />
-                <ScalarProperty Name="referenciaremesa" ColumnName="referenciaremesa" />
-                <ScalarProperty Name="fkseriescontablesremesa" ColumnName="fkseriescontablesremesa" />
-                <ScalarProperty Name="banco" ColumnName="banco" />
-                <ScalarProperty Name="letra" ColumnName="letra" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
-                <ScalarProperty Name="referencia" ColumnName="referencia" />
-                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
-                <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
+                <ScalarProperty Name="fkcuentatesoreria" ColumnName="fkcuentatesoreria" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="tiponumerofactura" ColumnName="tiponumerofactura" />
                 <ScalarProperty Name="codigoremesa" ColumnName="codigoremesa" />
                 <ScalarProperty Name="comentario" ColumnName="comentario" />
                 <ScalarProperty Name="situacion" ColumnName="situacion" />
                 <ScalarProperty Name="mandato" ColumnName="mandato" />
-                <ScalarProperty Name="fkcuentastesoreria" ColumnName="fkcuentastesoreria" />
                 <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
                 <ScalarProperty Name="importegiro" ColumnName="importegiro" />
                 <ScalarProperty Name="monedagiro" ColumnName="monedagiro" />
                 <ScalarProperty Name="monedabase" ColumnName="monedabase" />
-                <ScalarProperty Name="fecharemesa" ColumnName="fecharemesa" />
                 <ScalarProperty Name="fechapago" ColumnName="fechapago" />
                 <ScalarProperty Name="fechadescuento" ColumnName="fechadescuento" />
                 <ScalarProperty Name="fechavencimiento" ColumnName="fechavencimiento" />
                 <ScalarProperty Name="fechacreacion" ColumnName="fechacreacion" />
                 <ScalarProperty Name="fkcuentas" ColumnName="fkcuentas" />
                 <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="tipovencimiento" ColumnName="tipovencimiento" />
                 <ScalarProperty Name="traza" ColumnName="traza" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
@@ -16711,10 +16744,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="importefactura" ColumnName="importefactura" />
                 <ScalarProperty Name="cambioaplicado" ColumnName="cambioaplicado" />
                 <ScalarProperty Name="importegiro" ColumnName="importegiro" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="identificadorsegmento" ColumnName="identificadorsegmento" />
-                <ScalarProperty Name="referencia" ColumnName="referencia" />
-                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
                 <ScalarProperty Name="fkformaspago" ColumnName="fkformaspago" />
                 <ScalarProperty Name="comentario" ColumnName="comentario" />
                 <ScalarProperty Name="situacion" ColumnName="situacion" />
@@ -16783,6 +16812,34 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <EntityTypeMapping TypeName="MarfilModel.TipoInforme">
               <MappingFragment StoreEntitySet="TipoInforme">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaldosAcomuladosPeriodos">
+            <EntityTypeMapping TypeName="MarfilModel.SaldosAcomuladosPeriodos">
+              <MappingFragment StoreEntitySet="SaldosAcomuladosPeriodos">
+                <ScalarProperty Name="Recalculo" ColumnName="Recalculo" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="EnProceso" ColumnName="EnProceso" />
+                <ScalarProperty Name="Settings" ColumnName="Settings" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Ejercicio" ColumnName="Ejercicio" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaldosAcumuladosPeriodosLin">
+            <EntityTypeMapping TypeName="MarfilModel.SaldosAcumuladosPeriodosLin">
+              <MappingFragment StoreEntitySet="SaldosAcumuladosPeriodosLin">
+                <ScalarProperty Name="ImporteHaberEjercicioAnterior" ColumnName="ImporteHaberEjercicioAnterior" />
+                <ScalarProperty Name="ImporteDebeEjercicioAnterior" ColumnName="ImporteDebeEjercicioAnterior" />
+                <ScalarProperty Name="ImporteHaberEjercicioActual" ColumnName="ImporteHaberEjercicioActual" />
+                <ScalarProperty Name="ImporteDebeEjercicioActual" ColumnName="ImporteDebeEjercicioActual" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
+                <ScalarProperty Name="SalAcomPerId" ColumnName="SalAcomPerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
