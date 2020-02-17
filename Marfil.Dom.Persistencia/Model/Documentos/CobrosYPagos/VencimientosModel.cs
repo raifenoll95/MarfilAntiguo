@@ -11,33 +11,13 @@ using Marfil.Inf.Genericos;
 using Marfil.Dom.ControlsUI.Toolbar;
 using RAlbaranesCompras = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.AlbaranesCompras;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using DevExpress.Xpo;
 using Marfil.Dom.Persistencia.Model.Diseñador;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos;
+using Marfil.Dom.Persistencia.Model.GaleriaImagenes;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 {
-
-    public class StCartera
-    {
-        //public string Tipo { get; set; }
-        //public string Vencimientos { get; set; }
-        //public string Fkseriescontables { get; set; }
-        //public string Fkcuentas { get; set; }
-        //public string ImportePantalla3 { get; set; }
-        //public string Importe { get; set; }
-        //public string Situacion { get; set; }
-        //public string CuentaTesoreria { get; set; }
-        //public string CircuitoTesoreria { get; set; }
-        //public string FechaContable { get; set; }
-        //public string FechaVencimiento { get; set; }
-        //public string Banco { get; set; }
-        //public string Letra { get; set; }
-        //public string Observaciones { get; set; }
-    }
-
     public enum TipoVencimiento
     {
         [StringValue(typeof(RCobrosYPagos), "Cobros")]
@@ -79,7 +59,6 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [StringValue(typeof(RCobrosYPagos), "Pagado")]
         Pagado
     }
-
 
     public class VencimientosModel : BaseModel<VencimientosModel, Persistencia.Vencimientos>
     {
@@ -246,8 +225,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         #endregion
     }
 
-
-    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, Persistencia.CarteraVencimientos>
+    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, Persistencia.CarteraVencimientos>, IDocument, IGaleria
     {
 
         //Lineas
@@ -391,7 +369,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 
         public DocumentosBotonImprimirModel GetListFormatos()
         {
-            var user = Context;
+            var user = base.Context;
             using (var db = MarfilEntities.ConnectToSqlServer(user.BaseDatos))
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
@@ -431,7 +409,17 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
             return Id.ToString();
         }
 
+        public Configuracion.TipoEstado Tipoestado(IContextService context)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string DisplayName => RCobrosYPagos.TituloCartera;
+
+        public GaleriaModel Galeria => throw new NotImplementedException();
+
+        public int Fkejercicio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Fkestados { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
     }

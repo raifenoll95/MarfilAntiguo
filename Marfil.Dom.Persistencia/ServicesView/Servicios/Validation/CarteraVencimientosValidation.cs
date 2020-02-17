@@ -10,8 +10,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
 {
     class CarteraVencimientosValidation : BaseValidation<Persistencia.CarteraVencimientos>
     {
-        #region CTR
 
+        public string EjercicioId { get; set; }
+
+        #region CTR
         public CarteraVencimientosValidation(IContextService context, MarfilEntities db) : base(context, db)
         {
         }
