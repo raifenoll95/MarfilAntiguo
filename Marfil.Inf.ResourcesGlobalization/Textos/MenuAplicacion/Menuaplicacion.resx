@@ -570,4 +570,10 @@
   <data name="configurardocumentoscartera" xml:space="preserve">
     <value>Conf. de documentos: Cartera</value>
   </data>
+  <data name="listadoguiasbalances" xml:space="preserve">
+    <value>Guias de Balances</value>
+  </data>
+  <data name="listadosacomuladorperiodos" xml:space="preserve">
+    <value>Listado Acomulado de Periodos</value>
+  </data>
 </root>
