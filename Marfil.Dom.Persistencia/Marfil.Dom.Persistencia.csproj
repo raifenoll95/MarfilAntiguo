@@ -23,7 +23,7 @@
     <AssemblyVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
-    <AssemblyVersion>2019.1.105.0</AssemblyVersion>
+    <AssemblyVersion>2020.1.480.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -537,6 +537,8 @@
     <Compile Include="Model\CRM\ProyectosModel.cs" />
     <Compile Include="Model\CRM\OportunidadesModel.cs" />
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
+    <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
+    <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosCarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\ValidDataAttribute.cs" />
@@ -846,6 +848,7 @@
     <Compile Include="ServicesView\Servicios\Contabilidad\MovsService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\SaldosAcomuladosPeriodosService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\TipoAsientoContable.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\BancosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CircuitosTesoreriaCobrosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />

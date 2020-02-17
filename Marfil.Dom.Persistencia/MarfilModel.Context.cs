@@ -189,11 +189,11 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<TipoGuia> TipoGuia { get; set; }
         public virtual DbSet<TipoInforme> TipoInforme { get; set; }
         public virtual DbSet<SaldosAcomuladosPeriodos> SaldosAcomuladosPeriodos { get; set; }
-        public virtual DbSet<SaldosAcumuladosPeriodosLin> SaldosAcumuladosPeriodosLin { get; set; }
         public virtual DbSet<CarteraVencimientos> CarteraVencimientos { get; set; }
         public virtual DbSet<PrevisionesCartera> PrevisionesCartera { get; set; }
         public virtual DbSet<Vencimientos> Vencimientos { get; set; }
         public virtual DbSet<Ejercicios> Ejercicios { get; set; }
+        public virtual DbSet<SaldosAcumuladosPeriodosLin> SaldosAcumuladosPeriodosLin { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {
