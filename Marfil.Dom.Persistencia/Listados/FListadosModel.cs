@@ -180,8 +180,8 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionary.Add(DiarioContable, typeof(ListadosDiarioContable));
             _dictionary.Add(Mayor, typeof(ListadosMayor));
             _dictionary.Add(SumasYSaldos, typeof(ListadosBalanceSumasYSaldos));
-            _dictionary.Add(ListadoGuiasBalances, typeof(ListadoGuiasBalances));
-            _dictionary.Add(ListadoGuiasBalancesLineas, typeof(ListadoGuiasBalancesLineas));
+            //_dictionary.Add(ListadoGuiasBalances, typeof(ListadoGuiasBalances));
+            //_dictionary.Add(ListadoGuiasBalancesLineas, typeof(ListadoGuiasBalancesLineas));
             _dictionary.Add(ListadoAcomuladorPeriodos, typeof(ListadoAcomuladorPeriodos));
 
             // CRM
@@ -240,7 +240,7 @@ namespace Marfil.Dom.Persistencia.Listados
             _dictionaryController.Add(DiarioContable, "ListadosDiarioContable");
             _dictionaryController.Add(Mayor, "ListadosMayor");
             _dictionaryController.Add(SumasYSaldos, "ListadosBalanceSumasYSaldos");
-            _dictionaryController.Add(ListadoGuiasBalances, "GuiasBalances");
+            //_dictionaryController.Add(ListadoGuiasBalances, "GuiasBalances");
             _dictionaryController.Add(ListadoAcomuladorPeriodos, "ListadoAcomuladorPeriodos");
 
             // CRM
