@@ -1,4 +1,5 @@
 ﻿using Marfil.Dom.Persistencia.Listados.Base;
+using Marfil.Dom.Persistencia.Model.Contabilidad.Movs;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,10 @@ namespace Marfil.Dom.Persistencia.Listados
         public DateTime FechaHasta { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "SeccionDesde")]
-        public int SeccionDesde { get; set; }
+        public string SeccionDesde { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "SeccionHasta")]
-        public int SeccionHasta { get; set; }
+        public string SeccionHasta { get; set; }
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "Ejercicio")]
         public bool Ejercicio { get; set; }
@@ -53,6 +54,8 @@ namespace Marfil.Dom.Persistencia.Listados
 
         [Display(ResourceType = typeof(RAPeriodos), Name = "IncluirProrrateoAmortizaciones")]
         public bool IncluirProrrateoAmortizaciones { get; set; }
+        public string fkEjercicio { get; set; }
+        public string Empresa { get; set; }
         #endregion
         public ListadoAcomuladorPeriodos()
         {
@@ -60,72 +63,80 @@ namespace Marfil.Dom.Persistencia.Listados
         }
         public ListadoAcomuladorPeriodos(IContextService context):base(context)
         {
-
+            fkEjercicio = context.Ejercicio;
+            Empresa = context.Empresa;
         }
         internal override string GenerarFiltrosColumnas()
         {
-            return base.GenerarFiltrosColumnas();
+            var sb = new StringBuilder();
+            string filtro = string.Empty;
+            bool flag = false;
+            string valor = string.Empty;
+
+            if (!string.IsNullOrEmpty(FechaDesde.ToShortDateString()) || !string.IsNullOrEmpty(FechaHasta.ToShortDateString()))
+            {
+                filtro = $" convert(nvarchar(10),fecha,103) BETWEEN '{FechaDesde.ToShortDateString()}' AND '{FechaHasta.ToShortDateString()}'";
+            }
+            if (Ejercicio)
+            {
+                if (flag)
+                    valor += ",";
+                valor += "'R2'";
+                flag = true;
+            }
+            if(Existencia)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R3'";
+                flag = true;
+            }
+            if(Grupos)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R4'";
+                flag = true;
+            }
+            if (CierreEjercicio)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'R5'";
+                flag = true;
+            }
+            if (IncluirAsientosSimulacion)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'F2'";
+                flag = true;
+            }
+            if (ExcluirAsientosSimulacion)
+            {
+                if (flag)
+                    valor += ",";
+
+                valor += "'F3'";
+                flag = true;
+            }
+
+            if(flag)
+            {
+                filtro += $" AND tipoasiento in({valor}) AND empresa = {Empresa} AND fkejercicio = {fkEjercicio} ";
+            }
+            sb.Append(filtro);
+            return sb.ToString();
         }
         internal override string GenerarSelect()
         {
             var sb = new StringBuilder();
-            sb.Append("Select * from Maes");
+            sb.Append("Select * from Movs");
             return sb.ToString();
         }
-        //public void GenerarMovimiento(MovsModel model, TipoOperacionMaes tipo)// short multiplo)
-        //// multiplo 1 para alta  -1 para baja
-        //{
-        //    // nivel 0
-        //    foreach (var item in model.Lineas.GroupBy(l => l.Fkcuentas))
-        //    {
-        //        string fkcuentas = item.Key;
-
-
-        //        var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
-        //                      ?? _db.Maes.Create();
-
-        //        if (string.IsNullOrWhiteSpace(itemmaes.empresa))
-        //        {
-        //            itemmaes.empresa = model.Empresa;
-        //            itemmaes.fkcuentas = fkcuentas;
-        //            itemmaes.fkejercicio = model.Fkejercicio;
-        //        }
-        //        int multiplo = (tipo == TipoOperacionMaes.Alta ? 1 : -1);
-
-        //        itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l => l.Esdebe == 1).Sum(l => l.Importe) * (multiplo));
-        //        itemmaes.haber = (itemmaes.haber ?? 0) + (item.Where(l => l.Esdebe == -1).Sum(l => l.Importe) * (multiplo));
-        //        itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
-
-        //        _db.Maes.AddOrUpdate(itemmaes);
-        //    }
-
-
-        //    // nivel 0 - 4
-
-        //    for (int nivel = 4; nivel > 0; nivel--)
-        //    {
-        //        foreach (var item in model.Lineas.GroupBy(l => l.Fkcuentas.Substring(0, nivel)))
-        //        {
-        //            string fkcuentas = item.Key;//.Substring(0, nivel);
-
-        //            var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == fkcuentas && f.fkejercicio == model.Fkejercicio)
-        //                           ?? _db.Maes.Create();
-
-        //            if (string.IsNullOrWhiteSpace(itemmaes.empresa))
-        //            {
-        //                itemmaes.empresa = model.Empresa;
-        //                itemmaes.fkcuentas = fkcuentas;
-        //                itemmaes.fkejercicio = model.Fkejercicio;
-        //            }
-        //            int multiplo = (tipo == TipoOperacionMaes.Alta ? 1 : -1);
-
-        //            itemmaes.debe = (itemmaes.debe ?? 0) + (item.Where(l => l.Esdebe == 1).Sum(l => l.Importe) * (multiplo));
-        //            itemmaes.haber = (itemmaes.haber ?? 0) + (item.Where(l => l.Esdebe == -1).Sum(l => l.Importe) * (multiplo));
-        //            itemmaes.saldo = (itemmaes.debe ?? 0) - (itemmaes.haber ?? 0);
-
-        //            _db.Maes.AddOrUpdate(itemmaes);
-        //        }
-        //    }
-        //}
     }
 }

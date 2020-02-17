@@ -23,7 +23,7 @@
     <AssemblyVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
-    <AssemblyVersion>2020.1.480.0</AssemblyVersion>
+    <AssemblyVersion>2019.1.105.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,7 +83,6 @@
     <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.CodeParser.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Utils.v16.2.UI, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -530,6 +529,7 @@
     <Compile Include="Model\Configuracion\EstadosModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesLineasModel.cs" />
     <Compile Include="Model\Contabilidad\GuiasBalancesModel.cs" />
+    <Compile Include="Model\Contabilidad\SaldosAcomuladosPeriodosModel.cs" />
     <Compile Include="Model\Contabilidad\SelectSumasYSaldos.cs" />
     <Compile Include="Model\CRM\CampañasModel.cs" />
     <Compile Include="Model\CRM\CostesVariablesPeriodoModel.cs" />
@@ -537,12 +537,10 @@
     <Compile Include="Model\CRM\ProyectosModel.cs" />
     <Compile Include="Model\CRM\OportunidadesModel.cs" />
     <Compile Include="Model\CRM\SeguimientosModel.cs" />
-    <Compile Include="Model\Documentos\CarteraVencimientos\CarteraVencimientosReport.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosCarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CarteraModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\ValidDataAttribute.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\CircuitosTesoreriaCobrosModel.cs" />
-    <Compile Include="Model\Documentos\CobrosYPagos\AsistenteMovimientosTesoreriaModel.cs" />
     <Compile Include="Model\Documentos\CobrosYPagos\VencimientosModel.cs" />
     <Compile Include="Model\Documentos\DivisionLotes\DivisionLotesModel.cs" />
     <Compile Include="Model\Documentos\FacturasCompras\FacturasDuaValidation.cs" />
@@ -846,13 +844,13 @@
     <Compile Include="ServicesView\Servicios\Contabilidad\IMaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MaesService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\MovsService.cs" />
+    <Compile Include="ServicesView\Servicios\Contabilidad\SaldosAcomuladosPeriodosService.cs" />
     <Compile Include="ServicesView\Servicios\Contabilidad\TipoAsientoContable.cs" />
-    <Compile Include="ServicesView\Servicios\Converter\BancosConverterService.cs" />
-    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
-    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
-    <Compile Include="ServicesView\Servicios\Converter\PrevisionesCarteraConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CircuitosTesoreriaCobrosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\CarteraVencimientosConverterService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\GuiasBalancesLineasConvertService.cs" />
+    <Compile Include="ServicesView\Servicios\Converter\SaldosAcomuladosPeriodosConverteService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\VencimientosConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\SituacionesTesoreriaConverterService.cs" />
     <Compile Include="ServicesView\Servicios\Converter\GrosoresConverterService.cs" />
