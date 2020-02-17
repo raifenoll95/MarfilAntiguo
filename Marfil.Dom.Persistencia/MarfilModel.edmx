@@ -1324,7 +1324,6 @@
           <Property Name="registroivacerradohasta" Type="datetime" />
           <Property Name="criterioiva" Type="int" />
           <Property Name="fkejercicios" Type="int" />
-          <Property Name="fkseriescontables" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesAST" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesIVS" Type="varchar" MaxLength="3" />
           <Property Name="fkseriescontablesIVP" Type="varchar" MaxLength="3" />
@@ -6646,11 +6645,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <FunctionImport Name="spLotes" ReturnType="Collection(MarfilModel.spLotes_Result)" />
           <EntitySet Name="Cartera" EntityType="MarfilModel.Cartera" />
           <EntitySet Name="CircuitosTesoreriaCobros" EntityType="MarfilModel.CircuitosTesoreriaCobros" />
-          <EntitySet Name="Ejercicios" EntityType="MarfilModel.Ejercicios" />
-          <AssociationSet Name="fk_costes_variables" Association="MarfilModel.fk_costes_variables">
-            <End Role="Ejercicios" EntitySet="Ejercicios" />
-            <End Role="CostesVariablesPeriodo" EntitySet="CostesVariablesPeriodo" />
-          </AssociationSet>
           <EntitySet Name="GuiasBalances" EntityType="MarfilModel.GuiasBalances" />
           <EntitySet Name="GuiasBalancesLineas" EntityType="MarfilModel.GuiasBalancesLineas" />
           <EntitySet Name="TipoGuia" EntityType="MarfilModel.TipoGuia" />
@@ -6691,6 +6685,11 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <AssociationSet Name="FK__PrevisionesCarte__5B988E2F" Association="MarfilModel.FK__PrevisionesCarte__5B988E2F">
             <End Role="Vencimientos" EntitySet="Vencimientos" />
             <End Role="PrevisionesCartera" EntitySet="PrevisionesCartera" />
+          </AssociationSet>
+          <EntitySet Name="Ejercicios" EntityType="MarfilModel.Ejercicios" />
+          <AssociationSet Name="fk_costes_variables" Association="MarfilModel.fk_costes_variables">
+            <End Role="Ejercicios" EntitySet="Ejercicios" />
+            <End Role="CostesVariablesPeriodo" EntitySet="CostesVariablesPeriodo" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Administrador">
@@ -12089,48 +12088,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="documentocartera" Type="Boolean" />
           <Property Name="actualizarcobrador" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Ejercicios">
-          <Key>
-            <PropertyRef Name="empresa" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
-          <Property Name="descripcioncorta" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="desde" Type="DateTime" Precision="3" />
-          <Property Name="hasta" Type="DateTime" Precision="3" />
-          <Property Name="estado" Type="Int32" />
-          <Property Name="contabilidadcerradahasta" Type="DateTime" Precision="3" />
-          <Property Name="registroivacerradohasta" Type="DateTime" Precision="3" />
-          <Property Name="criterioiva" Type="Int32" />
-          <Property Name="fkejercicios" Type="Int32" />
-          <Property Name="fkseriescontablesAST" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesIVS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesIVP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesPRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesPRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesINM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CostesVariablesPeriodo" Relationship="MarfilModel.fk_costes_variables" FromRole="Ejercicios" ToRole="CostesVariablesPeriodo" />
-          <Property Name="fkseriescontablesCRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesCRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontablesREM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="fkseriescontables" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="fk_costes_variables">
-          <End Type="MarfilModel.Ejercicios" Role="Ejercicios" Multiplicity="1" />
-          <End Type="MarfilModel.CostesVariablesPeriodo" Role="CostesVariablesPeriodo" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Ejercicios">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="CostesVariablesPeriodo">
-              <PropertyRef Name="empresa" />
-              <PropertyRef Name="fkejercicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="GuiasBalances">
           <Key>
             <PropertyRef Name="Id" />
@@ -12400,6 +12357,47 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
             <Dependent Role="PrevisionesCartera">
               <PropertyRef Name="empresa" />
               <PropertyRef Name="codvencimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ejercicios">
+          <Key>
+            <PropertyRef Name="empresa" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="empresa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="descripcioncorta" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="desde" Type="DateTime" Precision="3" />
+          <Property Name="hasta" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="contabilidadcerradahasta" Type="DateTime" Precision="3" />
+          <Property Name="registroivacerradohasta" Type="DateTime" Precision="3" />
+          <Property Name="criterioiva" Type="Int32" />
+          <Property Name="fkejercicios" Type="Int32" />
+          <Property Name="fkseriescontablesAST" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesIVS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesIVP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesPRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesPRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesCRC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesCRP" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesREM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="fkseriescontablesINM" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CostesVariablesPeriodo" Relationship="MarfilModel.fk_costes_variables" FromRole="Ejercicios" ToRole="CostesVariablesPeriodo" />
+        </EntityType>
+        <Association Name="fk_costes_variables">
+          <End Type="MarfilModel.Ejercicios" Role="Ejercicios" Multiplicity="1" />
+          <End Type="MarfilModel.CostesVariablesPeriodo" Role="CostesVariablesPeriodo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ejercicios">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CostesVariablesPeriodo">
+              <PropertyRef Name="empresa" />
+              <PropertyRef Name="fkejercicio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16685,33 +16683,6 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ejercicios">
-            <EntityTypeMapping TypeName="MarfilModel.Ejercicios">
-              <MappingFragment StoreEntitySet="Ejercicios">
-                <ScalarProperty Name="fkseriescontables" ColumnName="fkseriescontables" />
-                <ScalarProperty Name="fkseriescontablesREM" ColumnName="fkseriescontablesREM" />
-                <ScalarProperty Name="fkseriescontablesCRP" ColumnName="fkseriescontablesCRP" />
-                <ScalarProperty Name="fkseriescontablesCRC" ColumnName="fkseriescontablesCRC" />
-                <ScalarProperty Name="fkseriescontablesINM" ColumnName="fkseriescontablesINM" />
-                <ScalarProperty Name="fkseriescontablesPRP" ColumnName="fkseriescontablesPRP" />
-                <ScalarProperty Name="fkseriescontablesPRC" ColumnName="fkseriescontablesPRC" />
-                <ScalarProperty Name="fkseriescontablesIVP" ColumnName="fkseriescontablesIVP" />
-                <ScalarProperty Name="fkseriescontablesIVS" ColumnName="fkseriescontablesIVS" />
-                <ScalarProperty Name="fkseriescontablesAST" ColumnName="fkseriescontablesAST" />
-                <ScalarProperty Name="fkejercicios" ColumnName="fkejercicios" />
-                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
-                <ScalarProperty Name="registroivacerradohasta" ColumnName="registroivacerradohasta" />
-                <ScalarProperty Name="contabilidadcerradahasta" ColumnName="contabilidadcerradahasta" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="hasta" ColumnName="hasta" />
-                <ScalarProperty Name="desde" ColumnName="desde" />
-                <ScalarProperty Name="descripcioncorta" ColumnName="descripcioncorta" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="empresa" ColumnName="empresa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GuiasBalances">
             <EntityTypeMapping TypeName="MarfilModel.GuiasBalances">
               <MappingFragment StoreEntitySet="GuiasBalances">
@@ -16867,6 +16838,32 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
                 <ScalarProperty Name="origen" ColumnName="origen" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="traza" ColumnName="traza" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="empresa" ColumnName="empresa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ejercicios">
+            <EntityTypeMapping TypeName="MarfilModel.Ejercicios">
+              <MappingFragment StoreEntitySet="Ejercicios">
+                <ScalarProperty Name="fkseriescontablesINM" ColumnName="fkseriescontablesINM" />
+                <ScalarProperty Name="fkseriescontablesREM" ColumnName="fkseriescontablesREM" />
+                <ScalarProperty Name="fkseriescontablesCRP" ColumnName="fkseriescontablesCRP" />
+                <ScalarProperty Name="fkseriescontablesCRC" ColumnName="fkseriescontablesCRC" />
+                <ScalarProperty Name="fkseriescontablesPRP" ColumnName="fkseriescontablesPRP" />
+                <ScalarProperty Name="fkseriescontablesPRC" ColumnName="fkseriescontablesPRC" />
+                <ScalarProperty Name="fkseriescontablesIVP" ColumnName="fkseriescontablesIVP" />
+                <ScalarProperty Name="fkseriescontablesIVS" ColumnName="fkseriescontablesIVS" />
+                <ScalarProperty Name="fkseriescontablesAST" ColumnName="fkseriescontablesAST" />
+                <ScalarProperty Name="fkejercicios" ColumnName="fkejercicios" />
+                <ScalarProperty Name="criterioiva" ColumnName="criterioiva" />
+                <ScalarProperty Name="registroivacerradohasta" ColumnName="registroivacerradohasta" />
+                <ScalarProperty Name="contabilidadcerradahasta" ColumnName="contabilidadcerradahasta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="hasta" ColumnName="hasta" />
+                <ScalarProperty Name="desde" ColumnName="desde" />
+                <ScalarProperty Name="descripcioncorta" ColumnName="descripcioncorta" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
               </MappingFragment>

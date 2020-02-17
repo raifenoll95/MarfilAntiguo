@@ -228,8 +228,6 @@
         <EntityTypeShape EntityType="MarfilModel.Lotes" Width="1.5" PointX="38.375" PointY="38.75" />
         <EntityTypeShape EntityType="MarfilModel.Cartera" Width="1.5" PointX="9.375" PointY="16.75" />
         <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
-        <EntityTypeShape EntityType="MarfilModel.Ejercicios" Width="2.625" PointX="18.375" PointY="44.25" />
-        <AssociationConnector Association="MarfilModel.fk_costes_variables" />
         <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.625" PointY="25" />
         <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.875" PointY="25.25" />
         <EntityTypeShape EntityType="MarfilModel.TipoGuia" Width="1.5" PointX="30.375" PointY="26" />
@@ -247,6 +245,8 @@
         <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="40.375" PointY="48.125" />
         <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5C8CB268" />
         <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5B988E2F" />
+        <EntityTypeShape EntityType="MarfilModel.Ejercicios" Width="1.5" PointX="18.375" PointY="44" />
+        <AssociationConnector Association="MarfilModel.fk_costes_variables" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
