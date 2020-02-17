@@ -9,12 +9,24 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Inf.Genericos.Helper;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using System.Text;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Validation;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
 
     public class CarteraVencimientosService : GestionService<CarteraVencimientosModel, Persistencia.CarteraVencimientos>
     {
+        private string _ejercicioId;
+
+        public string EjercicioId
+        {
+            get { return _ejercicioId; }
+            set
+            {
+                _ejercicioId = value;
+                ((CarteraVencimientosValidation)_validationService).EjercicioId = value;
+            }
+        }
 
         #region CONSTRUCTOR
         public CarteraVencimientosService(IContextService context, MarfilEntities db = null) : base(context, db)

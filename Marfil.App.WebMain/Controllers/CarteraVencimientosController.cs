@@ -14,6 +14,7 @@ using Marfil.Inf.ResourcesGlobalization.Textos.Entidades;
 using Marfil.Dom.Persistencia.ServicesView.Interfaces;
 using System.Collections.Generic;
 using Marfil.Dom.Persistencia.Model.Configuracion;
+using Marfil.Dom.Persistencia.ServicesView;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -204,12 +205,21 @@ namespace Marfil.App.WebMain.Controllers
 
         protected override IEnumerable<IToolbaritem> VerToolbar(IGestionService service, IModelView model)
         {
-            var objModel = model as CarteraVencimientosModel;
+            CarteraVencimientosModel objModel = model as CarteraVencimientosModel;
             var result = base.VerToolbar(service, model).ToList();
             result.Add(new ToolbarSeparatorModel());
             result.Add(CreateComboImprimir(objModel));
             return result;
         }
+
+        //protected override IEnumerable<IToolbaritem> EditToolbar(IGestionService service, IModelView model)
+        //{
+        //    var objModel = model as CarteraVencimientosModel;
+        //    var result = base.EditToolbar(service, model).ToList();
+        //    result.Add(new ToolbarSeparatorModel());
+        //    result.Add(CreateComboImprimir(objModel));
+        //    return result;
+        //}
 
         private ToolbarActionComboModel CreateComboImprimir(CarteraVencimientosModel objModel)
         {
@@ -230,6 +240,11 @@ namespace Marfil.App.WebMain.Controllers
         }
         #endregion
 
-
+        protected override IGestionService createService(IModelView model)
+        {
+            var result = FService.Instance.GetService(typeof(CarteraVencimientosModel), ContextService) as CarteraVencimientosService;
+            result.EjercicioId = ContextService.Ejercicio;
+            return result;
+        }
     }
 }

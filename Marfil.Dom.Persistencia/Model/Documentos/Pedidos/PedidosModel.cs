@@ -367,7 +367,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
 
 
         #region CTR
-
+        
         public PedidosModel()
         {
 
@@ -398,7 +398,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
         public override string DisplayName => RPedidos.TituloEntidad;
         public DocumentosBotonImprimirModel GetListFormatos()
         {
-            var user = Context;
+            var user = base.Context;
             using (var db = MarfilEntities.ConnectToSqlServer(user.BaseDatos))
             {
                 var servicePreferencias = new PreferenciasUsuarioService(db);
@@ -417,7 +417,6 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Pedidos
                     };
                 }
             }
-
         }
     }
     

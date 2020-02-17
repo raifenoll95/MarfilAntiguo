@@ -34,7 +34,6 @@ namespace Marfil.Dom.Persistencia
         public string fkseriescontablesCRC { get; set; }
         public string fkseriescontablesCRP { get; set; }
         public string fkseriescontablesREM { get; set; }
-        public string fkseriescontables { get; set; }
     
         public virtual CostesVariablesPeriodo CostesVariablesPeriodo { get; set; }
     }

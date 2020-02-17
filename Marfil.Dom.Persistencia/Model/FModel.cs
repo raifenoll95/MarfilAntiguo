@@ -1141,20 +1141,6 @@ namespace Marfil.Dom.Persistencia.Model
                 var empresa = appService.GetCurrentEmpresa();
                 return result as T;
             }
-            //else if (typeof(CarteraModel) == typeof(T))
-            //{
-            //    var result = new CarteraModel(context);
-            //    var empresa = appService.GetCurrentEmpresa();
-            //    result.Empresa = empresa.Id;
-            //    return result as T;
-            //}
-            //else if (typeof(VencimientosCarteraModel) == typeof(T))
-            //{
-            //    var result = new VencimientosCarteraModel(context);
-            //    var empresa = appService.GetCurrentEmpresa();
-            //    result.Empresa = empresa.Id;
-            //    return result as T;
-            //}
             var ctor = typeof(T).GetConstructor(new[] { typeof(IContextService) });
             return ctor.Invoke(new object[] { context }) as T;
 
