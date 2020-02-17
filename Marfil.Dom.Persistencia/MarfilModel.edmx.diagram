@@ -230,11 +230,6 @@
         <EntityTypeShape EntityType="MarfilModel.CircuitosTesoreriaCobros" Width="1.5" PointX="39.375" PointY="24.75" />
         <EntityTypeShape EntityType="MarfilModel.Ejercicios" Width="2.625" PointX="18.375" PointY="44.25" />
         <AssociationConnector Association="MarfilModel.fk_costes_variables" />
-        <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="40.375" PointY="48.125" />
-        <EntityTypeShape EntityType="MarfilModel.PrevisionesCartera" Width="1.5" PointX="42.625" PointY="36.625" />
-        <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="40.375" PointY="34.125" />
-        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5DB6AC22" />
-        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5CC287E9" />
         <EntityTypeShape EntityType="MarfilModel.GuiasBalances" Width="1.5" PointX="32.625" PointY="25" />
         <EntityTypeShape EntityType="MarfilModel.GuiasBalancesLineas" Width="1.5" PointX="34.875" PointY="25.25" />
         <EntityTypeShape EntityType="MarfilModel.TipoGuia" Width="1.5" PointX="30.375" PointY="26" />
@@ -247,6 +242,11 @@
         <EntityTypeShape EntityType="MarfilModel.SaldosAcomuladosPeriodos" Width="1.5" PointX="38.375" PointY="15" />
         <EntityTypeShape EntityType="MarfilModel.SaldosAcumuladosPeriodosLin" Width="1.5" PointX="40.625" PointY="15" />
         <AssociationConnector Association="MarfilModel.FK_SaldosAcumuladosPeriodosLin_SaldosAcomuladosPeriodos" />
+        <EntityTypeShape EntityType="MarfilModel.CarteraVencimientos" Width="1.5" PointX="40.375" PointY="34.125" />
+        <EntityTypeShape EntityType="MarfilModel.PrevisionesCartera" Width="1.5" PointX="42.625" PointY="36.625" />
+        <EntityTypeShape EntityType="MarfilModel.Vencimientos" Width="1.5" PointX="40.375" PointY="48.125" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5C8CB268" />
+        <AssociationConnector Association="MarfilModel.FK__PrevisionesCarte__5B988E2F" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
