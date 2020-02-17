@@ -13,24 +13,24 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
     public enum TipoInformeE
     {
         [StringValue(typeof(RGuiasBalances), "Balca")]
-        Balca=1,
+        Balca = 1,
         [StringValue(typeof(RGuiasBalances), "CTAPG")]
-        Ctapg=2,
+        Ctapg = 2,
     }
     public enum TipoGuiaE
     {
         [StringValue(typeof(RGuiasBalances), "TipoGuia1")]
-        Abreviada=1,
+        Abreviada = 1,
         [StringValue(typeof(RGuiasBalances), "TipoGuia2")]
-        Abreviado=2,
+        Abreviado = 2,
         [StringValue(typeof(RGuiasBalances), "TipoGuia3")]
-        COOP_ABREVIA=3,
+        COOP_ABREVIA = 3,
         [StringValue(typeof(RGuiasBalances), "TipoGuia4")]
-        COOP_NORMAL=4,
+        COOP_NORMAL = 4,
         [StringValue(typeof(RGuiasBalances), "TipoGuia5")]
-        NORMAL=5,
+        NORMAL = 5,
         [StringValue(typeof(RGuiasBalances), "TipoGuia6")]
-        PYME=6
+        PYME = 6
     }
 
     //http://localhost:55459/GuiasBalances/Index
@@ -41,7 +41,7 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public int Id { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Informe")]
-        
+
         public int InformeId { get; set; }
 
         [Display(ResourceType = typeof(RGuiasBalances), Name = "Guia")]
@@ -92,7 +92,8 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         }
 
         private List<string> listFormula;
-        public List<string> ListFormula {
+        public List<string> ListFormula
+        {
 
             get { return listFormula; }
             set { listFormula = value; }
