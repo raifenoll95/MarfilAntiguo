@@ -20,10 +20,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
         {
             var movs = _db.Movs.Include(i => i.MovsLin)
                 .Where(w => w.empresa == model.Empresa && w.fechaalta <= Convert.ToDateTime(model.SeccionDesde) && w.fechaalta >= Convert.ToDateTime(model.SeccionHasta) && w.fkejercicio == Convert.ToInt32(model.fkEjercicio) && w.empresa == model.Empresa);
-            
+
             foreach (var m in movs.ToList())
             {
-                foreach (var lineas in m.MovsLin.GroupBy(g=> g.fkcuentas))
+                foreach (var lineas in m.MovsLin.GroupBy(g => g.fkcuentas))
                 {
                     string keyGroup = lineas.Key;
                     var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == keyGroup && f.fkejercicio == Convert.ToInt32(model.fkEjercicio))
