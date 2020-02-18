@@ -8,9 +8,9 @@ using Marfil.Dom.Persistencia.ServicesView.Servicios;
 
 namespace Marfil.App.WebMain.Controllers
 {
-    public class ListadoAcomuladorPeriodosController : ListadosController<ListadoAcomuladorPeriodos>
+    public class ListadoAcumuladorPeriodosController : ListadosController<ListadoAcumuladorPeriodos>
     {
-        public ListadoAcomuladorPeriodosController(IContextService context) : base(context)
+        public ListadoAcumuladorPeriodosController(IContextService context) : base(context)
         {
 
         }

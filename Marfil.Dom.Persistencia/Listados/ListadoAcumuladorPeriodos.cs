@@ -11,11 +11,11 @@ using RAPeriodos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.ListadoAco
 
 namespace Marfil.Dom.Persistencia.Listados
 {
-    public class ListadoAcomuladorPeriodos : ListadosModel
+    public class ListadoAcumuladorPeriodos : ListadosModel
     {
         #region Propiedades defecto
-        public override string TituloListado => "Listado Acomulado de Periodos";
-        public override string IdListado => FListadosModel.ListadoAcomuladorPeriodos;
+        public override string TituloListado => "Listado Acumulador de Periodos";
+        public override string IdListado => FListadosModel.ListadoAcumuladorPeriodos;
         #endregion
 
         #region Propiedades
@@ -59,12 +59,12 @@ namespace Marfil.Dom.Persistencia.Listados
         #endregion
 
 
-        public ListadoAcomuladorPeriodos()
+        public ListadoAcumuladorPeriodos()
         {
 
         }
         
-        public ListadoAcomuladorPeriodos(IContextService context) : base(context)
+        public ListadoAcumuladorPeriodos(IContextService context) : base(context)
         {
             fkEjercicio = context.Ejercicio;
             Empresa = context.Empresa;
