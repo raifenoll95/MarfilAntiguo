@@ -298,7 +298,7 @@
     <Compile Include="Controllers\AsistenteVencimientosApiController.cs" />
     <Compile Include="Controllers\AsignacionSituacionesApiController.cs" />
     <Compile Include="Controllers\GuiasBalancesController.cs" />
-    <Compile Include="Controllers\ListadoAcomuladorPeriodosController.cs" />
+    <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -3479,7 +3479,7 @@
     <Content Include="Views\GuiasBalances\_GuiasBalances.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineas.cshtml" />
     <Content Include="Views\GuiasBalances\_GuiasBalancesLineasGrid.cshtml" />
-    <Content Include="Views\ListadoAcomuladorPeriodos\AcomuladorPeriodos.cshtml" />
+    <Content Include="Views\ListadoAcumuladorPeriodos\AcumuladorPeriodos.cshtml" />
     <Content Include="Views\MovimientosTesoreria\_asignacionstep1.cshtml" />
     <Content Include="Views\MovimientosTesoreria\_asignacionstep2.cshtml" />
     <Content Include="Views\MovimientosTesoreria\_asignacionstep3.cshtml" />

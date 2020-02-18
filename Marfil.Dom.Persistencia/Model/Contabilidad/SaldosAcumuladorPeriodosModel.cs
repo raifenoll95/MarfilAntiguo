@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.Model.Contabilidad
 {
-    public class SaldosAcomuladosPeriodosModel : BaseModel<SaldosAcomuladosPeriodosModel,Persistencia.SaldosAcomuladosPeriodos>
+    public class SaldosAcumuladorPeriodosModel : BaseModel<SaldosAcumuladorPeriodosModel,Persistencia.SaldosAcomuladosPeriodos>
     {
         #region Propiedades
         public string Empresa { get; set; }
@@ -22,11 +22,11 @@ namespace Marfil.Dom.Persistencia.Model.Contabilidad
         public bool IncluirProrrateoAmortizaciones { get; set; }
         public List<SaldosAcumuladosPeriodosLin> AcumuladosPeriodosLins { get; set; }
         #endregion
-        public SaldosAcomuladosPeriodosModel()
+        public SaldosAcumuladorPeriodosModel()
         {
 
         }
-        public SaldosAcomuladosPeriodosModel(IContextService context) : base(context)
+        public SaldosAcumuladorPeriodosModel(IContextService context) : base(context)
         {
 
         }

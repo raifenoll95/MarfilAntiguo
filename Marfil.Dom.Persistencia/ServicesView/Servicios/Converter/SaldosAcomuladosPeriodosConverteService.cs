@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
-    class SaldosAcomuladosPeriodosConverteService : BaseConverterModel<SaldosAcomuladosPeriodosModel, SaldosAcomuladosPeriodos>
+    class SaldosAcomuladosPeriodosConverteService : BaseConverterModel<SaldosAcumuladorPeriodosModel, SaldosAcomuladosPeriodos>
     {
         public SaldosAcomuladosPeriodosConverteService(IContextService context, MarfilEntities db) : base(context, db)
         {

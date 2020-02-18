@@ -11,11 +11,11 @@ using RAPeriodos = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.ListadoAco
 
 namespace Marfil.Dom.Persistencia.Listados
 {
-    public class ListadoAcomuladorPeriodos : ListadosModel
+    public class ListadoAcumuladorPeriodos : ListadosModel
     {
         #region Propiedades defecto
-        public override string TituloListado => "Listado Acomulado de Periodos";
-        public override string IdListado => FListadosModel.ListadoAcomuladorPeriodos;
+        public override string TituloListado => "Listado Acumulador de Periodos";
+        public override string IdListado => FListadosModel.ListadoAcumuladorPeriodos;
         #endregion
 
         #region Propiedades
@@ -57,11 +57,14 @@ namespace Marfil.Dom.Persistencia.Listados
         public string fkEjercicio { get; set; }
         public string Empresa { get; set; }
         #endregion
-        public ListadoAcomuladorPeriodos()
+
+
+        public ListadoAcumuladorPeriodos()
         {
 
         }
-        public ListadoAcomuladorPeriodos(IContextService context):base(context)
+        
+        public ListadoAcumuladorPeriodos(IContextService context) : base(context)
         {
             fkEjercicio = context.Ejercicio;
             Empresa = context.Empresa;
@@ -72,10 +75,9 @@ namespace Marfil.Dom.Persistencia.Listados
             string filtro = string.Empty;
             bool flag = false;
             string valor = string.Empty;
-
             if (!string.IsNullOrEmpty(FechaDesde.ToShortDateString()) || !string.IsNullOrEmpty(FechaHasta.ToShortDateString()))
             {
-                filtro = $" convert(nvarchar(10),fecha,103) BETWEEN '{FechaDesde.ToShortDateString()}' AND '{FechaHasta.ToShortDateString()}'";
+                filtro = $" convert(nvarchar(10),fecha,103) BETWEEN '{FechaDesde.ToShortDateString()}' AND '{FechaHasta.ToShortDateString()} '";
             }
             if (Ejercicio)
             {
@@ -84,7 +86,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 valor += "'R2'";
                 flag = true;
             }
-            if(Existencia)
+            if (Existencia)
             {
                 if (flag)
                     valor += ",";
@@ -92,7 +94,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 valor += "'R3'";
                 flag = true;
             }
-            if(Grupos)
+            if (Grupos)
             {
                 if (flag)
                     valor += ",";
@@ -125,7 +127,7 @@ namespace Marfil.Dom.Persistencia.Listados
                 flag = true;
             }
 
-            if(flag)
+            if (flag)
             {
                 filtro += $" AND tipoasiento in({valor}) AND empresa = {Empresa} AND fkejercicio = {fkEjercicio} ";
             }

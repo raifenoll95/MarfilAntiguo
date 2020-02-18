@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Contabilidad
 {
-    public class SaldosAcomuladosPeriodosService : GestionService<SaldosAcomuladosPeriodosModel, SaldosAcomuladosPeriodos>
+    public class SaldosAcumuladosPeriodosService : GestionService<SaldosAcumuladorPeriodosModel, SaldosAcomuladosPeriodos>
     {
-        public SaldosAcomuladosPeriodosService(IContextService context, MarfilEntities db = null) : base(context, db)
+        public SaldosAcumuladosPeriodosService(IContextService context, MarfilEntities db = null) : base(context, db)
         {
         }
 
-        public void GenerarMovimiento(ListadoAcomuladorPeriodos model, TipoOperacionMaes tipo)// short multiplo)
+        public void GenerarMovimiento(ListadoAcumuladorPeriodos model, TipoOperacionMaes tipo)// short multiplo)
         {
             var movs = _db.Movs.Include(i => i.MovsLin)
                 .Where(w => w.empresa == model.Empresa && w.fechaalta <= Convert.ToDateTime(model.SeccionDesde) && w.fechaalta >= Convert.ToDateTime(model.SeccionHasta) && w.fkejercicio == Convert.ToInt32(model.fkEjercicio) && w.empresa == model.Empresa);
-            
+
             foreach (var m in movs.ToList())
             {
-                foreach (var lineas in m.MovsLin.GroupBy(g=> g.fkcuentas))
+                foreach (var lineas in m.MovsLin.GroupBy(g => g.fkcuentas))
                 {
                     string keyGroup = lineas.Key;
                     var itemmaes = _db.Maes.SingleOrDefault(f => f.empresa == model.Empresa && f.fkcuentas == keyGroup && f.fkejercicio == Convert.ToInt32(model.fkEjercicio))
