@@ -10,6 +10,8 @@ using Marfil.Inf.Genericos.Helper;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using System.Text;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Validation;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Converter;
+using NumerosALetras;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -63,7 +65,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return result.ToString();
         }
 
-        #endregion     
+        #endregion
+
+        public override void edit(IModelView obj)
+        {
+            var model = obj as CarteraVencimientosModel;
+            Conversion c = new Conversion();
+            model.Importeletra = c.enletras(model.Importegiro.ToString());
+            base.edit(model);
+        }
 
         #region CRUD
         public override void create(IModelView obj)
@@ -96,6 +106,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }
 
                 model.Fecha= DateTime.Now;
+                Conversion c = new Conversion();
+                model.Importeletra = c.enletras(model.Importegiro.ToString());
 
                 //Calculo ID
                 var contador = ServiceHelper.GetNextIdContable<CarteraVencimientos>(_db, Empresa, model.Fkseriescontables);
@@ -114,13 +126,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override IModelView get(string id)
         {
-            var model = _converterModel.CreateView(id) as CarteraVencimientosModel;
-            var serviceVencimientos = new VencimientosService(_context);
+            ((CarteraVencimientosConverterService)_converterModel).Ejercicio = EjercicioId;
+            var model =  base.get(id);
 
-            foreach (var linea in model.LineasCartera)
+            var serviceVencimientos = new VencimientosService(_context);
+            foreach (var linea in ((CarteraVencimientosModel)model).LineasCartera)
             {
-                model.LineasPrevisiones.Add(serviceVencimientos.get(linea.Codvencimiento.ToString()) as VencimientosModel);
+                ((CarteraVencimientosModel)model).LineasPrevisiones.Add(serviceVencimientos.get(linea.Codvencimiento.ToString()) as VencimientosModel);
             }
+
             return model;
         }
         #endregion

@@ -14,12 +14,6 @@ namespace Marfil.Dom.Persistencia
     
     public partial class SaldosAcomuladosPeriodos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SaldosAcomuladosPeriodos()
-        {
-            this.SaldosAcumuladosPeriodosLin = new HashSet<SaldosAcumuladosPeriodosLin>();
-        }
-    
         public int Id { get; set; }
         public string Empresa { get; set; }
         public int Ejercicio { get; set; }
@@ -28,8 +22,5 @@ namespace Marfil.Dom.Persistencia
         public string EnProceso { get; set; }
         public System.DateTime FechaHora { get; set; }
         public string Recalculo { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SaldosAcumuladosPeriodosLin> SaldosAcumuladosPeriodosLin { get; set; }
     }
 }

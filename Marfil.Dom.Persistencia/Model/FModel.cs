@@ -1112,6 +1112,7 @@ namespace Marfil.Dom.Persistencia.Model
                 var result = new VencimientosModel(context);
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
+                result.Usuario = context.Usuario;
                 return result as T;
             }
             else if (typeof(CircuitoTesoreriaCobrosModel) == typeof(T))
@@ -1126,6 +1127,7 @@ namespace Marfil.Dom.Persistencia.Model
                 var result = new CarteraVencimientosModel(context);
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
+                result.Usuario = context.Usuario;
                 return result as T;
             }
             else if (typeof(PrevisionesCarteraModel) == typeof(T))

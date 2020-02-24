@@ -55,28 +55,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         private ClientesModelView Cargarlicencia(string id)
         {
-            var cliente = new ClientesModelView();
-            cliente.Id = Guid.NewGuid().ToString();
-            cliente.Dominio = "localhost";
-            cliente.Basedatos = "marfilestable";
-            cliente.Activado = true;
-            cliente.Usuarios = 10;
-            cliente.Tipolicencia = TipoLicencia.Profesional;
-            return cliente;
+            //var cliente = new ClientesModelView();
+            //cliente.Id = Guid.NewGuid().ToString();
+            //cliente.Dominio = "localhost";
+            //cliente.Basedatos = "marfilestable";
+            ////cliente.Dominio = "https://cindugranit.marfilb2b.com";
+            ////cliente.Basedatos = "Cindugranit";
+            //cliente.Activado = true;
+            //cliente.Usuarios = 10;
+            //cliente.Tipolicencia = TipoLicencia.Profesional;
+            //return cliente;
 
-            //var service = new HttpClient();
-            //service.BaseAddress = new Uri(_url);
-            //service.DefaultRequestHeaders.Clear();
-            //service.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
-            //var response = service.GetAsync($"Api/Clientes?id=" + id);
-            //response.Wait();
-            //if (response.Result.IsSuccessStatusCode)
-            //{
-            //    var resultadoCliente = response.Result.Content.ReadAsStringAsync();
-            //    resultadoCliente.Wait();
-            //    return Newtonsoft.Json.JsonConvert.DeserializeObject<ClientesModelView>(resultadoCliente.Result);
-            //}
-            //return null;
+            var service = new HttpClient();
+            service.BaseAddress = new Uri(_url);
+            service.DefaultRequestHeaders.Clear();
+            service.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
+            var response = service.GetAsync($"Api/Clientes?id=" + id);
+            response.Wait();
+            if (response.Result.IsSuccessStatusCode)
+            {
+                var resultadoCliente = response.Result.Content.ReadAsStringAsync();
+                resultadoCliente.Wait();
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<ClientesModelView>(resultadoCliente.Result);
+            }
+            return null;
         }
 
         #endregion

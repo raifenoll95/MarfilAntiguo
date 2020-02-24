@@ -114,16 +114,18 @@ namespace Marfil.App.WebMain.Controllers
                 if (TempData["model"] != null)
                     return View(TempData["model"]);
 
-                var model = gestionService.get(id) as CarteraVencimientosModel;
+                var model = gestionService.get(id);
+                ((CarteraVencimientosModel)model).Context = newModel.Context;
+
                 if (model == null)
                 {
                     return HttpNotFound();
                 }
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
 
-                foreach (var vencimiento in model.LineasPrevisiones)
+                foreach (var vencimiento in ((CarteraVencimientosModel)model).LineasPrevisiones)
                 {
-                    vencimiento.urlDocumento = model.Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
+                    vencimiento.urlDocumento = ((CarteraVencimientosModel)model).Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
                 }
                 return View(model);
             }
@@ -173,7 +175,9 @@ namespace Marfil.App.WebMain.Controllers
             using (var gestionService = createService(newModel))
             {
 
-                var model = gestionService.get(id) as CarteraVencimientosModel;
+                var model = gestionService.get(id);
+                ((CarteraVencimientosModel)model).Context = newModel.Context;
+
                 if (model == null)
                 {
                     return HttpNotFound();
@@ -181,9 +185,9 @@ namespace Marfil.App.WebMain.Controllers
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
 
-                foreach(var vencimiento in model.LineasPrevisiones)
+                foreach(var vencimiento in ((CarteraVencimientosModel)model).LineasPrevisiones)
                 {
-                    vencimiento.urlDocumento = model.Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
+                    vencimiento.urlDocumento = ((CarteraVencimientosModel)model).Tipovencimiento == TipoVencimiento.Cobros ? Url.Action("Details", "Vencimientos", new { id = vencimiento.Id }) : Url.Action("Details", "VencimientosCompra", new { id = vencimiento.Id });
                 }
                 return View(model);
             }
@@ -212,14 +216,14 @@ namespace Marfil.App.WebMain.Controllers
             return result;
         }
 
-        //protected override IEnumerable<IToolbaritem> EditToolbar(IGestionService service, IModelView model)
-        //{
-        //    var objModel = model as CarteraVencimientosModel;
-        //    var result = base.EditToolbar(service, model).ToList();
-        //    result.Add(new ToolbarSeparatorModel());
-        //    result.Add(CreateComboImprimir(objModel));
-        //    return result;
-        //}
+        protected override IEnumerable<IToolbaritem> EditToolbar(IGestionService service, IModelView model)
+        {
+            CarteraVencimientosModel objModel = model as CarteraVencimientosModel;
+            var result = base.VerToolbar(service, model).ToList();
+            result.Add(new ToolbarSeparatorModel());
+            result.Add(CreateComboImprimir(objModel));
+            return result;
+        }
 
         private ToolbarActionComboModel CreateComboImprimir(CarteraVencimientosModel objModel)
         {

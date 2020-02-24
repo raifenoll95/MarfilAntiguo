@@ -11,6 +11,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
     internal class CarteraVencimientosConverterService : BaseConverterModel<CarteraVencimientosModel, Persistencia.CarteraVencimientos>
     {
+        public string Ejercicio { get; set; }
+
         public CarteraVencimientosConverterService(IContextService context, MarfilEntities db) : base(context, db)
         {
         }
@@ -73,6 +75,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fecharemesa = viewmodel.Fecharemesa;
             result.referenciaremesa = viewmodel.Referenciaremesa;
             result.identificadorsegmentoremesa = viewmodel.Identificadorsegmentoremesa;
+            result.importeletra = viewmodel.Importeletra;
 
             foreach (var item in viewmodel.LineasCartera)
             {
@@ -102,7 +105,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fkformaspago = viewmodel.Fkformaspago;
             result.usuario = viewmodel.Usuario;
             result.fkcuentas = viewmodel.Fkcuentas;
-            result.fechacreacion = viewmodel.Fechacreacion;
+            result.fechacreacion = DateTime.Now;
             result.fechavencimiento = viewmodel.Fechavencimiento;
             result.fechadescuento = viewmodel.Fechadescuento;
             result.fechapago = viewmodel.Fechapago;
@@ -123,6 +126,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fecharemesa = viewmodel.Fecharemesa;
             result.referenciaremesa = viewmodel.Referenciaremesa;
             result.identificadorsegmentoremesa = viewmodel.Identificadorsegmentoremesa;
+            result.importeletra = viewmodel.Importeletra;
 
             result.PrevisionesCartera.Clear();
 
@@ -174,7 +178,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Fkseriescontablesremesa = viewmodel.fkseriescontablesremesa,
                 Fecharemesa = viewmodel.fecharemesa,
                 Referenciaremesa = viewmodel.referenciaremesa,
-                Identificadorsegmentoremesa = viewmodel.identificadorsegmentoremesa
+                Identificadorsegmentoremesa = viewmodel.identificadorsegmentoremesa,
+                Importeletra = viewmodel.importeletra
             };
            
             return result;

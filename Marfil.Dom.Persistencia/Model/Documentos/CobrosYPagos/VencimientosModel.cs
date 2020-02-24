@@ -225,7 +225,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         #endregion
     }
 
-    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, Persistencia.CarteraVencimientos>, IDocument, IGaleria
+    public class CarteraVencimientosModel : BaseModel<CarteraVencimientosModel, CarteraVencimientos>, IDocument, IGaleria
     {
 
         //Lineas
@@ -305,6 +305,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importegiro")]
         public double? Importegiro { get; set; }
 
+        public string Importeletra { get; set; }
+
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Cambioaplicado")]
         public double? Cambioaplicado { get; set; }
 
@@ -340,7 +342,6 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Letra")]
         public string Letra { get; set; }
 
-        [Required]
         [Display(ResourceType = typeof(RPedidos), Name = "Fkseries")]
         public string Fkseriescontablesremesa { get; set; }
 
@@ -418,8 +419,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
 
         public GaleriaModel Galeria => throw new NotImplementedException();
 
-        public int Fkejercicio { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Fkestados { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Fkejercicio { get; set; }
+        public string Fkestados { get; set; }
 
         #endregion
     }

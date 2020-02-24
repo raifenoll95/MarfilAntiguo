@@ -22,7 +22,5 @@ namespace Marfil.Dom.Persistencia
         public decimal ImporteHaberEjercicioActual { get; set; }
         public decimal ImporteDebeEjercicioAnterior { get; set; }
         public decimal ImporteHaberEjercicioAnterior { get; set; }
-    
-        public virtual SaldosAcomuladosPeriodos SaldosAcomuladosPeriodos { get; set; }
     }
 }

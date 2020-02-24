@@ -23,7 +23,7 @@
     <AssemblyVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyVersionSettings>
     <AssemblyFileVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyFileVersionSettings>
     <AssemblyInfoVersionSettings>YearStamp.IncrementOnDemandWithReset.Increment.None</AssemblyInfoVersionSettings>
-    <AssemblyVersion>2020.1.480.0</AssemblyVersion>
+    <AssemblyVersion>2020.1.481.0</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -390,6 +390,7 @@
     </Compile>
     <Compile Include="Helpers\ApplicationHelper.cs" />
     <Compile Include="Helpers\CheckPaisEuropeo.cs" />
+    <Compile Include="Helpers\Conversion.cs" />
     <Compile Include="Helpers\Exportar.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\CustomDisplayDescriptionAttribute.cs" />

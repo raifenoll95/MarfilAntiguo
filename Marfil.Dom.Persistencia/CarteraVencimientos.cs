@@ -51,6 +51,7 @@ namespace Marfil.Dom.Persistencia
         public string fkseriescontablesremesa { get; set; }
         public string referenciaremesa { get; set; }
         public string identificadorsegmentoremesa { get; set; }
+        public string importeletra { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrevisionesCartera> PrevisionesCartera { get; set; }
