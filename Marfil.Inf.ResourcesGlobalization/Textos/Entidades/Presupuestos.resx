@@ -233,7 +233,7 @@
     <value>Cód. artículo</value>
   </data>
   <data name="Descripcion" xml:space="preserve">
-    <value>Artículo</value>
+    <value>Descripción</value>
   </data>
   <data name="Lote" xml:space="preserve">
     <value>Lote</value>
@@ -444,5 +444,29 @@
   </data>
   <data name="Enviaremail" xml:space="preserve">
     <value>Enviar email</value>
+  </data>
+  <data name="AsistenteFabricacion" xml:space="preserve">
+    <value>Presupuestos</value>
+  </data>
+  <data name="AsistenteFabricacionComponentes" xml:space="preserve">
+    <value>Asistente de fabricacion de componentes</value>
+  </data>
+  <data name="IdComponente" xml:space="preserve">
+    <value>Componente</value>
+  </data>
+  <data name="FkarticulospadreLin" xml:space="preserve">
+    <value>Arículo desglose</value>
+  </data>
+  <data name="PiezasLin" xml:space="preserve">
+    <value>Piezas</value>
+  </data>
+  <data name="Merma" xml:space="preserve">
+    <value>Merma</value>
+  </data>
+  <data name="DescripcionLin" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Idlineaarticulo" xml:space="preserve">
+    <value>Artículo</value>
   </data>
 </root>

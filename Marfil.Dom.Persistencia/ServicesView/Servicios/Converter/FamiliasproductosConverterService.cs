@@ -115,7 +115,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var result = _db.Familiasproductos.Single(f => f.id == viewmodel.Id && f.empresa == viewmodel.Empresa);
 
             var fkunidadesmedida = result.fkunidadesmedida;
-            var tipofamilia = result.tipofamilia;
+            var tipofamilia = viewmodel.Tipofamilia;
 
             foreach (var item in result.GetType().GetProperties())
             {
@@ -150,7 +150,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
 
             result.fkunidadesmedida = fkunidadesmedida;
-            result.tipofamilia = tipofamilia;            
+            result.tipofamilia = (int)tipofamilia;            
             return result;
         }
 

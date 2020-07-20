@@ -66,8 +66,16 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         [Display(ResourceType = typeof(RArticulosComponentes), Name = "Grueso")]
         public float Grueso { get; set; }
 
+        public float Metros { get; set; }
+
         [Display(ResourceType = typeof(RArticulosComponentes), Name = "Merma")]
         public int Merma { get; set; }
+
+        public string UnidadMedida { get; set; }
+
+        public double Precio { get; set; }
+
+        public double PrecioInicial { get; set; }
 
         #endregion
     }

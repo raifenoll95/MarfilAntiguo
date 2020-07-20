@@ -208,4 +208,7 @@
   <data name="Unidades" xml:space="preserve">
     <value>UM</value>
   </data>
+  <data name="Valorarcomponentes" xml:space="preserve">
+    <value>Valorar componentes</value>
+  </data>
 </root>

@@ -33,7 +33,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                 if (!model.fkMonedabase.HasValue)
                     throw new ValidationException(string.Format(General.ErrorCampoObligatorio, REmpresa.FkMonedaBase));
 
-                if(!ValdiateNif(model))
+                if (!String.IsNullOrEmpty(model.ean13) && model.ean13.Length > 10)
+                    throw new ValidationException(string.Format(General.ErrorEan13));
+
+                if (model.decimalesprecios.HasValue && model.decimalesprecios > 4)
+                    throw new ValidationException(string.Format(General.ErrorDecimalesPrecios));
+
+                if (!ValdiateNif(model))
                     throw new ValidationException(string.Format(General.ErrorFormatoCampo, REmpresa.NifCifAdministrador));
 
                 if (DigitosCuentasModificados(model))

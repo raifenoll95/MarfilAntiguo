@@ -112,7 +112,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal()
         {
-            return string.Format(CuentasService.SelectCuentasTerceros, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes);
+            var a = string.Format(CuentasService.SelectCuentasTerceros, (int)TiposCuentas.Clientes, Empresa, TiposCuentas.Clientes);
+            return a;
         }
 
 

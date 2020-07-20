@@ -39,7 +39,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     var inttipocuenta = (TiposCuentas) Funciones.Qint(tipocuenta).Value;
                     var totalitems = service.GetCuentasClientes(inttipocuenta);
-                    items = totalitems.Where(f => f.Tiposcuentas == (int)inttipocuenta || (f.Tiposcuentas == 0 || !f.Tiposcuentas.HasValue));
+                    items = totalitems.Where(f => (f.Tiposcuentas == (int)inttipocuenta || (f.Tiposcuentas == 0 || !f.Tiposcuentas.HasValue)) && f.Bloqueado == false);
                 }
                 catch (Exception)
                 {

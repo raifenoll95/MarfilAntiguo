@@ -646,11 +646,6 @@ namespace Marfil.Dom.Persistencia.Model
                 result.Direcciones = new DireccionesModel();
                 result.Direcciones.Id = Guid.NewGuid();
                 result.Direcciones.Direcciones = new List<DireccionesLinModel>();
-
-                result.LstTarifasVentas = appService.GetListTarifasBase(TipoFlujo.Venta, db).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion });
-                result.LstTarifasCompras = appService.GetListTarifasBase(TipoFlujo.Compra, db).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion });
-
-
                 return result as T;
             }
             else if (typeof(CuentasModel) == typeof(T))
@@ -764,7 +759,7 @@ namespace Marfil.Dom.Persistencia.Model
             else if (typeof(DireccionesModel) == typeof(T))
             {
                 var result = new DireccionesModel();
-                result.Empresa = appService.GetCurrentEmpresa()?.Id;
+                //result.Empresa = appService.GetCurrentEmpresa()?.Id;
                 result.Id = Guid.NewGuid();
                 result.Direcciones = new List<DireccionesLinModel>();
                 return result as T;

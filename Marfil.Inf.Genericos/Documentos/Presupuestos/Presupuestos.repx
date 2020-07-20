@@ -802,7 +802,7 @@ namespace XtraReportSerialization {
             this.Report.ConnectionName = "Report";
             msSqlConnectionParameters1.AuthorizationType = DevExpress.DataAccess.ConnectionParameters.MsSqlAuthorizationType.SqlServer;
             msSqlConnectionParameters1.DatabaseName = "marfil";
-            msSqlConnectionParameters1.Password = "Totware.2016";
+            msSqlConnectionParameters1.Password = "Tot.2020;";
             msSqlConnectionParameters1.ServerName = "localhost\\SQLExpress";
             msSqlConnectionParameters1.UserName = "sa";
             this.Report.ConnectionParameters = msSqlConnectionParameters1;

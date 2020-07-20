@@ -71,10 +71,12 @@
                             @Html.LabelFor(f => lindireccion.Fkid_direccion, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @{
-                                    var direcciones = Model.Direcciones.Direcciones.Select(f => new SelectListItem() {Text = f.Descripcion, Value = f.Id.ToString()}).ToList();
-                                    direcciones.Insert(0,new SelectListItem() {Text="",Value=""});
+                                    var direcciones = Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList();
+                                    direcciones.Insert(0, new SelectListItem() { Text = "", Value = "" });
                                 }
-                                @Html.DropDownListFor(f => lindireccion.Fkid_direccion, direcciones, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkidioma"} : (object) new {@class = "form-control", @ng_model = "nuevo.Fkidioma"})
+                                @Html.DropDownListFor(f => lindireccion.Fkid_direccion, Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList(), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+                                @*@Html.DropDownListFor(f => lindireccion.Fkid_direccion, Model.Direcciones.Direcciones.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Id.ToString() }).ToList(), isreadonly ? (object)new { @class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkid_direccion" } : (object)new { @class = "form-control", @ng_model = "nuevo.Fkid_direccion" })*@
+                                @*@Html.DropDownListFor(f => lindireccion.Fkid_direccion, direcciones, isreadonly ? (object) new {@class = "form-control", @disabled = "disabled", @ng_model = "nuevo.Fkid_direccion"} : (object) new {@class = "form-control", @ng_model = "nuevo.Fkid_direccion"})*@
                             </div>
                         </div>
 

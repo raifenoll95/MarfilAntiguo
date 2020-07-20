@@ -202,4 +202,10 @@
   <data name="Fkseriescontables" xml:space="preserve">
     <value>Serie contable</value>
   </data>
+  <data name="Ean13" xml:space="preserve">
+    <value>EAN-13 empresa</value>
+  </data>
+  <data name="Decimalesprecios" xml:space="preserve">
+    <value>Decimales precios</value>
+  </data>
 </root>

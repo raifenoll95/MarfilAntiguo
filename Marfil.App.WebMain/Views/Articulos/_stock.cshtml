@@ -18,16 +18,12 @@
 {
     <script src="@Url.Content("~/Scripts/Model/Articulos/articulosstockcontroller.js")"></script>
 }
-<div @Html.Raw(!isreadonly ? "ng-controller=\"ArticulosStockCtrl\" ng-init=\"init(false," + Model.Gestionstock.ToString().ToLower() + "," + (((int)Model.Tipogestionlotes).ToString()) + "," + @Model.Stocknegativoautorizado.ToString().ToLower() + "," + ((Model.Lotefraccionable).ToString().ToLower()) + "," + (((int)Model.Tipofamilia)) + ") \"" : string.Empty)>
-
-
-
+<div @Html.Raw(!isreadonly ? "ng-controller=\"ArticulosStockCtrl\" ng-init=\"init(false," + Model.Gestionstock.ToString().ToLower() + "," + (((int)Model.Tipogestionlotes).ToString()) + "," + @Model.Stocknegativoautorizado.ToString().ToLower() + "," + ((Model.Lotefraccionable).ToString().ToLower()) + "," + ( !isNuevo? ((int)Model.Tipofamilia) : -1) + ") \"" : string.Empty)>
 
     <div class="form-group">
         @Html.LabelFor(f => Model.Gestionstock, new { @class = "control-label col-md-2" })
         <div class="col-md-1">
-            @Html.CheckBoxFor(f => Model.Gestionstock, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @ng_model = "Gestionstock", @ng_disabled = "Gestionstockdisabled" })
-            @Html.ValidationMessageFor(f => Model.Gestionstock, "", new { @class = "text-danger" })
+            @Html.CheckBoxFor(f => Model.Gestionstock, isreadonly ? (object)new { @disabled = "disabled" } : iseditable ? (object)new { } : (object)new { @ng_model = "Gestionstock", @ng_disabled = "!Gestionstockdisabled"})
         </div>
     </div>
 

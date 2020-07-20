@@ -405,10 +405,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                 model.Tipomovimiento == TipoOperacionService.InsertarTraspasosalmacen ||
                 model.Tipomovimiento == TipoOperacionService.FinalizarTransformacionloteStock)
             {
-                historicoitem.costeadicionalmaterial = Math.Round((double)((historicoitem.costeadicionalmaterial ?? 0) + model.Costeadicionalmaterial), decimalesmonedas);
-                historicoitem.costeadicionalportes = Math.Round((double)((historicoitem.costeadicionalportes ?? 0) + model.Costeadicionalportes), decimalesmonedas);
-                historicoitem.costeadicionalotro = Math.Round((double)((historicoitem.costeadicionalotro ?? 0) + model.Costeadicionalotro), decimalesmonedas);
-                historicoitem.costeacicionalvariable = Math.Round((double)((historicoitem.costeacicionalvariable ?? 0) + model.Costeadicionalvariable), decimalesmonedas);
+                historicoitem.costeadicionalmaterial = Math.Round((double)((historicoitem.costeadicionalmaterial ?? 0) + model.Costeadicionalmaterial ?? 0), decimalesmonedas);
+                historicoitem.costeadicionalportes = Math.Round((double)((historicoitem.costeadicionalportes ?? 0) + model.Costeadicionalportes ?? 0), decimalesmonedas);
+                historicoitem.costeadicionalotro = Math.Round((double)((historicoitem.costeadicionalotro ?? 0) + model.Costeadicionalotro ?? 0), decimalesmonedas);
+                historicoitem.costeacicionalvariable = Math.Round((double)((historicoitem.costeacicionalvariable ?? 0) + model.Costeadicionalvariable ?? 0), decimalesmonedas);
             }
 
             //jmm            

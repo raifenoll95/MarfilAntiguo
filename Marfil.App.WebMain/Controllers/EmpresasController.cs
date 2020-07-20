@@ -15,6 +15,7 @@ using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using Resources;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -100,6 +101,38 @@ namespace Marfil.App.WebMain.Controllers
                 
                 
                 return View(model);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public override ActionResult EditOperacion(EmpresaModel model)
+        {
+            var obj = model as IModelView;
+            var objExt = model as IModelViewExtension;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (var gestionService = createService(model))
+                    {
+                        gestionService.edit(model);
+                        TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;
+                        return RedirectToAction("Index");
+                    }
+                }
+                TempData["errors"] = string.Join("; ", ViewData.ModelState.Values
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage));
+                TempData["model"] = model;
+                return RedirectToAction("Edit", new { id = obj.get(objExt.primaryKey.First().Name) });
+            }
+            catch (Exception ex)
+            {
+                model.Context = ContextService;
+                TempData["errors"] = ex.Message;
+                TempData["model"] = model;
+                return RedirectToAction("Edit", new { id = obj.get(objExt.primaryKey.First().Name) });
             }
         }
 

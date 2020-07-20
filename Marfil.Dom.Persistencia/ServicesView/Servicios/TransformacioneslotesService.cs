@@ -125,6 +125,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var model = obj as TransformacioneslotesModel;
                 // Calcular costesadicionales costexm2 o costexm3
+
+                //DocumentosHelpers.GenerarCarpetaAsociada(model, TipoDocumentos.TransformacionesAcabados, _context, _db);
+
                 CalcularCosteTotalMetros(model.Lineas, model.Costes);
 
                 var validation = _validationService as TransformacioneslotesValidation;
@@ -141,7 +144,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 {
                     item.Precio = Math.Round((double)(item.Precio * item.Metros), 2);
                 }
-                
+
                 base.create(obj);
                 var trobj = _db.Transformacioneslotes.Single(f => f.empresa == model.Empresa && f.referencia == model.Referencia);
                 model.Id = trobj.id;
@@ -164,11 +167,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var validation = _validationService as TransformacioneslotesValidation;
                     validation.EjercicioId = EjercicioId;
 
+                    DocumentosHelpers.GenerarCarpetaAsociada(editado, TipoDocumentos.TransformacionesAcabados, _context, _db);
+
                     // Calcular costesadicionales costexm2 o costexm3
                     CalcularCosteTotalMetros(editado.Lineas, editado.Costes);
 
                     RepartirCostesLineas(editado.Lineas, editado.Costes,original.Costes);
-                    
+
                     base.edit(obj);
                     var trabajosService = FService.Instance.GetService(typeof(TrabajosModel), _context) as TrabajosService;
                     var trabajosObj = trabajosService.get(editado.Fktrabajos) as TrabajosModel;

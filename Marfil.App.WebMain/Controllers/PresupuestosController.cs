@@ -25,6 +25,7 @@ using Newtonsoft.Json;
 using Resources;
 using System.Text.RegularExpressions;
 using RFamilias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Familiasproductos;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -32,6 +33,7 @@ namespace Marfil.App.WebMain.Controllers
     {
         private const string session = "_presupuestoslin_";
         private const string sessiontotales = "_presupuestostotales_";
+        private const string sessioncomponentes = "_presupuestoscomponentes";
 
 
         public override string MenuName { get; set; }
@@ -70,17 +72,15 @@ namespace Marfil.App.WebMain.Controllers
            if (TempData["errors"] != null)
                 ModelState.AddModelError("", TempData["errors"].ToString());
 
-
             using (var gestionService = FService.Instance.GetService(typeof(PresupuestosModel), ContextService))
             {
                 var model = TempData["model"] as PresupuestosModel ?? Helper.fModel.GetModel<PresupuestosModel>(ContextService);
                 Session[session] = model.Lineas;
                 Session[sessiontotales] = model.Totales;
+                Session[sessioncomponentes] = model.Componentes;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Alta, model);
                 return View(model);
-            }
-
-            
+            }      
         }
 
         [HttpPost]
@@ -92,6 +92,7 @@ namespace Marfil.App.WebMain.Controllers
                 model.Context = ContextService;
                 model.Lineas = Session[session] as List<PresupuestosLinModel>;
                 model.Totales = Session[sessiontotales] as List<PresupuestosTotalesModel>;
+                model.Componentes = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
                 if (ModelState.IsValid)
                 {
                     
@@ -136,6 +137,7 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 Session[session] = ((PresupuestosModel)model).Lineas;
                 Session[sessiontotales] = ((PresupuestosModel)model).Totales;
+                Session[sessioncomponentes] = ((PresupuestosModel)model).Componentes.OrderBy(f => f.Idlineaarticulo).ToList();
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Editar, model);
                
                 return View(model);
@@ -153,6 +155,7 @@ namespace Marfil.App.WebMain.Controllers
                 model.Context = ContextService;
                 model.Lineas = Session[session] as List<PresupuestosLinModel>;
                 model.Totales = Session[sessiontotales] as List<PresupuestosTotalesModel>;
+                model.Componentes = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
                 if (ModelState.IsValid)
                 {
                     using (var gestionService = createService(model))
@@ -196,6 +199,8 @@ namespace Marfil.App.WebMain.Controllers
                 }
                 Session[session] = ((PresupuestosModel)model).Lineas;
                 Session[sessiontotales] = ((PresupuestosModel)model).Totales;
+                Session[sessioncomponentes] = ((PresupuestosModel)model).Componentes.OrderBy(f => f.Idlineaarticulo).ToList();
+
                 ViewBag.ReadOnly = true;
                 ((IToolbar)model).Toolbar = GenerateToolbar(gestionService, TipoOperacion.Ver, model);
                 return View(model);
@@ -228,7 +233,13 @@ namespace Marfil.App.WebMain.Controllers
                 }
 
             }
+        }
 
+        public ActionResult Fabricar(int id)
+        {
+            var asistenteModel = new PresupuestosAsistenteModel(ContextService);
+            asistenteModel.Id = id;
+            return View(asistenteModel);
         }
 
         public ActionResult CambiarEstado(string documentoReferencia, string estadoNuevo,string returnUrl)
@@ -272,14 +283,20 @@ namespace Marfil.App.WebMain.Controllers
                     Texto = General.LblGenerarPedido,
                     Url = Url.Action("Importar", "Pedidos", new { id = objModel.Id, returnUrl = Url.Action("Edit", new { id = objModel.Id }) })
                 });
-            }
-            
+            } 
 
             result.Add(new ToolbarActionModel()
             {
                 Icono = "fa fa-copy",
                 Texto = General.LblClonar,
                 Url = Url.Action("Clonar", new { id = objModel.Id })
+            });
+
+            result.Add(new ToolbarActionModel()
+            {
+                Icono = "fa fa-cubes",
+                Texto = General.Presupuestar,
+                Url = Url.Action("Fabricar", new { id = objModel.Id })
             });
 
             result.Add(new ToolbarSeparatorModel());
@@ -379,8 +396,12 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     var max = model.Any() ? model.Max(f => f.Id) : 0;
                     item.Id = max + 1;
+                    item.Intaux = item.Id;
+                    item.Integridadreferenciaflag = Guid.NewGuid();
 
                     var moneda = Funciones.Qnull(Request.Params["fkmonedas"]);
+                    var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                    var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
 
                     var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), ContextService);
                     var serviceArticulos = FService.Instance.GetService(typeof(ArticulosModel), ContextService);
@@ -400,8 +421,9 @@ namespace Marfil.App.WebMain.Controllers
                             var decimalesunidades = Funciones.Qint(Request.Params["decimalesunidades"]);
                             var portes = 0;
 
+                            item.Decimalesmonedas = monedaObj.Decimales;
                             item.Importe = Math.Round(item.Importe ?? 0, monedaObj.Decimales);
-                            item.Precio = Math.Round(item.Precio ?? 0, monedaObj.Decimales);
+                            item.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                             item.Decimalesmedidas = decimalesunidades ?? 0;
                             item.Revision = item.Revision?.ToUpper();
 
@@ -470,9 +492,12 @@ namespace Marfil.App.WebMain.Controllers
                     else
                     {
                         var editItem = model.Single(f => f.Id == item.Id);
+                        var integridad = editItem.Integridadreferenciaflag;
                         var moneda = Funciones.Qnull(Request.Params["fkmonedas"]);
                         var decimalesunidades = Funciones.Qint(Request.Params["decimalesunidades"]);
                         var decimalesmonedas = Funciones.Qint(Request.Params["decimalesmonedas"]);
+                        var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                        var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
 
                         var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), ContextService);
                         var monedaObj = serviceMonedas.get(moneda) as MonedasModel;
@@ -496,12 +521,14 @@ namespace Marfil.App.WebMain.Controllers
                         editItem.Importe = Math.Round(item.Importe ?? 0, monedaObj.Decimales);
                         editItem.Importedescuento = item.Importedescuento;
                         editItem.Lote = item.Lote;
-                        editItem.Precio = Math.Round(item.Precio ?? 0, monedaObj.Decimales);
+                        editItem.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                         editItem.Precioanterior = item.Precioanterior;
                         editItem.Porcentajedescuento = item.Porcentajedescuento;
                         editItem.Tabla = item.Tabla;
                         editItem.Revision = item.Revision?.ToUpper();
                         editItem.Orden = item.Orden;
+                        editItem.Integridadreferenciaflag = integridad;
+                        editItem.Intaux = item.Id;
 
                         // Validar dimensiones artículo
                         try
@@ -547,7 +574,14 @@ namespace Marfil.App.WebMain.Controllers
         {
             var model = Session[session] as List<PresupuestosLinModel>;
             var idint = int.Parse(id);
-            model.Remove(model.Single(f => f.Id == idint));
+            var linea = model.Single(f => f.Id == idint);
+
+            //Eliminar los componentes asociados
+            var componentes = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
+            componentes.RemoveAll(f => f.Integridadreferenciaflag == linea.Integridadreferenciaflag);
+
+            model.Remove(linea);
+            Session[sessioncomponentes] = componentes;
             Session[session] = model;
             var moneda = Funciones.Qnull(Request.Params["fkmonedas"]);
 
@@ -582,8 +616,6 @@ namespace Marfil.App.WebMain.Controllers
             Session[session] = lineas.ToList();
             Session[sessiontotales] = service.Recalculartotales(lineas, Funciones.Qdouble(porcentajedescuentopp) ?? 0, Funciones.Qdouble(porcentajedescuentocomercial) ?? 0, 0, decimales);
 
-
-
         }
 
         #endregion
@@ -594,5 +626,137 @@ namespace Marfil.App.WebMain.Controllers
             result.EjercicioId = ContextService.Ejercicio;
             return result;
         }
+
+
+        [HttpPost]
+        public ActionResult Presupuestar(IEnumerable<PresupuestosComponentesLinModel> componentes, string PresupuestoId, string integridadreferencial, string idArticulo)
+        {
+            try
+            {
+                using (var gestionService = FService.Instance.GetService(typeof(PresupuestosModel), ContextService))
+                {
+                    var model = gestionService.get(PresupuestoId) as PresupuestosModel;
+                    var articuloid = Int32.Parse(idArticulo);
+
+                    //Eliminamos los componentes de ese articulo
+                    model.Componentes.RemoveAll(f => f.Idlineaarticulo == articuloid);
+                    int id = 0;
+
+                    foreach (var componente in componentes)
+                    {
+                        componente.Empresa = Empresa;
+                        componente.Id = id;
+                        componente.Idlineaarticulo = articuloid;
+                        componente.Integridadreferenciaflag = new Guid(integridadreferencial); 
+                        id = id + 1;
+                    }
+
+                    model.Componentes.AddRange(componentes);                 
+
+                    foreach(var articulo in model.Lineas)
+                    {
+                        if(articulo.Id == articuloid)
+                        {
+                            articulo.Precio = Math.Round((componentes.Sum(f => f.Precio.Value) / articulo.Metros.Value), model.Decimalesmonedas);
+                        }
+                    }
+
+                    gestionService.edit(model);
+                    TempData[Constantes.VariableMensajeExito] = General.MensajeExitoOperacion;     
+                }
+            }
+
+            catch (Exception ex)
+            {
+                TempData[Constantes.VariableMensajeWarning] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        #region componentes
+
+        [ValidateInput(false)]
+        public ActionResult PresupuestosComponentesLin()
+        {
+            var model = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
+            return PartialView("_componenteslin", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult PresupuestosComponentesLinAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] PresupuestosComponentesLinModel item)
+        {
+            var model = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (model.Any(f => f.Id == item.Id))
+                    {
+                        ModelState.AddModelError("Id", string.Format(General.ErrorRegistroExistente));
+                    }
+                    else
+                    {
+                        var max = model.Any() ? model.Max(f => f.Id) + 1 : 1;
+                        item.Id = max;
+                        model.Add(item);
+                        Session[sessioncomponentes] = model;
+                    }
+                }
+            }
+            catch (ValidationException)
+            {
+                model.Remove(item);
+                throw;
+            }
+
+            return PartialView("_componenteslin", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult PresupuestosComponentesLinUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] PresupuestosComponentesLinModel item)
+        {
+            var model = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
+
+            if (ModelState.IsValid)
+            {
+                var editItem = model.Single(f => f.Id == item.Id);
+                editItem.Fkpresupuestos = item.Fkpresupuestos;
+                editItem.IdComponente = item.IdComponente;
+                editItem.Integridadreferenciaflag = item.Integridadreferenciaflag;
+                editItem.Descripcioncomponente = item.Descripcioncomponente;
+                editItem.Piezas = item.Piezas;
+                editItem.Largo = item.Largo;
+                editItem.Ancho = item.Ancho;
+                editItem.Grueso = item.Grueso;
+                editItem.Merma = item.Merma;
+                editItem.Precio = item.Precio;
+                Session[sessioncomponentes] = model;
+            }
+
+            return PartialView("_componenteslin", Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult PresupuestosComponentesLinDelete(string id)
+        {
+            var model = Session[sessioncomponentes] as List<PresupuestosComponentesLinModel>;
+            model.Remove(model.Single(f => f.Id.ToString() == id));
+
+            if (model.Count() >= 1)
+            {
+                int count = 0;
+                foreach (var linea in model)
+                {
+                    linea.Id = count;
+                    count++;
+                }
+            }
+
+            Session[sessioncomponentes] = model;
+            return PartialView("_componenteslin", model);
+        }
+
+        #endregion
     }
 }

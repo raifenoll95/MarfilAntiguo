@@ -32,9 +32,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
     {
         private List<TransformacioneslotesLinModel> _lineassalida=new List<TransformacioneslotesLinModel>();
         private List<TransformacioneslotesCostesadicionalesModel> _costes = new List<TransformacioneslotesCostesadicionalesModel>();
+        private GaleriaModel _galeria;
 
         #region Properties
 
+        [Key]
         public int? Id { get; set; }
         
         public string Empresa { get; set; }
@@ -195,20 +197,20 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
 
         #endregion
 
-        public override object generateId(string id)
-        {
-            return id;
-        }
+        //public override object generateId(string id)
+        //{
+        //    return id;
+        //}
 
-        public override void createNewPrimaryKey()
-        {
-            primaryKey = getProperties().Where(f => f.property.Name.ToLower() == "id").Select(f => f.property);
-        }
+        //public override void createNewPrimaryKey()
+        //{
+        //    primaryKey = getProperties().Where(f => f.property.Name.ToLower() == "id").Select(f => f.property);
+        //}
 
-        public override string GetPrimaryKey()
-        {
-            return Id.ToString();
-        }
+        //public override string GetPrimaryKey()
+        //{
+        //    return Id.ToString();
+        //}
 
         public override string DisplayName => RTransformacioneslotes.TituloEntidad;
         public DocumentosBotonImprimirModel GetListFormatos()
@@ -247,8 +249,29 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
             return TipoEstado.Diseño;
         }
 
+        public override object generateId(string id)
+        {
+            return id;
+        }
+
         [Display(ResourceType = typeof(Inf.ResourcesGlobalization.Textos.Entidades.Albaranes), Name = "Estado")]
         public string Fkestados { get; set; }
+
+        public Guid? Fkcarpetas { get; set; }
+
+        public GaleriaModel Galeria
+        {
+            get
+            {
+                _galeria = new GaleriaModel();
+                if (Fkcarpetas.HasValue)
+                {
+                    _galeria.Empresa = Empresa;
+                    _galeria.DirectorioId = Fkcarpetas.Value;
+                }
+                return _galeria;
+            }
+        }
     }
 
     public class TransformacioneslotesLinModel : IDocumentosLinModel

@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Aplicacion", "1.Aplicacion", "{50E2647E-C730-49BE-8BB2-1CBCD8A14B9F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Presentacion", "2.Presentacion", "{5FFF4872-B875-4B4F-BE9A-87F588B53E61}"
+	ProjectSection(SolutionItems) = preProject
+		Marfil.App.WebMain\Views\Shared\Header\_empresa.cshtml = Marfil.App.WebMain\Views\Shared\Header\_empresa.cshtml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Dominio", "3.Dominio", "{807AEA26-BD93-4B53-AD80-41D391C666BC}"
 EndProject
@@ -1023,54 +1026,7 @@ Global
 		{FC7A5ACD-EF6B-4621-98C0-853B0F11BE9D} = {50E2647E-C730-49BE-8BB2-1CBCD8A14B9F}
 		{D4026400-7BAB-451D-BA33-D80283E6D48A} = {50E2647E-C730-49BE-8BB2-1CBCD8A14B9F}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://192.168.222.150:9191/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Marfil.Dom.Persistencia_UT\\Marfil.Dom.Persistencia_UT.csproj
-		SccProjectTopLevelParentUniqueName1 = Marfil.sln
-		SccProjectName1 = Marfil.Dom.Persistencia_UT
-		SccLocalPath1 = Marfil.Dom.Persistencia_UT
-		SccProjectUniqueName2 = Marfil.Inf.Genericos\\Marfil.Inf.Genericos.csproj
-		SccProjectTopLevelParentUniqueName2 = Marfil.sln
-		SccProjectName2 = Marfil.Inf.Genericos
-		SccLocalPath2 = Marfil.Inf.Genericos
-		SccProjectUniqueName3 = Marfil.Dom.Campoverificacion\\Marfil.Dom.Campoverificacion.csproj
-		SccProjectTopLevelParentUniqueName3 = Marfil.sln
-		SccProjectName3 = Marfil.Dom.Campoverificacion
-		SccLocalPath3 = Marfil.Dom.Campoverificacion
-		SccProjectUniqueName4 = Marfil.App.WebMain\\Marfil.App.WebMain.csproj
-		SccProjectTopLevelParentUniqueName4 = Marfil.sln
-		SccProjectName4 = Marfil.App.WebMain
-		SccLocalPath4 = Marfil.App.WebMain
-		SccProjectUniqueName5 = Marfil.Dom.ControlsUI\\Marfil.Dom.ControlsUI.csproj
-		SccProjectTopLevelParentUniqueName5 = Marfil.sln
-		SccProjectName5 = Marfil.Dom.ControlsUI
-		SccLocalPath5 = Marfil.Dom.ControlsUI
-		SccProjectUniqueName6 = Marfil.Inf.ResourcesGlobalization\\Marfil.Inf.ResourcesGlobalization.csproj
-		SccProjectTopLevelParentUniqueName6 = Marfil.sln
-		SccProjectName6 = Marfil.Inf.ResourcesGlobalization
-		SccLocalPath6 = Marfil.Inf.ResourcesGlobalization
-		SccProjectUniqueName7 = Marfil.Dom.Persistencia\\Marfil.Dom.Persistencia.csproj
-		SccProjectTopLevelParentUniqueName7 = Marfil.sln
-		SccProjectName7 = Marfil.Dom.Persistencia
-		SccLocalPath7 = Marfil.Dom.Persistencia
-		SccProjectUniqueName8 = Marfil.App.ConfiguracionAyuda\\Marfil.App.ConfiguracionAyuda.csproj
-		SccProjectTopLevelParentUniqueName8 = Marfil.sln
-		SccProjectName8 = Marfil.App.ConfiguracionAyuda
-		SccLocalPath8 = Marfil.App.ConfiguracionAyuda
-		SccProjectUniqueName9 = Marfil.Pre.Ficheros\\Marfil.Pre.Ficheros.csproj
-		SccProjectTopLevelParentUniqueName9 = Marfil.sln
-		SccProjectName9 = Marfil.Pre.Ficheros
-		SccLocalPath9 = Marfil.Pre.Ficheros
-		SccProjectUniqueName10 = Marfil.App.ExportarDatos\\Marfil.App.ExportarDatos.csproj
-		SccProjectTopLevelParentUniqueName10 = Marfil.sln
-		SccProjectName10 = Marfil.App.ExportarDatos
-		SccLocalPath10 = Marfil.App.ExportarDatos
-		SccProjectUniqueName11 = Marfil.App.TestGenerator\\Marfil.App.TestGenerator.csproj
-		SccProjectTopLevelParentUniqueName11 = Marfil.sln
-		SccProjectName11 = Marfil.App.TestGenerator
-		SccLocalPath11 = Marfil.App.TestGenerator
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3CAF04A-8AD2-46B4-A928-357B2FB38AFC}
 	EndGlobalSection
 EndGlobal

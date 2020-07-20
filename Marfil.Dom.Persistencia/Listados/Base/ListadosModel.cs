@@ -99,7 +99,8 @@ namespace Marfil.Dom.Persistencia.Listados.Base
                 var filtros = GenerarFiltros();
                 if (!string.IsNullOrEmpty(filtros))
                     filtros = " WHERE " + filtros;
-                return GenerarSelect() + filtros ;
+                var a = GenerarSelect() + filtros;
+                return a;
 
             }
         }

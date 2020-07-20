@@ -79,6 +79,9 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         [Display(ResourceType = typeof(REmpresas), Name = "NifCifAdministrador")]
         public NifCifModel NifCifAdministrador { get; set; }
 
+        [Display(ResourceType = typeof(REmpresas), Name = "Ean13")]
+        public string Ean13 { get; set; }
+
         //actividad
         [Display(ResourceType = typeof(REmpresas), Name = "TipoEmpresa")]
         public string TipoEmpresa { get; set; }
@@ -141,6 +144,9 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
 
         [Display(ResourceType = typeof(REmpresas), Name = "FkCuentaSalidasVariasAlmacen")]
         public string FkCuentaSalidasVariasAlmacen { get; set; }
+
+        [Display(ResourceType = typeof(REmpresas), Name = "Decimalesprecios")]
+        public int? Decimalesprecios { get; set; }
 
         private DireccionesModel _direcciones;
         private IEnumerable<EjerciciosModel> _ejercicios= Enumerable.Empty<EjerciciosModel>();

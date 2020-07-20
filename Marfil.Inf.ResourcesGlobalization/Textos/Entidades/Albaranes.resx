@@ -783,4 +783,7 @@
   <data name="TipoOperacionServiceInsertarCostes" xml:space="preserve">
     <value>Insertar costes adicionales</value>
   </data>
+  <data name="Merma" xml:space="preserve">
+    <value>Merma</value>
+  </data>
 </root>

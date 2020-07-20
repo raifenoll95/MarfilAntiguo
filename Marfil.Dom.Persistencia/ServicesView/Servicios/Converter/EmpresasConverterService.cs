@@ -34,7 +34,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var ejerciciosService = fService.GetService(typeof(EjerciciosModel), auxContext, _db) as EjerciciosService;
             result.Direcciones=new DireccionesModel();
             result.Direcciones.Empresa = id;
-            result.Direcciones.Direcciones = direccionesService.GetDirecciones(-1,id);
+            result.Direcciones.Direcciones = direccionesService.GetDirecciones(-1,Empresa);
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero =-1;
             result.LstTarifasVentas = _appService.GetListTarifasBase(TipoFlujo.Venta,_db).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion });
@@ -75,6 +75,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fkregimeniva = viewmodel.Fkregimeniva;
             result.fkCuentaEntradasVariasAlmacen = viewmodel.FkCuentaEntradasVariasAlmacen;
             result.fkCuentaSalidasVariasAlmacen = viewmodel.FkCuentaSalidasVariasAlmacen;
+            result.ean13 = viewmodel.Ean13;
+            result.decimalesprecios = viewmodel.Decimalesprecios;
             return result;
         }
 
@@ -109,6 +111,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.fkregimeniva = viewmodel.Fkregimeniva;
             result.fkCuentaEntradasVariasAlmacen = viewmodel.FkCuentaEntradasVariasAlmacen;
             result.fkCuentaSalidasVariasAlmacen = viewmodel.FkCuentaSalidasVariasAlmacen;
+            result.ean13 = viewmodel.Ean13;
+            result.decimalesprecios = viewmodel.Decimalesprecios;
             return result;
         }
 
@@ -141,6 +145,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Fkregimeniva = obj.fkregimeniva;
             result.FkCuentaEntradasVariasAlmacen = obj.fkCuentaEntradasVariasAlmacen;
             result.FkCuentaSalidasVariasAlmacen = obj.fkCuentaSalidasVariasAlmacen;
+            result.Ean13 = obj.ean13;
+            result.Decimalesprecios = obj.decimalesprecios;
             return result;
         }
     }

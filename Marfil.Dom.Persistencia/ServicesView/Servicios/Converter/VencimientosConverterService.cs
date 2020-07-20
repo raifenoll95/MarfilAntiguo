@@ -4,6 +4,8 @@ using System.Linq;
 using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using System;
+using Marfil.Dom.Persistencia.Helpers;
+using System.Data.Entity;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
@@ -21,7 +23,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override IModelView CreateView(string id)
         {
             var idnum = Int32.Parse(id);
-            var obj = _db.Set<Persistencia.Vencimientos>().Single(f => f.empresa == Empresa && f.id == idnum);
+            var obj = _db.Set<Persistencia.Vencimientos>().Where(f => f.empresa == Empresa && f.id == idnum).Include(f => f.PrevisionesCartera).Single();
             var result = GetModelView(obj) as VencimientosModel;
             return result;
         }
@@ -103,40 +105,37 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
         public override IModelView GetModelView(Persistencia.Vencimientos viewmodel)
         {
-            var result = new VencimientosModel
-            {
-                Empresa = viewmodel.empresa,
-                Id = viewmodel.id,
-                Traza = viewmodel.traza,
-                Fkseriescontables = viewmodel.fkseriescontables,
-                Referencia = viewmodel.referencia,
-                Identificadorsegmento = viewmodel.identificadorsegmento,
-                Fecha = viewmodel.fecha,
-                Tipo = (TipoVencimiento)viewmodel.tipo,
-                Origen = (TipoOrigen)viewmodel.origen,
-                Usuario = viewmodel.usuario,
-                Fkcuentas = viewmodel.fkcuentas,
-                Fechacreacion = viewmodel.fechacreacion,
-                Fechafactura = viewmodel.fechafactura,
-                Fecharegistrofactura = viewmodel.fecharegistrofactura,
-                Fechavencimiento = viewmodel.fechavencimiento,
-                Fechadescuento = viewmodel.fechadescuento,
-                Fechapago = viewmodel.fechapago,
-                Monedabase = viewmodel.monedabase.Value,
-                Monedagiro = viewmodel.monedagiro.Value,
-                Importegiro = viewmodel.importegiro.Value,
-                //Importefactura = viewmodel.importefactura.Value,
-                //Cambioaplicado = viewmodel.cambioaplicado.Value,
-                Monedafactura = viewmodel.monedafactura.Value,
-                Fkcuentatesoreria = viewmodel.fkcuentatesoreria,
-                Fkformaspago = viewmodel.fkformaspago,
-                Mandato = viewmodel.mandato,
-                Importeasignado = viewmodel.importeasignado.Value,
-                Importepagado = viewmodel.importepagado.Value,
-                Estado = (TipoEstado)viewmodel.estado,
-                Situacion = viewmodel.situacion,
-                Comentario = viewmodel.comentario
-            };
+
+            var result = Helper.fModel.GetModel<VencimientosModel>(Context);
+            result.Empresa = viewmodel.empresa;
+            result.Id = viewmodel.id;
+            result.Traza = viewmodel.traza;
+            result.Fkseriescontables = viewmodel.fkseriescontables;
+            result.Referencia = viewmodel.referencia;
+            result.Identificadorsegmento = viewmodel.identificadorsegmento;
+            result.Fecha = viewmodel.fecha;
+            result.Tipo = (TipoVencimiento)viewmodel.tipo;
+            result.Origen = (TipoOrigen)viewmodel.origen;
+            result.Usuario = viewmodel.usuario;
+            result.Fkcuentas = viewmodel.fkcuentas;
+            result.Fechacreacion = viewmodel.fechacreacion;
+            result.Fechafactura = viewmodel.fechafactura;
+            result.Fecharegistrofactura = viewmodel.fecharegistrofactura;
+            result.Fechavencimiento = viewmodel.fechavencimiento;
+            result.Fechadescuento = viewmodel.fechadescuento;
+            result.Fechapago = viewmodel.fechapago;
+            result.Monedabase = viewmodel.monedabase;
+            result.Monedagiro = viewmodel.monedagiro;
+            result.Importegiro = viewmodel.importegiro;
+            result.Monedafactura = viewmodel.monedafactura;
+            result.Fkcuentatesoreria = viewmodel.fkcuentatesoreria;
+            result.Fkformaspago = viewmodel.fkformaspago;
+            result.Mandato = viewmodel.mandato;
+            result.Importeasignado = viewmodel.importeasignado;
+            result.Importepagado = viewmodel.importepagado;
+            result.Estado = (TipoEstado)viewmodel.estado;
+            result.Situacion = viewmodel.situacion;
+            result.Comentario = viewmodel.comentario;
            
             return result;
         }

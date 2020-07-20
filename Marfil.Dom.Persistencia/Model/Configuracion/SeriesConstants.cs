@@ -71,6 +71,8 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion
         [StringValue(typeof(RFamilias), "TituloEntidad")]
         Familias,
         [StringValue(typeof(RCobrosYPagos), "TituloEntidadCartera")]
-        CarteraVencimientos
+        CarteraVencimientos,
+        [StringValue(typeof(RTransformaciones), "TituloEntidadAcabados")]
+        TransformacionesAcabados
     }
 }

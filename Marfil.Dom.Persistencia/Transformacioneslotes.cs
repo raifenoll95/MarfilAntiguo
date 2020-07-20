@@ -48,6 +48,7 @@ namespace Marfil.Dom.Persistencia
         public System.Guid fkusuariomodificacion { get; set; }
         public System.DateTime fechamodificacion { get; set; }
         public Nullable<System.Guid> integridadreferencialflag { get; set; }
+        public Nullable<System.Guid> fkcarpetas { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transformacioneslotescostesadicionales> Transformacioneslotescostesadicionales { get; set; }

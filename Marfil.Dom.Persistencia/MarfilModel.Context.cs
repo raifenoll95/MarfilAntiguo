@@ -182,7 +182,6 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Diariostock> Diariostock { get; set; }
         public virtual DbSet<ListadoStockValorado> ListadoStockValorado { get; set; }
         public virtual DbSet<Lotes> Lotes { get; set; }
-        public virtual DbSet<Cartera> Cartera { get; set; }
         public virtual DbSet<CircuitosTesoreriaCobros> CircuitosTesoreriaCobros { get; set; }
         public virtual DbSet<GuiasBalances> GuiasBalances { get; set; }
         public virtual DbSet<GuiasBalancesLineas> GuiasBalancesLineas { get; set; }
@@ -194,6 +193,7 @@ namespace Marfil.Dom.Persistencia
         public virtual DbSet<Ejercicios> Ejercicios { get; set; }
         public virtual DbSet<SaldosAcomuladosPeriodos> SaldosAcomuladosPeriodos { get; set; }
         public virtual DbSet<SaldosAcumuladosPeriodosLin> SaldosAcumuladosPeriodosLin { get; set; }
+        public virtual DbSet<PresupuestosComponentesLin> PresupuestosComponentesLin { get; set; }
     
         public virtual ObjectResult<spLotes_Result> spLotes()
         {

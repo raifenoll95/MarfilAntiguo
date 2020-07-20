@@ -365,7 +365,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             foreach (var cuenta in cuentastesoreria)
             {
-                cuentas.Add(cuentasService.get(cuenta.fkcuentas) as CuentasModel);
+                var cuentaModel = cuentasService.get(cuenta.fkcuentas) as CuentasModel;
+
+                if(!cuentaModel.Bloqueado)
+                {
+                    cuentas.Add(cuentaModel);
+                }             
             }
 
             return cuentas;

@@ -49,7 +49,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -62,6 +62,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Charts.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.TreeMap.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -107,9 +110,21 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="jQuery.Validation.Unobtrusive.Native, Version=1.1.5809.17463, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jQuery.Validation.Unobtrusive.Native.MVC5.1.3.0\lib\net45\jQuery.Validation.Unobtrusive.Native.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.1.1.11\lib\net45\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net45\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net45\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
@@ -160,6 +175,9 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -168,22 +186,28 @@
       <HintPath>..\packages\OpenHtmlToPdf.1.12.0.0\lib\net45\OpenHtmlToPdf.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -236,6 +260,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Ubiety.Dns.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mvc5, Version=1.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Mvc5.1.2.3\lib\net45\Unity.Mvc5.dll</HintPath>
       <Private>True</Private>
@@ -251,6 +278,9 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Zstandard.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +313,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
+    <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
+    <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
+    <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
     <Compile Include="Controllers\CuentasTesoreriaApiController.cs" />
     <Compile Include="Controllers\MovimientosTesoreriaController.cs" />
     <Compile Include="Controllers\BusquedaArticulosConSinStockSingleLotesApiController.cs" />
@@ -299,6 +332,7 @@
     <Compile Include="Controllers\AsignacionSituacionesApiController.cs" />
     <Compile Include="Controllers\GuiasBalancesController.cs" />
     <Compile Include="Controllers\ListadoAcumuladorPeriodosController.cs" />
+    <Compile Include="Controllers\SituacionesExclusiveApiController.cs" />
     <Compile Include="Controllers\SituacionesApiController.cs" />
     <Compile Include="Controllers\VencimientosCompraController.cs" />
     <Compile Include="Controllers\CircuitosTesoreriaController.cs" />
@@ -1872,10 +1906,11 @@
     <Content Include="bin\App_Data\Otros\municipios.csv" />
     <Content Include="bin\App_Data\Otros\situacionestesoreria.csv" />
     <Content Include="bin\App_Data\TablasVarias\clasificacionarticulos.csv" />
-    <None Include="Properties\PublishProfiles\Azure.pubxml" />
-    <None Include="Properties\PublishProfiles\Estable.pubxml">
+    <Content Include="App_Data\Otros\circuitostesoreria.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
+    <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -1924,13 +1959,6 @@
     <Content Include="Scripts\globalize-cultures\Messages\Messages.en.js.map" />
     <Content Include="Scripts\globalize-cultures\Messages\Messages.es.js.map" />
     <Content Include="Scripts\globalize-cultures\Messages\Messages.fr.js.map" />
-    <None Include="Properties\PublishProfiles\Marfilnet - FTP %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Marfilnet - FTP %283%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Marfilnet - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\Marfilnet - Azure Produccion.pubxml" />
-    <None Include="Properties\PublishProfiles\Marfilnet - Web Deploy %28Jorge%29.pubxml" />
-    <None Include="Properties\PublishProfiles\Marfilnet - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\Subvencion.pubxml" />
     <Content Include="Scripts\Directivas\KeyDirectivas.js" />
     <Content Include="Scripts\EventAgregator\EventAgregator.js" />
     <Content Include="Scripts\fullheight.js" />
@@ -2369,6 +2397,7 @@
     <Content Include="Scripts\Model\Pedidos\SaldarPedidoController.js" />
     <Content Include="Scripts\Model\Pedidos\PedidosController.js" />
     <Content Include="Scripts\Model\PresupuestosCompras\PresupuestosComprasController.js" />
+    <Content Include="Scripts\Model\Presupuestos\PresupuestosAsistenteController.js" />
     <Content Include="Scripts\Model\Presupuestos\PresupuestosController.js" />
     <Content Include="Scripts\Model\Prospectos\convertirprospectoscontroller.js" />
     <Content Include="Scripts\Model\Puertos\PuertosController.js" />
@@ -3490,6 +3519,13 @@
     <Content Include="Views\Designer\SaveDialog.cshtml" />
     <Content Include="Views\Designer\Visualizar.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\Presupuestos\Fabricar.cshtml" />
+    <Content Include="Views\Presupuestos\_asignacionstep1.cshtml" />
+    <Content Include="Views\Presupuestos\_asignacionstep2.cshtml" />
+    <Content Include="Views\Presupuestos\_nuevoregistro.cshtml" />
+    <Content Include="Views\Presupuestos\_componentes.cshtml" />
+    <Content Include="Views\Presupuestos\_componenteslin.cshtml" />
+    <Content Include="Views\ListadosConsultaTesoreria\ConsultaTesoreria.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3514,7 +3550,6 @@
     <Folder Include="Scripts\inputmask\dependencyLibs\" />
     <Folder Include="Scripts\inputmask\global\" />
     <Folder Include="Scripts\inputmask\phone-codes\" />
-    <Folder Include="Views\BusquedaArticulosConSinStockSingleLotesApi\" />
     <Folder Include="Views\ChangeCulture\" />
     <Folder Include="Views\ComentariosAsientosApi\" />
     <Folder Include="Views\Email\" />
@@ -3611,7 +3646,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Azure|AnyCPU'">
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <Optimize>false</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -3630,7 +3666,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'localhost|AnyCPU'">
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>

@@ -120,7 +120,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 newItem.Decimalesmonedas = decimalesmoneda;
                 newItem.Fktiposiva = item.Key;
                 newItem.Porcentajeiva = objIva.porcentajeiva;
-                newItem.Brutototal = Math.Round((item.Sum(f => f.Importe) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
+                newItem.Brutototal = Math.Round((item.Sum(f => (f.Metros * f.Precio)) - item.Sum(f => f.Importedescuento)) ?? 0, decimalesmoneda);
                 newItem.Porcentajerecargoequivalencia = objIva.porcentajerecargoequivalente;
                 newItem.Porcentajedescuentoprontopago = descuentopp;
                 newItem.Porcentajedescuentocomercial = descuentocomercial;
@@ -327,6 +327,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var service = new BuscarDocumentosService(_db, Empresa);
             return service.Get<PresupuestosModel,PresupuestosLinModel,PresupuestosTotalesModel>(this,referencia);
+        }
+
+        public IEnumerable<PresupuestosLinModel> articulosComponentes(string id)
+        {
+            var model = get(id) as PresupuestosModel;
+            List<PresupuestosLinModel> lineas = new List<PresupuestosLinModel>();
+            var componentes = _db.ArticulosComponentes.Where(f => f.empresa == Empresa).ToList();
+
+            foreach(var articulo in model.Lineas)
+            {
+                if(componentes.Any(f => f.fkarticulo == articulo.Fkarticulos))
+                {
+                    lineas.Add(articulo);
+                }
+            }
+
+            return lineas;
         }
     }
 }

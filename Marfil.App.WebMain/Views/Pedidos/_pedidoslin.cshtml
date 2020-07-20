@@ -627,8 +627,8 @@
     }
 
     eventAggregator.RegisterEvent("Fkarticulos-Buscarfocus", function (obj) {
+        console.log("llega al Fkarticulos-Buscarfocus: " + obj);
         Fkarticulos.SetValue(obj);
-
         cDescripcion = GridViewLineas.GetEditor("Descripcion");
         GridViewLineas.SetEnabled(false);
 

@@ -54,14 +54,15 @@ namespace Marfil.App.WebMain.Controllers
             
             using (var service = new CuentasService(ContextService))
             {
-
-                var list = service.get(id) as CuentasModel;
+                var model = service.get(id) as CuentasModel;
                 var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
-                    "application/json");
+                if (!model.Bloqueado)
+                {            
+                    response.Content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8,
+                        "application/json");
+                    
+                }
                 return response;
-               
-
             }
         }
     }

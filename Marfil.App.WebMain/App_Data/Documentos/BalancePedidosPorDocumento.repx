@@ -435,8 +435,8 @@ namespace XtraReportSerialization {
             this.Report.ConnectionName = "Report";
             msSqlConnectionParameters1.AuthorizationType = DevExpress.DataAccess.ConnectionParameters.MsSqlAuthorizationType.SqlServer;
             msSqlConnectionParameters1.DatabaseName = "marfilestable";
-            msSqlConnectionParameters1.Password = "Totware.2016";
-            msSqlConnectionParameters1.ServerName = "192.168.222.150";
+            msSqlConnectionParameters1.Password = "Tot.2020;";
+            msSqlConnectionParameters1.ServerName = "192.168.223.210";
             msSqlConnectionParameters1.UserName = "sa";
             this.Report.ConnectionParameters = msSqlConnectionParameters1;
             this.Report.Name = "Report";

@@ -79,7 +79,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Porcentaje = f.porcentaje,
                 Total = f.total,
                 Tipocoste = (TipoCoste)f.tipocoste,
-                Tiporeparto = (TipoReparto)f.tiporeparto
+                Tiporeparto = (TipoReparto)f.tiporeparto,
+                Notas = f.notas
             }).ToList();
             return result;
         }
@@ -192,7 +193,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.fechamodificacion = DateTime.Now;
             result.fkusuariomodificacion = Context.Id;
-
            
 
             result.Transformacionesloteslin.Clear();

@@ -47,6 +47,7 @@
 
 
         //edition
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "RecepcionesStock", Action = "AlbaranesComprasLinAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "RecepcionesStock", Action = "AlbaranesComprasLinUpdate" };
         settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "RecepcionesStock", Action = "AlbaranesComprasLinDelete" };
         settings.CustomActionRouteValues = new { Controller = "RecepcionesStock", Action = "CustomGridViewEditingPartial" };
@@ -404,7 +405,6 @@
             settings.CommandColumn.ShowEditButton = true;
 
             settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblBorrar + " - (F2)\"></i>";
-
             settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
 
             settings.CommandColumn.Width = Unit.Pixel(150);

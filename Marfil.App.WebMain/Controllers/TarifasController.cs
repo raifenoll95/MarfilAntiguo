@@ -17,6 +17,8 @@ using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.ResourcesGlobalization.Textos.Entidades;
 using Resources;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -272,11 +274,14 @@ namespace Marfil.App.WebMain.Controllers
 
                         var service = FService.Instance.GetService(typeof(UnidadesModel), ContextService);
                         var serviceFamilia = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService);
+                        var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                        var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
 
                         var familiaObj = serviceFamilia.get(item.Fkarticulos.Substring(0, 2)) as FamiliasproductosModel;
 
                         var unidadesObj = service.get(familiaObj.Fkunidadesmedida) as UnidadesModel;
                         item.Unidades = unidadesObj.Codigounidad;
+                        item.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
 
                         model.Lineas.Add(item);
                         Session[session] = model;
@@ -310,7 +315,11 @@ namespace Marfil.App.WebMain.Controllers
                         ModelState.AddModelError("Precio", string.Format(General.ErrorCampoObligatorio, Tarifas.Precio));
                         return PartialView("_listadotarifas", model);
                     }
-                    editItem.Precio = item.Precio;
+
+                    var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                    var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
+
+                    editItem.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                     editItem.Descuento = item.Descuento;
 
                     Session[session] = model;
@@ -331,6 +340,19 @@ namespace Marfil.App.WebMain.Controllers
             model.Lineas.Remove(model.Lineas.Single(f => f.Fkarticulos == Fkarticulos));
             Session[session] = model;
             return PartialView("_listadotarifas", model);
+        }
+
+        public ActionResult getPrecio(string componente, string unidadmedida)
+        {
+            var servicioTarifas = FService.Instance.GetService(typeof(TarifasModel), ContextService) as TarifasService;
+            var precio = servicioTarifas.getPrecioComponentes(componente);
+            var serviceArticulos = FService.Instance.GetService(typeof(ArticulosModel), ContextService) as ArticulosService;
+            var articuloModel = serviceArticulos.get(componente) as ArticulosModel;
+            var metros = 0;
+
+            var preciototal = precio;
+            var data = JsonConvert.SerializeObject(preciototal, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

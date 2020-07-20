@@ -100,6 +100,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                     item.SetValue(result, viewmodel.get(item.Name));
             }
 
+            if(viewmodel.Tipodeportes != null)
+            {
+                result.tipoportes = (int)viewmodel.Tipodeportes;
+            }
+
+            else
+            {
+                result.tipoportes = null;
+            }
+
             result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
 
@@ -117,6 +127,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                     item.SetValue(result, viewmodel.get(item.Name));
             }
 
+            if (viewmodel.Tipodeportes != null)
+            {
+                result.tipoportes = (int)viewmodel.Tipodeportes;
+            }
+
+            else
+            {
+                result.tipoportes = null;
+            }
+
             result.fkpuertosfkpaises = viewmodel.Fkpuertos.Fkpaises;
             result.fkpuertosid = viewmodel.Fkpuertos.Id;
             
@@ -129,6 +149,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.Fkpuertos.Fkpaises = obj.fkpuertosfkpaises;
             result.Fkpuertos.Id = obj.fkpuertosid;
+
+            if(obj.tipoportes != null)
+            {
+                result.Tipodeportes = (Tipoportes)obj.tipoportes;
+            }
 
             return result;
         }

@@ -314,6 +314,10 @@ app.controller('RecepcionStockCtrl', ['$scope', '$http', '$location', '$window',
         }
     }
 
+    $scope.AceptarComponente = function () {
+        var a = 3;
+    }
+
     $scope.EnviarDatos = function () {
         var Model = {};
         $scope.Fkarticulos = $("[name='Fkarticulosentrada']").val();

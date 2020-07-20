@@ -35,7 +35,7 @@
         $scope.Valormaterial = valormaterial;
         $scope.Valorcaracteristica = valorcaracteristica;        
         $scope.VerificarTipofamilia(Tipofamilia);
-        $scope.actualizarTipofamilia(Tipofamilia);
+        //$scope.actualizarTipofamilia(Tipofamilia);
         $scope.LOADING = false;
     }
 
@@ -55,51 +55,55 @@
     });
 
         //Cambia el tipo de familia
-        $scope.$watch("Tipofamilia", function (nwevalue, oldvalue) {         
-            $scope.actualizarTipofamilia(nwevalue);
-        });
-
-        //Bloquear Gestiones
-        $scope.actualizarTipofamilia = function (tipofamilia) {
-
-            $scope.Lotefraccionabledisabled = false;
-
-            if (tipofamilia == 1 || tipofamilia == 2) {
-                $scope.Gestionstock = true;
-                $scope.Gestionstockdisabled = true;
-                $("[name='Gestionstock']").val(true);
-            }
-
-            else {
-                $scope.Gestionstock = true;
-                $scope.Gestionstockdisabled = false;
-                $("[name='Gestionstock']").val(true);
-            }
-
-            $scope.Tipogestionlotesdisabled = false; //Si es tabla o bloque, puede elegir el que quiera
-            $scope.Stocknegativoautorizadodisabled = false;
-            $scope.VerificarTipofamilia(tipofamilia);
+    $scope.$watch("Tipofamilia", function (newvalue, oldvalue) {
+        if (newvalue != -1) {
+            $scope.actualizarTipofamilia(newvalue);
         }
-       
+    });
 
-    $scope.$watch("Gestionstock", function (nwevalue, oldvalue) {
+
+    //Bloquear Gestiones
+    $scope.actualizarTipofamilia = function (tipofamilia) {
+
+        $scope.Lotefraccionabledisabled = false;
+
+        if (tipofamilia == 1 || tipofamilia == 2) {
+            $scope.Gestionstock = true;
+            $scope.Gestionstockdisabled = false;
+        }
+
+        else {
+            $scope.Gestionstock = true;
+            $scope.Gestionstockdisabled = true;
+        }
+
+        $scope.Tipogestionlotesdisabled = false; //Si es tabla o bloque, puede elegir el que quiera
+        $scope.Stocknegativoautorizadodisabled = false;
+        $scope.VerificarTipofamilia(tipofamilia);    
+    }
+    
+
+    $scope.$watch("Gestionstock", function (newvalue, oldvalue) {
+
+        $("[name='Validarmaterial']").val(newvalue);
+
         if (!$scope.Gestionstock) {
             $scope.Tipogestionlotes = 0;
             $scope.Stocknegativoautorizado = false;
         }
     });
 
-    $scope.$watch("Tipogestionlotes", function (nwevalue, oldvalue) {
+    $scope.$watch("Tipogestionlotes", function (newvalue, oldvalue) {
         if ($scope.Tipogestionlotes > 0) {
             $scope.Stocknegativoautorizado = false;
         }
     });
-    $scope.$watch("Valormaterial", function (nwevalue, oldvalue) {
-        $("[name='Validarmaterial']").val(nwevalue);
+    $scope.$watch("Valormaterial", function (newvalue, oldvalue) {
+        $("[name='Validarmaterial']").val(newvalue);
 
     });
-    $scope.$watch("Valorcaracteristica", function (nwevalue, oldvalue) {
-        $("[name='Validarcaracteristica']").val(nwevalue);
+    $scope.$watch("Valorcaracteristica", function (newvalue, oldvalue) {
+        $("[name='Validarcaracteristica']").val(newvalue);
 
     });
 

@@ -11,8 +11,12 @@
     $scope.fkclientes = "";
     $scope.urlApiBancos = "";
     $scope.urlDescargaDefecto = "";
-    $scope.init = function (firstEdit, cliente, agente, comercial, bancomandato, fkobras, isnuevo, urlrefrescar, urlApiBancos, urlDescargaDefecto)
+
+    $scope.regimenIVA;
+
+    $scope.init = function (regimenIVA, firstEdit, cliente, agente, comercial, bancomandato, fkobras, isnuevo, urlrefrescar, urlApiBancos, urlDescargaDefecto)
     {
+        $scope.regimenIVA = regimenIVA;
         $scope.firstEditClientes = firstEdit && cliente!=="";
         $scope.firstEditAgentes = firstEdit && agente !== "";
         $scope.firstEditComerciales = firstEdit && comercial !== "";
@@ -27,12 +31,20 @@
 
     $("[name='Porcentajedescuentoprontopago']").bind('change', function (event, previousText) {
         if (!$scope.firstEditComerciales) {
+            var descuento = $("[name='Porcentajedescuentoprontopago']").val();
+            if (descuento.includes(",")) {
+                $("[name='Porcentajedescuentoprontopago']").val(descuento.replace(",", "."));
+            }
             $scope.refrescharGrids();
         }
     });
 
     $("[name='Porcentajedescuentocomercial']").bind('change', function (event, previousText) {
         if (!$scope.firstEditComerciales) {
+            var descuento = $("[name='Porcentajedescuentocomercial']").val();
+            if (descuento.includes(",")) {
+                $("[name='Porcentajedescuentocomercial']").val(descuento.replace(",", "."));
+            }
             $scope.refrescharGrids();
         }
     });
@@ -108,6 +120,7 @@
         });
 
         eventAggregator.RegisterEvent("Fkcomerciales-cv", function (message) {
+
             if (!$scope.firstEditComerciales) {
                 $("[name='Comisioncomercial']").val(message.Porcentajecomision);
             }
@@ -121,9 +134,12 @@
         });
 
         eventAggregator.RegisterEvent("Fkregimeniva-cv", function (message) {
-            if (!$scope.firstEditComerciales) {
-                $scope.refrescharGrids();
-            }
+            if (message.Id != $scope.regimenIVA) {
+                $scope.regimenIVA = message.Id;
+                if (!$scope.firstEditComerciales) {
+                    $scope.refrescharGrids();
+                }
+            }       
         });
 
         $scope.calcularBancoscliente = function () {

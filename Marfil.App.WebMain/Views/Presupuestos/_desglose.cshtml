@@ -14,8 +14,6 @@
     Session["readonly"] = isreadonly;
     var isNuevo = !isreadonly && !iseditable;
 
-
-
 }
 <script src="@Url.Content("~/Scripts/documentosasociados.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Tiposiva/TiposivadocumentosController.js")"></script>
@@ -321,6 +319,7 @@
             window.setTimeout(function () { GridViewLineas.SetHorizontalScrollPosition(0); GridViewTotales.SetHorizontalScrollPosition(0); }, 0);
             Fkarticulos.SetValue("");
             Fkarticulos.Focus();
+            GridViewTotales.Refresh();
 
         }
         if (operation === "CUSTOMCALLBACK") {

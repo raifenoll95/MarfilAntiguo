@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
+using Marfil.Dom.ControlsUI.Toolbar;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados;
@@ -27,13 +28,14 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
 {
     public class PresupuestosModel : BaseModel<PresupuestosModel, Persistencia.Presupuestos>, IDocument, IGaleria
     {
-        private List<PresupuestosLinModel> _lineas=new List<PresupuestosLinModel>();
+        private List<PresupuestosLinModel> _lineas = new List<PresupuestosLinModel>();
         private List<PresupuestosTotalesModel> _totales = new List<PresupuestosTotalesModel>();
+        private List<PresupuestosComponentesLinModel> _componentes = new List<PresupuestosComponentesLinModel>();
 
         #region Properties
 
         public int? Id { get; set; }
-        
+
         public string Empresa { get; set; }
 
         [Required]
@@ -43,7 +45,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         [Required]
         [Display(ResourceType = typeof(RPresupuestos), Name = "Fkejercicio")]
         public int Fkejercicio { get; set; }
-        
+
         [Display(ResourceType = typeof(RPresupuestos), Name = "Identificadorsegmento")]
         public string Identificadorsegmento { get; set; }
 
@@ -149,7 +151,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             {
                 using (var serviceEstados = new EstadosService(Context))
                 {
-                   return serviceEstados.GetStates(DocumentoEstado.PresupuestosVentas, Tipoestado(Context));
+                    return serviceEstados.GetStates(DocumentoEstado.PresupuestosVentas, Tipoestado(Context));
                 }
             }
         }
@@ -162,7 +164,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             {
                 if (!string.IsNullOrEmpty(Fkestados))
                 {
-                    using (var estadosService = FService.Instance.GetService(typeof (EstadosModel), Context))
+                    using (var estadosService = FService.Instance.GetService(typeof(EstadosModel), Context))
                     {
                         return estadosService.get(Fkestados) as EstadosModel;
                     }
@@ -170,7 +172,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
                 return null;
             }
         }
-        
+
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Importebruto")]
         public double? Importebruto { get; set; }
@@ -215,7 +217,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         public int Peso { get; set; }
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Confianza")]
-        [Range(0,100,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "RangeClient")]
+        [Range(0, 100, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "RangeClient")]
         public int Confianza { get; set; }
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Costemateriales")]
@@ -228,7 +230,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
 
         public string Totaldocumento
         {
-            get { return (Importetotaldoc??0.0).ToString("N" + Decimalesmonedas); }
+            get { return (Importetotaldoc ?? 0.0).ToString("N" + Decimalesmonedas); }
         }
 
         [Required]
@@ -258,7 +260,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         [Display(ResourceType = typeof(RPresupuestos), Name = "Fkbancosmandatos")]
         public string Fkbancosmandatos { get; set; }
 
-        [MaxLength(25,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(25, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RPresupuestos), Name = "Cartacredito")]
         public string Cartacredito { get; set; }
 
@@ -267,10 +269,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
 
         public string Vencimientocartacreditocadena
         {
-            get { return Vencimientocartacredito?.ToShortDateString().ToString(CultureInfo.InvariantCulture)??string.Empty; }
+            get { return Vencimientocartacredito?.ToShortDateString().ToString(CultureInfo.InvariantCulture) ?? string.Empty; }
         }
 
-        [Range(0,99,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "RangeClient")]
+        [Range(0, 99, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "RangeClient")]
         [Display(ResourceType = typeof(RPresupuestos), Name = "Contenedores")]
         public int? Contenedores { get; set; }
 
@@ -315,6 +317,16 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         {
             get { return _totales; }
             set { _totales = value; }
+        }
+
+        #endregion
+
+        #region Componentes
+
+        public List<PresupuestosComponentesLinModel> Componentes
+        {
+            get { return _componentes; }
+            set { _componentes = value; }
         }
 
         #endregion
@@ -366,7 +378,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
                         Tipo = TipoDocumentoImpresion.PresupuestosVentas,
                         Lineas = lst.Select(f => f.Nombre),
                         Primarykey = Referencia,
-                        Defecto= doc?.Name
+                        Defecto = doc?.Name
                     };
                 }
             }
@@ -385,12 +397,17 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             return TipoEstado.Diseño;
         }
     }
-    
-    public class PresupuestosLinModel:ILineasDocumentosBusquedaMovil
+
+    public class PresupuestosLinModel : ILineasDocumentosBusquedaMovil
     {
-        private int? _decimalesmonedas=2;
-        private int? _decimalesmedidas=3;
+        private int? _decimalesmonedas = 2;
+        private int? _decimalesmedidas = 3;
+        
         public int Id { get; set; }
+
+        [Display(ResourceType = typeof(RPresupuestos), Name = "Idlineaarticulo")]
+        public int? Intaux { get; set; }
+
         private int? _orden;
 
         public int? Decimalesmonedas
@@ -409,11 +426,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         [Display(ResourceType = typeof(RPresupuestos), Name = "Fkarticulos")]
         public string Fkarticulos { get; set; }
 
-        [MaxLength(120,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(120, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RPresupuestos), Name = "Descripcion")]
         public string Descripcion { get; set; }
 
-        [MaxLength(12,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "MaxLength")]
+        [MaxLength(12, ErrorMessageResourceType = typeof(Unobtrusive), ErrorMessageResourceName = "MaxLength")]
         [Display(ResourceType = typeof(RPresupuestos), Name = "Lote")]
         public string Lote { get; set; }
 
@@ -455,7 +472,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         [Display(ResourceType = typeof(RPresupuestos), Name = "Grueso")]
         public string SGrueso
         {
-            get { return (Grueso ?? 0.0).ToString("N" + Decimalesmedidas,CultureInfo.CurrentUICulture); }
+            get { return (Grueso ?? 0.0).ToString("N" + Decimalesmedidas, CultureInfo.CurrentUICulture); }
             set { Grueso = Funciones.Qdouble(value); }
         }
 
@@ -476,8 +493,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         public double? Precio { get; set; }
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Precio")]
-        public string SPrecio {
-            get { return (Precio ?? 0.0).ToString("N" + Decimalesmonedas, CultureInfo.CurrentUICulture); }
+        public string SPrecio
+        {
+            get { return (Precio ?? 0.0).ToString(); }
             set { Precio = Funciones.Qdouble(value); }
         }
 
@@ -486,7 +504,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuento")]
         public double? Importedescuento { get; set; }
-        
+
         public string Fkregimeniva { get; set; }
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Fktiposiva")]
@@ -517,7 +535,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
         [Display(ResourceType = typeof(RPresupuestos), Name = "Notas")]
         public string Notas { get; set; }
 
-        
+
 
         [Display(ResourceType = typeof(RPresupuestos), Name = "Precioanterior")]
         public double? Precioanterior { get; set; }
@@ -535,110 +553,221 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Presupuestos
             get { return _orden ?? Id * ApplicationHelper.EspacioOrdenLineas; }
             set { _orden = value; }
         }
+
+        public Guid? Integridadreferenciaflag { get; set; }
     }
 
-    public class PresupuestosLinImportarModel:PresupuestosLinModel
-    {
-        public int Fkpresupuestos { get; set; }        
-        public string Fkpresupuestosreferencia { get; set; }
-        public int? Fkmonedas { get; set; }
-        public PresupuestosModel Cabecera { get; set; }
-        
+        public class PresupuestosLinImportarModel : PresupuestosLinModel
+        {
+            public int Fkpresupuestos { get; set; }
+            public string Fkpresupuestosreferencia { get; set; }
+            public int? Fkmonedas { get; set; }
+            public PresupuestosModel Cabecera { get; set; }
+
+        }
+
+        public struct StDocumentoReferencia
+        {
+            public string Referencia { get; set; }
+            public string CampoId { get; set; }
+        }
+
+        public class PresupuestosTotalesModel : ITotalesDocumentosBusquedaMovil
+        {
+            public int? Decimalesmonedas { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Fktiposiva")]
+            public string Fktiposiva { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajeiva")]
+            public double? Porcentajeiva { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "BrutoTotal")]
+            public double? Brutototal { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "BrutoTotal")]
+            public string SBrutototal
+            {
+                get { return (Brutototal ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Brutototal = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Basetotal")]
+            public double? Baseimponible { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Basetotal")]
+            public string SBaseimponible
+            {
+                get { return (Baseimponible ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Baseimponible = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotaiva")]
+            public double? Cuotaiva { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotaiva")]
+            public string SCuotaiva
+            {
+                get { return (Cuotaiva ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Cuotaiva = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajerecargoequivalencia")]
+            public double? Porcentajerecargoequivalencia { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotarecargoequivalencia")]
+            public double? Importerecargoequivalencia { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotarecargoequivalencia")]
+            public string SImporterecargoequivalencia
+            {
+                get { return (Importerecargoequivalencia ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Importerecargoequivalencia = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajedescuentoprontopago")]
+            public double? Porcentajedescuentoprontopago { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentoprontopago")]
+            public double? Importedescuentoprontopago { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentoprontopago")]
+            public string SImportedescuentoprontopago
+            {
+                get { return (Importedescuentoprontopago ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Importedescuentoprontopago = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajedescuentocomercial")]
+            public double? Porcentajedescuentocomercial { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentocomercial")]
+            public double? Importedescuentocomercial { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentocomercial")]
+            public string SImportedescuentocomercial
+            {
+                get { return (Importedescuentocomercial ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Importedescuentocomercial = Funciones.Qdouble(value); }
+            }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Subtotal")]
+            public double? Subtotal { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Subtotal")]
+            public string SSubtotal
+            {
+                get { return (Subtotal ?? 0.0).ToString("N" + Decimalesmonedas); }
+                set { Subtotal = Funciones.Qdouble(value); }
+            }
+        }
+
+        public class ToolbarPresupuestosAsistenteModel : ToolbarModel
+        {
+            public ToolbarPresupuestosAsistenteModel()
+            {
+                Operacion = TipoOperacion.Custom;
+                Titulo = RPresupuestos.AsistenteFabricacion;
+            }
+
+            public override string GetCustomTexto()
+            {
+                return RPresupuestos.AsistenteFabricacionComponentes;
+            }
+        }
+
+
+        public class PresupuestosAsistenteModel : IToolbar
+        {
+            private ToolbarModel _toolbar;
+
+            public ToolbarModel Toolbar
+            {
+                get { return _toolbar; }
+                set { _toolbar = value; }
+            }
+
+            public PresupuestosAsistenteModel(IContextService context)
+            {
+                _toolbar = new ToolbarPresupuestosAsistenteModel();
+            }
+
+            public PresupuestosAsistenteModel()
+            {
+            }
+
+            public int Id { get; set; }
+            public bool Presupuestado { get; set; }
+        }
+
+        public class PresupuestosComponentesLinModel : BaseModel<PresupuestosComponentesLinModel, PresupuestosComponentesLin>
+        {
+            public PresupuestosComponentesLinModel()
+            {
+            }
+
+            public PresupuestosComponentesLinModel(IContextService context) : base(context)
+            {
+
+            }
+
+            public override string DisplayName => "";
+
+            public override object generateId(string id)
+            {
+                return id;
+            }
+
+            public override void createNewPrimaryKey()
+            {
+                primaryKey = getProperties().Where(f => f.property.Name.ToLower() == "id").Select(f => f.property);
+            }
+
+            public override string GetPrimaryKey()
+            {
+                return this.Id.ToString();
+            }
+
+            public string Empresa { get; set; }
+
+            public int Fkpresupuestos { get; set; }
+
+            //1,2,3,4,5
+            public int Id { get; set; }
+
+            //Id Articulo Componente
+            [Display(ResourceType = typeof(RPresupuestos), Name = "IdComponente")]
+            public string IdComponente { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Idlineaarticulo")]
+            public int? Idlineaarticulo { get; set; }
+
+            //REFERENCIA DEL PADRE (INTEGRIDAD REFERENCIAL)
+            public Guid? Integridadreferenciaflag { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "DescripcionLin")]
+            public string Descripcioncomponente { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "PiezasLin")]
+            public int? Piezas { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Largo")]
+            public double? Largo { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Ancho")]
+            public double? Ancho { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Grueso")]
+            public double? Grueso { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Merma")]
+            public int? Merma { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Subtotal")]
+            public double? Precio { get; set; }
+
+            [Display(ResourceType = typeof(RPresupuestos), Name = "Precio")]
+            public double? PrecioInicial { get; set; }
+        }
     }
 
-    public struct StDocumentoReferencia
-    {
-        public string Referencia { get; set; }
-        public string CampoId { get; set; }
-    }
-
-    public class PresupuestosTotalesModel: ITotalesDocumentosBusquedaMovil
-    {
-        public int? Decimalesmonedas { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Fktiposiva")]
-        public string Fktiposiva { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajeiva")]
-        public double? Porcentajeiva { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "BrutoTotal")]
-        public double? Brutototal { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "BrutoTotal")]
-        public string SBrutototal {
-            get { return (Brutototal??0.0).ToString("N" + Decimalesmonedas); }
-            set { Brutototal = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Basetotal")]
-        public double? Baseimponible { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Basetotal")]
-        public string SBaseimponible
-        {
-            get { return (Baseimponible ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Baseimponible = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotaiva")]
-        public double ? Cuotaiva { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotaiva")]
-        public string SCuotaiva
-        {
-            get { return (Cuotaiva ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Cuotaiva = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajerecargoequivalencia")]
-        public double? Porcentajerecargoequivalencia { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotarecargoequivalencia")]
-        public double? Importerecargoequivalencia { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Cuotarecargoequivalencia")]
-        public string SImporterecargoequivalencia
-        {
-            get { return (Importerecargoequivalencia ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importerecargoequivalencia = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajedescuentoprontopago")]
-        public double? Porcentajedescuentoprontopago { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentoprontopago")]
-        public double? Importedescuentoprontopago { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentoprontopago")]
-        public string SImportedescuentoprontopago
-        {
-            get { return (Importedescuentoprontopago ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importedescuentoprontopago = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Porcentajedescuentocomercial")]
-        public double? Porcentajedescuentocomercial { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentocomercial")]
-        public double? Importedescuentocomercial { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Importedescuentocomercial")]
-        public string SImportedescuentocomercial
-        {
-            get { return (Importedescuentocomercial ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Importedescuentocomercial = Funciones.Qdouble(value); }
-        }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Subtotal")]
-        public double? Subtotal { get; set; }
-
-        [Display(ResourceType = typeof(RPresupuestos), Name = "Subtotal")]
-        public string SSubtotal
-        {
-            get { return (Subtotal ?? 0.0).ToString("N" + Decimalesmonedas); }
-            set { Subtotal = Funciones.Qdouble(value); }
-        }
-    }
-
-}

@@ -16,6 +16,9 @@ using Marfil.Inf.ResourcesGlobalization.Textos.Entidades;
 using Resources;
 using DevExpress.Web.Mvc;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Newtonsoft.Json;
+using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos;
+using Marfil.Dom.Persistencia.Model.Configuracion;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -539,6 +542,74 @@ namespace Marfil.App.WebMain.Controllers
             var servicioArticulo = FService.Instance.GetService(typeof(ArticulosModel), ContextService) as ArticulosService;
             var descripcion = servicioArticulo.descripcionArticulo(idArticulo) ?? "";
             var data = new { status = "ok", descripcion = descripcion };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult obtenerUnidadMedida(string idArticulo)
+        {
+            var servicioFamilia = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService) as FamiliasproductosService;
+            var familia = servicioFamilia.get(idArticulo.Substring(0, 2)) as FamiliasproductosModel;
+            var unidad = familia.Fkunidadesmedida;
+            var data = new { unidad = unidad };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult getComponentes(string articulo, string presupuestoId, string lineaarticulo)
+        {
+            var servicioPresupuesto = FService.Instance.GetService(typeof(PresupuestosModel), ContextService) as PresupuestosService;
+            var servicioArticulo = FService.Instance.GetService(typeof(ArticulosModel), ContextService) as ArticulosService;
+            var servicioFamilia = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService) as FamiliasproductosService;
+
+            List<ArticulosComponentesModel> listadoComponentes = new List<ArticulosComponentesModel>();
+            var presupuestoModel = servicioPresupuesto.get(presupuestoId) as PresupuestosModel;
+            var idarticulo = Int32.Parse(lineaarticulo);
+            bool componentesprevios = false;
+
+            if(presupuestoModel.Componentes.Any(f=> f.Idlineaarticulo == idarticulo))
+            {
+                foreach(var componente in presupuestoModel.Componentes.Where(f => f.Idlineaarticulo == idarticulo))
+                {
+                    var articuloModel = servicioArticulo.get(componente.IdComponente) as ArticulosModel;
+                    var unidad = articuloModel.Fkunidades;
+
+                    if(String.IsNullOrEmpty(unidad))
+                    {
+                        var familia = servicioFamilia.get(componente.IdComponente.Substring(0, 2)) as FamiliasproductosModel;
+                        unidad = familia.Fkunidadesmedida;
+                    }
+
+                    listadoComponentes.Add(new ArticulosComponentesModel(ContextService)
+                    {
+                        IdComponente = componente.IdComponente,
+                        DescripcionComponente = componente.Descripcioncomponente,
+                        Piezas = componente.Piezas.Value,
+                        Largo = Convert.ToSingle(componente.Largo),
+                        Ancho = Convert.ToSingle(componente.Ancho),
+                        Grueso = Convert.ToSingle(componente.Grueso),
+                        Merma = componente.Merma.Value,
+                        Precio = componente.Precio.Value,
+                        PrecioInicial = componente.PrecioInicial.Value,
+                        UnidadMedida = unidad
+                    });
+                }
+
+                componentesprevios = true;
+            }
+
+            else
+            {
+                var modelo = servicioArticulo.get(articulo) as ArticulosModel;
+
+                foreach(var componente in modelo.ArticulosComponentes)
+                {
+                    var familia = servicioFamilia.get(componente.IdComponente.Substring(0, 2)) as FamiliasproductosModel;
+                    componente.UnidadMedida = familia.Fkunidadesmedida;
+                    componente.PrecioInicial = componente.Precio;
+                    listadoComponentes.Add(componente);
+                }
+            } 
+            
+            var data = new { listadoComponentes = JsonConvert.SerializeObject(listadoComponentes, Formatting.Indented), componentesprevios = componentesprevios };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
     }

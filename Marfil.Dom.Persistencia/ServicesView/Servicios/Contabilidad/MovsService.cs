@@ -1116,7 +1116,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 //Nuevos Vencimientos y Pagos
                 var vencimientosService = new VencimientosService(_context);
 
-                //Vencimientos
+                //Vencimientosº 
                 foreach(var vencimiento in facturaVenta.Vencimientos)
                 {
                     var vencimientosModel = new VencimientosModel(_context);

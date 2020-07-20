@@ -34,7 +34,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         {
             
             var cp = Funciones.Qint(id);
-            var obj = _db.Set<Presupuestos>().Where(f => f.empresa ==Empresa && f.id == cp).Include(f => f.PresupuestosLin).Include(f=>f.PresupuestosTotales).Single();
+            var obj = _db.Set<Presupuestos>().Where(f => f.empresa ==Empresa && f.id == cp).Include(f => f.PresupuestosLin).Include(f=>f.PresupuestosTotales).Include(f => f.PresupuestosComponentesLin).Single();
             var monedasObj = _db.Monedas.Single(f => f.id == obj.fkmonedas);
             
            
@@ -75,6 +75,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 , EnPedido = _db.PedidosLin.Any(j => j.empresa == Empresa && j.fkpresupuestos == result.Id )
                 , Fkpedidoreferencia = _db.Pedidos.Include("PedidosLin").Where(j=> j.empresa == Empresa && j.PedidosLin.Any(h=> h.empresa == Empresa && h.fkpresupuestos == result.Id)).ToList().Select(h=> new StDocumentoReferencia() { CampoId= string.Format("{0}",h.id) , Referencia = h.referencia}).ToList()
                 , Orden = f.orden?? f.id
+                , Integridadreferenciaflag = f.integridadreferenciaflag
+                , Intaux = f.intaux
             }).ToList();
 
             //Totales
@@ -95,10 +97,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 , Decimalesmonedas = f.decimalesmonedas
             }).ToList();
 
-           
-
-
-            
+            //Componentes
+            result.Componentes = obj.PresupuestosComponentesLin.ToList().OrderBy(f => f.idlineaarticulo).Select(f => new PresupuestosComponentesLinModel()
+            {
+                Fkpresupuestos = f.fkpresupuestos,
+                Id = f.id,
+                IdComponente = f.idcomponente,
+                Integridadreferenciaflag = f.integridadreferenciaflag,
+                Descripcioncomponente = f.descripcioncomponente,
+                Piezas = f.piezas,
+                Largo = f.largo,
+                Ancho = f.ancho,
+                Grueso = f.grueso,
+                Merma = f.merma,
+                Precio = f.precio,
+                PrecioInicial = f.precioinicial,
+                Idlineaarticulo = f.idlineaarticulo
+            }).ToList();
 
             return result;
         }
@@ -168,6 +183,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.decimalesmedidas = item.Decimalesmedidas;
                 newItem.orden = item.Orden;
+                newItem.integridadreferenciaflag = item.Integridadreferenciaflag;
+                newItem.intaux = item.Intaux;
                 result.PresupuestosLin.Add(newItem);
             }
 
@@ -194,8 +211,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 result.PresupuestosTotales.Add(newItem);
             }
 
+            foreach (var item in viewmodel.Componentes)
+            {
+                var newItem = _db.Set<PresupuestosComponentesLin>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkpresupuestos = result.id;
+                newItem.id = item.Id;
+                newItem.idcomponente = item.IdComponente;
+                newItem.descripcioncomponente = item.Descripcioncomponente;                
+                newItem.piezas = item.Piezas;
+                newItem.largo = item.Largo;
+                newItem.ancho = item.Ancho;
+                newItem.grueso = item.Grueso;
+                newItem.merma = item.Merma;
+                newItem.precio = item.Precio;
+                newItem.precioinicial = item.PrecioInicial;
+                newItem.idlineaarticulo = item.Idlineaarticulo.Value;
 
-
+                result.PresupuestosComponentesLin.Add(newItem);
+            }
 
             return result;
         }
@@ -262,6 +296,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 newItem.decimalesmedidas = item.Decimalesmedidas;
                 newItem.orden = item.Orden;
+                newItem.integridadreferenciaflag = item.Integridadreferenciaflag;
+                newItem.intaux = item.Intaux;
                 result.PresupuestosLin.Add(newItem);
             }
 
@@ -285,6 +321,27 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.subtotal = item.Subtotal;
                 newItem.decimalesmonedas = item.Decimalesmonedas;
                 result.PresupuestosTotales.Add(newItem);
+            }
+
+            result.PresupuestosComponentesLin.Clear();
+            foreach (var item in viewmodel.Componentes)
+            {
+                var newItem = _db.Set<PresupuestosComponentesLin>().Create();
+                newItem.empresa = Empresa;
+                newItem.fkpresupuestos = result.id;
+                newItem.id = item.Id;
+                newItem.idcomponente = item.IdComponente;
+                newItem.integridadreferenciaflag = item.Integridadreferenciaflag;
+                newItem.descripcioncomponente = item.Descripcioncomponente; newItem.piezas = item.Piezas;
+                newItem.piezas = item.Piezas;
+                newItem.largo = item.Largo;
+                newItem.ancho = item.Ancho;
+                newItem.grueso = item.Grueso;
+                newItem.merma = item.Merma;
+                newItem.precio = item.Precio;
+                newItem.precioinicial = item.PrecioInicial;
+                newItem.idlineaarticulo = item.Idlineaarticulo.Value;
+                result.PresupuestosComponentesLin.Add(newItem);
             }
             return result;
         }

@@ -17,13 +17,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
 
         public override bool ValidarGrabar(Familiasproductos model)
         {
-            if(string.IsNullOrEmpty(model.fkunidadesmedida))
+            VerificarTipoFamilia(model);
+
+            if (string.IsNullOrEmpty(model.fkunidadesmedida))
                 throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RFamiliasproductos.Fkunidadesmedida));
 
             if ((!(model.gestionstock??false) || model.tipogestionlotes==(int?)Tipogestionlotes.Singestion) && !string.IsNullOrEmpty(model.fkcontador))
                 throw new ValidationException(RFamiliasproductos.ErrorContadorGestionStock);
-
-            VerificarTipoFamilia(model);
 
             return base.ValidarGrabar(model);
         }

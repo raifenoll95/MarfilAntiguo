@@ -118,7 +118,7 @@
             this.TxtHost.Name = "TxtHost";
             this.TxtHost.Size = new System.Drawing.Size(199, 20);
             this.TxtHost.TabIndex = 1;
-            this.TxtHost.Text = "192.168.222.150";
+            this.TxtHost.Text = "192.168.223.210";
             // 
             // TxtPassword
             // 
@@ -126,7 +126,7 @@
             this.TxtPassword.Name = "TxtPassword";
             this.TxtPassword.Size = new System.Drawing.Size(199, 20);
             this.TxtPassword.TabIndex = 3;
-            this.TxtPassword.Text = "Totware.2016";
+            this.TxtPassword.Text = "Tot.2020;";
             // 
             // TxtUsuario
             // 

@@ -25,7 +25,7 @@ namespace Marfil.Dom.Persistencia_UT
 
             var tempName = Path.GetTempFileName().Replace("tmp","sql");
             File.WriteAllText(tempName,script);
-            var pi = new ProcessStartInfo("sqlcmd", @"-S 192.168.222.150 -U sa -P Totware.2016 -i " + tempName);
+            var pi = new ProcessStartInfo("sqlcmd", @"-S 192.168.223.210 -U sa -P Tot.2020; -i " + tempName);
             pi.UseShellExecute = false;
             pi.RedirectStandardError = true;
             var p =Process.Start(pi);
@@ -58,7 +58,7 @@ namespace Marfil.Dom.Persistencia_UT
         public static void LaunchScript(string filename, string database)
         {
             var fi=new FileInfo(filename);
-            var pi = new ProcessStartInfo("sqlcmd.exe", @"-S 192.168.222.150 -U sa -P Totware.2016 -d "+ database +" -i \"" + fi.FullName+"\"")
+            var pi = new ProcessStartInfo("sqlcmd.exe", @"-S 192.168.223.210 -U sa -P Tot.2020; -d "+ database +" -i \"" + fi.FullName+"\"")
             {
                 UseShellExecute = false,
                 RedirectStandardError = true,

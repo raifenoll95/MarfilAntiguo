@@ -42,21 +42,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
-        //Comentado (Prevencion)
-        /*
         public override void edit(IModelView obj)
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
                 var editado = obj as FamiliasproductosModel;
-                DocumentosHelpers.GenerarCarpetaAsociada(editado, TipoDocumentos.Familias, _context, _db);
-                base.edit(obj);
+                base.edit(editado);
                 _db.SaveChanges();
                 tran.Complete();
-
             }
         }
-        */
 
         public override ListIndexModel GetListIndexModel(Type t, bool canEliminar, bool canModificar, string controller)
         {

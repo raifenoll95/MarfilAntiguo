@@ -29,7 +29,7 @@
             <li><a data-toggle="tab" href="#otros">@General.LblOtros</a></li>
             <li><a data-toggle="tab" href="#salida">@Transformaciones.Salida</a></li>
             <li><a data-toggle="tab" href="#costes">@AlbaranesCompras.CostesAdicionales</a></li>
-           
+            <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -52,8 +52,9 @@
         <div id="costes" class="tab-pane fade in">
             @Html.Partial("_costes", Model)
         </div>
-       
-      
+        <div id="galeria" class="tab-pane fade">
+            @Html.Partial("_galeriaimagenes", Model.Galeria)
+        </div>     
     </div>
 
 </div>

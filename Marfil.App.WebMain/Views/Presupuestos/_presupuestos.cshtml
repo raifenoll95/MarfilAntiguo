@@ -15,7 +15,8 @@
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/Formulas.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Articulos/Formulas/FormulasService.js")"></script>
 <script src="@Url.Content("~/Scripts/Model/Presupuestos/PresupuestosController.js")"></script>
-<div ng-controller="PresupuestosCtrl" ng-init="init(@((!isNuevo).ToString().ToLower()),'@Model.Fkclientes','@Model.Fkagentes','@Model.Fkcomerciales','@Model.Fkbancosmandatos','@Model.Fkobras',@isNuevo.ToString().ToLower(),'@Url.Action("PresupuestosRefresh")','@Url.Action("BancosMandatosApi","Api")','@string.Format("{0};{1};{2}",Model.Referencia??string.Empty,(Model.DocumentosImpresion?.Tipo)?.ToString()??string.Empty,Model.DocumentosImpresion?.Defecto??string.Empty)')">
+
+<div ng-controller="PresupuestosCtrl" ng-init="init('@Model.Fkregimeniva', @((!isNuevo).ToString().ToLower()),'@Model.Fkclientes','@Model.Fkagentes','@Model.Fkcomerciales','@Model.Fkbancosmandatos','@Model.Fkobras',@isNuevo.ToString().ToLower(),'@Url.Action("PresupuestosRefresh")','@Url.Action("BancosMandatosApi","Api")','@string.Format("{0};{1};{2}",Model.Referencia??string.Empty,(Model.DocumentosImpresion?.Tipo)?.ToString()??string.Empty,Model.DocumentosImpresion?.Defecto??string.Empty)')">
 
 
     <div id="tabs">
@@ -25,6 +26,7 @@
             <li><a data-toggle="tab" href="#comerciales">@Comerciales.TituloEntidad</a></li>
             <li><a data-toggle="tab" href="#otros">@General.LblOtros</a></li>
             <li><a data-toggle="tab" href="#desglose">@General.LblDesglose</a></li>
+            <li><a data-toggle="tab" href="#componentes">@Articulos.Componentes</a></li>
             @if (iseditable || isreadonly)
             {
                 <li><a data-toggle="tab" href="#galeria">@General.GestionFicheros</a></li>
@@ -47,6 +49,9 @@
         </div>
         <div id="desglose" class="tab-pane fade in">
             @Html.Partial("_desglose", Model)
+        </div>
+        <div id="componentes" class="tab-pane fade in">
+            @Html.Partial("_componentes", Model.Componentes)
         </div>
         @if (iseditable || isreadonly)
         {

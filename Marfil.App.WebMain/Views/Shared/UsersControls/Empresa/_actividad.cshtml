@@ -3,6 +3,9 @@
 @using Marfil.Dom.Persistencia.Helpers
 @using Marfil.Dom.Persistencia.Model.Iva
 @using Marfil.Dom.Persistencia.ServicesView.Servicios.Campoverificacion
+@using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+@using Marfil.Dom.Persistencia.Model.Configuracion
+
 @model Marfil.Dom.Persistencia.Model.Configuracion.Empresa.EmpresaModel
 @{
     bool isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
@@ -12,6 +15,9 @@
     cvregimeniva.CampoDescripcion = "Descripcion";
     cvregimeniva.Valor = Model.Fkregimeniva;
     cvregimeniva.SoloLectura = isreadonly;
+
+    var listatarifasventa = WebHelper.GetApplicationHelper().GetListTarifasBase(TipoFlujo.Venta).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion }).ToList();
+    var listatarifascompra = WebHelper.GetApplicationHelper().GetListTarifasBase(TipoFlujo.Compra).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion }).ToList();
 }
 
 <div class="form-group">
@@ -84,7 +90,7 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Fktarifasventas, new {@class = "control-label col-md-2"})
     <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.Fktarifasventas, Model.LstTarifasVentas, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
+        @Html.DropDownListFor(f => Model.Fktarifasventas, listatarifasventa, isreadonly ? (object) new {@class = "form-control", @autofocus = "", @disabled = "disabled"} : (object) new {@class = "form-control", @autofocus = ""})
         @Html.ValidationMessageFor(f => Model.Fktarifasventas, "", new {@class = "text-danger"})
     </div>
 </div>
@@ -92,7 +98,7 @@
 <div class="form-group">
     @Html.LabelFor(f => Model.Fktarifascompras, new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.DropDownListFor(f => Model.Fktarifascompras, Model.LstTarifasCompras, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.DropDownListFor(f => Model.Fktarifascompras, listatarifascompra, isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
         @Html.ValidationMessageFor(f => Model.Fktarifascompras, "", new { @class = "text-danger" })
     </div>
 </div>

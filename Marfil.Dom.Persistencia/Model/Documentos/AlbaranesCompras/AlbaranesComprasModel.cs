@@ -785,7 +785,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
         [Display(ResourceType = typeof(RAlbaranesCompras), Name = "Precio")]
         public string SPrecio
         {
-            get { return (Precio ?? 0.0).ToString("N" + Decimalesmonedas, CultureInfo.CurrentUICulture); }
+            get { return (Precio ?? 0.0).ToString(); }
             set { Precio = Funciones.Qdouble(value); }
         }
 

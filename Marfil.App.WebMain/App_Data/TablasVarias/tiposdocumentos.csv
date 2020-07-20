@@ -10,8 +10,8 @@ COR;Cortabloques;Blockcutter;false
 TRA;Traspaso;Transfer doc.;false
 RES;Reserva de stock;Stock reservation;false
 INV;Inventarios;Inventories;false
-TRF;Transformaciones;Transformations;false
-TRL;Transformaciones lotes;Lote Transformations;false
+TRF;Transformaciones de lotes;Transformations;false
+TRL;Transformaciones de acabados;Lote Transformations;false
 KIT;Kits;Kits;false
 OPO;Oportunidad;Opportunity;false
 PRO;Proyecto;Project;false

@@ -183,5 +183,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             _db.Entry(tarifa).State = EntityState.Modified;
             _db.SaveChanges();
         }
+
+        public double? getPrecioComponentes(string componente)
+        {
+            var tarifa = _db.Tarifas.Where(f => f.empresa == Empresa && f.valorarcomponentes == true).FirstOrDefault();
+            var precio = tarifa != null ? _db.TarifasLin.Where(f => f.empresa == Empresa && f.fktarifas == tarifa.id && f.fkarticulos == componente).Select(f => f.precio).SingleOrDefault() : null; 
+            return precio;
+        }
     }
 }

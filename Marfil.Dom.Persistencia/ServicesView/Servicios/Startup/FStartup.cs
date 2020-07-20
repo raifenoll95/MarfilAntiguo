@@ -40,6 +40,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             _dictionary.Add("criteriosagrupacion", new CriteriosAgrupacionStartup(context, db));
             _dictionary.Add("unidades", new UnidadesStartup(context, db));
             _dictionary.Add("situacionestesoreria", new SituacionesTesoreriaStartup(context, db));
+            _dictionary.Add("circuitostesoreria", new CircuitosTesoreriaStartup(context, db));
         }
 
         public IStartup CreateService( string id)

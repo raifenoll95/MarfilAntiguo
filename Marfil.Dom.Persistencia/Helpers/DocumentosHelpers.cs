@@ -21,7 +21,7 @@ namespace Marfil.Dom.Persistencia.Helpers
             var carpetasService = FService.Instance.GetService(typeof(CarpetasModel), context, db) as CarpetasService;
             var ejercicioService =FService.Instance.GetService(typeof (EjerciciosModel), context, db) as EjerciciosService;
 
-            if (tipo != TipoDocumentos.Articulos && tipo != TipoDocumentos.Materiales && tipo != TipoDocumentos.GrupoMateriales && tipo != TipoDocumentos.Almacenes && tipo != TipoDocumentos.Familias)
+            if (tipo != TipoDocumentos.Articulos && tipo != TipoDocumentos.Materiales && tipo != TipoDocumentos.GrupoMateriales && tipo != TipoDocumentos.Almacenes && tipo != TipoDocumentos.Familias && tipo !=TipoDocumentos.TransformacionesAcabados)
             {
                 var ejercicioModel = ejercicioService.get(model.get("Fkejercicio").ToString()) as EjerciciosModel;
 

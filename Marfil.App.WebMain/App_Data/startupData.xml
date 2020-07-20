@@ -65,6 +65,12 @@
     <descripcion>Genera la agrupación por defecto del proceso de facturación.</descripcion>
     <data>~/App_Data/Otros/criteriosagrupacion.csv</data>
   </item>
+	
+  <item id="circuitostesoreria" readonly="true">
+	<titulo>Circuitos de tesórería</titulo>
+	<descripcion>Genera los circuitos de tesorería de contabilidad.</descripcion>
+	<data>~/App_Data/Otros/circuitostesoreria.csv</data>
+  </item>
 
   <item id="tablasvarias" readonly="true">
     <titulo>Tablas varias</titulo>

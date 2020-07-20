@@ -104,7 +104,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         public override string GetSelectPrincipal()
         {
-            return string.Format(CuentasService.SelectCuentasTerceros, (int)TiposCuentas.Transportistas, _context, TiposCuentas.Transportistas);
+            return string.Format(CuentasService.SelectCuentasTerceros, (int)TiposCuentas.Transportistas, Empresa, TiposCuentas.Transportistas);
         }
 
         #endregion

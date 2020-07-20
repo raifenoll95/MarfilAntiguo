@@ -275,7 +275,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             if (model.Direcciones == null) return;
             var fservice = FService.Instance;
             var direccionesService = fservice.GetService(typeof(DireccionesLinModel), _context, _db);
-            ProcessDirecciones(model);
+            //ProcessDirecciones(model);
             foreach (var item in model.Direcciones.Direcciones)
             {
                 direccionesService.delete(item);

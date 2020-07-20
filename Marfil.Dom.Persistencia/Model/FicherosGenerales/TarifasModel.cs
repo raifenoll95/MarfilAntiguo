@@ -9,6 +9,7 @@ using Marfil.Dom.Persistencia.Model.Interfaces;
 using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos;
+using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RTarifa= Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Tarifas;
 namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
@@ -40,7 +41,14 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         [Display(ResourceType = typeof(RTarifa), Name = "Precio")]
         public double? Precio { get; set; }
-        
+
+        [Display(ResourceType = typeof(RTarifa), Name = "Precio")]
+        public string SPrecio
+        {
+            get { return (Precio ?? 0.0).ToString(); }
+            set { Precio = Funciones.Qdouble(value); }
+        }
+
         [Display(ResourceType = typeof(RTarifa), Name = "Descuento")]
         [Range(0,100,ErrorMessageResourceType = typeof(Unobtrusive),ErrorMessageResourceName = "RangeClient")]
         public double? Descuento { get; set; }
@@ -118,6 +126,9 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
 
         [Display(ResourceType = typeof(RTarifa), Name = "Precioautomaticofkmaterialeshasta")]
         public string Precioautomaticofkmaterialeshasta { get; set; }
+
+        [Display(ResourceType = typeof(RTarifa), Name = "Valorarcomponentes")]
+        public bool Valorarcomponentes { get; set; }
 
 
         public List<TarifasLinModel> Lineas

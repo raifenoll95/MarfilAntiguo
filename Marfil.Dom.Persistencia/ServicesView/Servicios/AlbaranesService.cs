@@ -511,7 +511,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             throw new ValidationException(RAlbaranes.ErrorSinCantidadPendiente);
         }
 
-        private IEnumerable<ILineaImportar> ConvertLineasModelToILineas(string idcabecera, string referencia, IEnumerable<PedidosLinModel> lineas)
+        private IEnumerable<ILineaImportar> ConvertLineasModelToILineas
+            
+            (string idcabecera, string referencia, IEnumerable<PedidosLinModel> lineas)
         {
             var id = lineas.Any() ? lineas.Max(f => f.Id) : 0;
             id++;

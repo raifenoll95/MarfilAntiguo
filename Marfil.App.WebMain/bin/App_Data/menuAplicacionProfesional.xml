@@ -42,6 +42,7 @@
       <item name="listadobalancesumasysaldos" eslistado="true" text="Sumas y saldos" icono="fa fa-file" url="~/ListadosBalanceSumasYSaldos/Listado/SumasYSaldos" />
       <item name="listadoguiasbalances" eslistado="true" text="Guias de Balances" icono="fa fa-file" url="~/GuiasBalances/Index" />
       <item name="listadosacomuladorperiodos" eslistado="true" text="Listado Acomulado de Periodos" icono="fa fa-file" url="~/ListadoAcumuladorPeriodos/Listado/AcumuladorPeriodos" />
+      <item name="listadosconsultatesoreria" eslistado="true" text="Listado Consulta de Tesorería" icono="fa fa-file" url="~/ListadosConsultaTesoreria/Listado/ConsultaTesoreria" />
     </item>
     <item name="configurardocumentosdiario" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1000" />
     <item name="configurardocumentosmayor" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1010" />

@@ -43,7 +43,7 @@ namespace Marfil.App.WebMain.Controllers
                 
                 var result = new ResultBusquedas<CuentasBusqueda>()
                 {
-                    values = service.GetCuentas((TiposCuentas)Funciones.Qint(tipocuenta).Value).Where(f => primeracarga),
+                    values = service.GetCuentas((TiposCuentas)Funciones.Qint(tipocuenta).Value).Where(f => primeracarga && f.Bloqueado == false),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Cuentas", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},

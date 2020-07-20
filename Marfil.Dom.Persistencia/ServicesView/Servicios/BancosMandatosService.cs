@@ -48,7 +48,22 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 Empresa = Empresa,
                 Id = f.id,
+                Bic = f.bic,
+                Fkpaises = f.fkpaises,
                 Descripcion = f.descripcion,
+                Iban = f.iban,
+                Defecto = f.defecto.Value,
+                Sufijoacreedor = f.sufijoacreedor,
+                Contratoconfirmig = f.contratoconfirmig,
+                Contadorconfirming = f.contadorconfirming,
+                Riesgonacional = f.riesgonacional,
+                Riesgoextranjero = f.riesgoextranjero,
+                Direccion = f.direccion,
+                Fkprovincias = f.fkprovincias,
+                Ciudad = f.ciudad,
+                Cpostal = f.cpostal,
+                Telefonobanco = f.telefonobanco,
+                Personacontacto = f.personacontacto,
                 Idmandato = f.idmandato,
                 Tipoadeudo = (TipoAdeudo?)f.tipoadeudo,
                 Esquema = (Esquema?)f.esquema
@@ -56,8 +71,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             return mandatos;
         }
-
-       
 
         #endregion
     }

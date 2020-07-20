@@ -61,11 +61,26 @@
             c.Visible = false;
         } );
 
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "Precio";
+        //    c.PropertiesEdit.DisplayFormatString = "N2";
+        //    c.Caption = Tarifas.Precio;
+        //});
+
         settings.Columns.Add(c =>
         {
-            c.FieldName = "Precio";
-            c.PropertiesEdit.DisplayFormatString = "N2";
+            c.FieldName = "SPrecio";
             c.Caption = Tarifas.Precio;
+            c.Visible = true;
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            c.CellStyle.HorizontalAlign = HorizontalAlign.Right;
+            var p = c.PropertiesEdit as SpinEditProperties;
+            p.SpinButtons.ShowIncrementButtons = false;
+            p.EncodeHtml = false;
+            p.ClientInstanceName = c.FieldName;
+            p.ButtonStyle.CssClass = "btn btn-minier btn-purple";
+            p.SpinButtons.ShowIncrementButtons = false;
         });
 
         settings.Columns.Add(c =>

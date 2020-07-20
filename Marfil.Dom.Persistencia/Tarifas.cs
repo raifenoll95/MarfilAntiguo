@@ -44,6 +44,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.DateTime> fechamodificacionbloqueo { get; set; }
         public Nullable<System.Guid> fkUsuariobloqueo { get; set; }
         public Nullable<bool> bloqueada { get; set; }
+        public Nullable<bool> valorarcomponentes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TarifasLin> TarifasLin { get; set; }

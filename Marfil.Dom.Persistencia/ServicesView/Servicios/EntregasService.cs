@@ -663,7 +663,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         //Gruesosalida = linea.Grueso,
                         //Metrossalida = linea.Metros          
 
-                        Cantidad = (linea.Cantidad ?? 0) * operacion, ///*-1,
+                        Cantidad = !String.Equals(linea.Fkunidades, "08") ? (linea.Cantidad ?? 0) * operacion : 0, ///*-1,
                         Metros = (linea.Metros ?? 0) * operacion,
                         //Pesoneto = ((articuloObj.Kilosud ?? 0) * linea.Metros) * operacion,
                         Costeadicionalmaterial = linea.Costeadicionalmaterial * operacion,

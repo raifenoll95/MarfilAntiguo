@@ -297,4 +297,19 @@
   <data name="FechaInforme" xml:space="preserve">
     <value>Fecha informe</value>
   </data>
+  <data name="CuentaDesdeTesoreria" xml:space="preserve">
+    <value>Desde cuenta tesorería</value>
+  </data>
+  <data name="CuentaHastaTesoreria" xml:space="preserve">
+    <value>Hasta cuenta tesoreria</value>
+  </data>
+  <data name="FechaDesdeVencimiento" xml:space="preserve">
+    <value>Desde fecha vencimiento</value>
+  </data>
+  <data name="FechaHastaVencimiento" xml:space="preserve">
+    <value>Hasta fecha vencimiento</value>
+  </data>
+  <data name="FormaPago" xml:space="preserve">
+    <value>Forma de pago</value>
+  </data>
 </root>

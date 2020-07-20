@@ -65,6 +65,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> tblnum { get; set; }
         public Nullable<int> caja { get; set; }
         public Nullable<int> orden { get; set; }
+        public Nullable<System.Guid> integridadreferenciaflag { get; set; }
+        public Nullable<int> intaux { get; set; }
     
         public virtual Presupuestos Presupuestos { get; set; }
     }

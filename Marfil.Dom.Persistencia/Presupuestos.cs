@@ -19,6 +19,7 @@ namespace Marfil.Dom.Persistencia
         {
             this.PresupuestosLin = new HashSet<PresupuestosLin>();
             this.PresupuestosTotales = new HashSet<PresupuestosTotales>();
+            this.PresupuestosComponentesLin = new HashSet<PresupuestosComponentesLin>();
         }
     
         public string empresa { get; set; }
@@ -92,5 +93,7 @@ namespace Marfil.Dom.Persistencia
         public virtual ICollection<PresupuestosLin> PresupuestosLin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PresupuestosTotales> PresupuestosTotales { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PresupuestosComponentesLin> PresupuestosComponentesLin { get; set; }
     }
 }

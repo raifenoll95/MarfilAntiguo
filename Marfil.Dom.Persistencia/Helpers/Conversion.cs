@@ -28,7 +28,7 @@ namespace NumerosALetras
                 dec = " CON " + toText(Convert.ToDouble(decimales));
             }
 
-            res = toText(Convert.ToDouble(entero)) + dec;
+            res = toText(Convert.ToDouble(entero)) + dec + " EUROS";
             return res;
         }
 

@@ -34,6 +34,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.Transformaciones;
 using System.Text.RegularExpressions;
 using RFamilias = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Familiasproductos;
 using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
+using Marfil.Dom.Persistencia.Model.Configuracion.Empresa;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -520,6 +521,8 @@ namespace Marfil.App.WebMain.Controllers
 
                     var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), ContextService);
                     var serviceArticulos = FService.Instance.GetService(typeof(ArticulosModel), ContextService);
+                    var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                    var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
 
                     if (serviceArticulos.exists(item.Fkarticulos))
                     {
@@ -555,11 +558,11 @@ namespace Marfil.App.WebMain.Controllers
                                     item.Fkalbaranesreferencia = linea.Fkalbaranesreferencia;
                                     item.Orden = linea.Id * ApplicationHelper.EspacioOrdenLineas;
                                 }
-
-
                             }
+
+                            item.Decimalesmonedas = monedaObj.Decimales;
                             item.Importe = Math.Round(item.Importe ?? 0, monedaObj.Decimales);
-                            item.Precio = Math.Round(item.Precio ?? 0, monedaObj.Decimales);
+                            item.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                             item.Decimalesmedidas = decimalesunidades ?? 0;
                             item.Revision = item.Revision?.ToUpper();
                             item.Bundle = item.Bundle?.ToUpper();
@@ -631,6 +634,8 @@ namespace Marfil.App.WebMain.Controllers
                         var moneda = Funciones.Qnull(Request.Params["fkmonedas"]);
                         var decimalesunidades = Funciones.Qint(Request.Params["decimalesunidades"]);
                         var decimalesmonedas = Funciones.Qint(Request.Params["decimalesmonedas"]);
+                        var serviceEmpresa = FService.Instance.GetService(typeof(EmpresaModel), ContextService);
+                        var empresa = serviceEmpresa.get(ContextService.Empresa) as EmpresaModel;
 
                         var serviceMonedas = FService.Instance.GetService(typeof(MonedasModel), ContextService);
                         var monedaObj = serviceMonedas.get(moneda) as MonedasModel;
@@ -654,7 +659,7 @@ namespace Marfil.App.WebMain.Controllers
                         editItem.Importe = Math.Round(item.Importe ?? 0, monedaObj.Decimales);
                         editItem.Importedescuento = item.Importedescuento;
                         editItem.Lote = item.Lote;
-                        editItem.Precio = Math.Round(item.Precio ?? 0, monedaObj.Decimales);
+                        editItem.Precio = Math.Round(item.Precio ?? 0, empresa.Decimalesprecios ?? 2);
                         editItem.Precioanterior = item.Precioanterior;
                         editItem.Porcentajedescuento = item.Porcentajedescuento;
                         editItem.Tabla = item.Tabla;

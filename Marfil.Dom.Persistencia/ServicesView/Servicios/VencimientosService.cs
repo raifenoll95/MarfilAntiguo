@@ -32,6 +32,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
                 var model = obj as VencimientosModel;
+
+                if(model.Importeasignado == null)
+                {
+                    model.Importeasignado = 0;
+                }
                 
                 if(_db.Vencimientos.Any())
                 {
@@ -52,7 +57,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 model.Identificadorsegmento = identificadorsegmento;
 
                 //Llamamos al base
-                base.create(obj);
+                base.create(model);
 
                 //Guardamos los cambios
                 _db.SaveChanges();
@@ -239,6 +244,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             return vencimientos;
         }
 
+
         //Seccion Api Asistente
         public IEnumerable<GridAsistenteMovimientosTesoreriaModel> getVencimientosMovimientosTesoreria(string tipoasignacion, string circuito, string fkmodospago,
             string cuentadesde, string cuentahasta, string fechadesde, string fechahasta)
@@ -260,7 +266,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var tipo = string.Equals(situacionInicialCircuito, situacioninicialcobros) ? TipoVencimiento.Cobros : TipoVencimiento.Pagos;
 
                 var posiblesvencimientos = _db.Vencimientos.Where(f => f.empresa == Empresa && f.tipo == (int)tipo && f.situacion == situacionInicialCircuito
-                && (f.importegiro - f.importeasignado) > 0 && idformaspagos.Contains(f.fkformaspago.Value)).ToList();
+                && ((f.importegiro ?? 0) - (f.importeasignado ?? 0)) > 0 && idformaspagos.Contains(f.fkformaspago.Value)).ToList();
 
                 if (!String.IsNullOrEmpty(cuentadesde))
                 {

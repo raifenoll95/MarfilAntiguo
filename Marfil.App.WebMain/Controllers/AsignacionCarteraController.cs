@@ -6,6 +6,7 @@ using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.App.WebMain.Misc;
 using Resources;
 using System.Linq;
+using Marfil.Dom.Persistencia.Model.Interfaces;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -49,10 +50,11 @@ namespace Marfil.App.WebMain.Controllers
 
         public ActionResult AsistenteAsignacionCartera()
         {
-            return View(new AsistenteAsignacionModel(ContextService)
-            {
-                FechaContable = DateTime.Now
-            });
+            var model = new AsistenteAsignacionModel(ContextService);
+            model.FechaContable = DateTime.Now;
+            var aux = model as IToolbar;
+            aux.Toolbar.Acciones = HelpItem();
+            return View(model);
         }
 
         //Fin del asistente

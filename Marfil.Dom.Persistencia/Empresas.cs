@@ -42,5 +42,7 @@ namespace Marfil.Dom.Persistencia
         public string fkregimeniva { get; set; }
         public string fkCuentaEntradasVariasAlmacen { get; set; }
         public string fkCuentaSalidasVariasAlmacen { get; set; }
+        public string ean13 { get; set; }
+        public Nullable<int> decimalesprecios { get; set; }
     }
 }

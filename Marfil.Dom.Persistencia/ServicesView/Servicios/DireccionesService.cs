@@ -56,11 +56,44 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         public IEnumerable<DireccionesLinModel> GetDirecciones(int tipo,string fkCuentas)
         {
             var tipoInt = tipo;
-            var list =
-                _db.Set<Direcciones>()
-                    .Where(f => f.empresa == Empresa  && f.fkentidad == fkCuentas)
-                    .ToList();
-                return list.Select(f => _converterModel.GetModelView(f) as DireccionesLinModel).ToList();
+            var list = _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == fkCuentas && f.tipotercero == tipo).ToList();
+            List<DireccionesLinModel> direcciones = new List<DireccionesLinModel>();
+
+            foreach(var d in list)
+            {
+                direcciones.Add(new DireccionesLinModel
+                {
+                    Empresa = d.empresa,
+                    Tipotercero = d.tipotercero,
+                    Fkentidad = d.fkentidad,
+                    Id = d.id,
+                    Defecto = d.defecto.Value,
+                    Descripcion = d.descripcion,
+                    Fktipovia = d.fktipovia,
+                    Direccion = d.direccion,
+                    Cp = d.cp,
+                    Fkpais = d.fkpais,
+                    Fkprovincia = d.fkprovincia,
+                    Poblacion = d.poblacion,
+                    Personacontacto = d.personacontacto,
+                    Telefono = d.telefono,
+                    Telefonomovil = d.telefonomovil,
+                    Fax = d.fax,
+                    Email = d.email,
+                    Web = d.web,
+                    Notas = d.notas,
+                    Fktipodireccion = d.fktipodireccion
+                }) ;
+            }
+
+            //var list =
+            //    _db.Set<Direcciones>()
+            //        .Where(f => f.empresa == Empresa  && f.fkentidad == fkCuentas)
+            //        .ToList();
+            //return list.Select(f => _converterModel.GetModelView(f) as DireccionesLinModel).ToList();
+            //return list.Select(f => (DireccionesLinModel)f).ToList();
+
+            return direcciones;
         }
 
         public IEnumerable<DireccionesLinModel> GetDirecciones(TiposCuentas tipo, string fkCuentas)

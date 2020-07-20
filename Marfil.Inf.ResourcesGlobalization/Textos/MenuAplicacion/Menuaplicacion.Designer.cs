@@ -943,6 +943,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listados de consulta de tesorería.
+        /// </summary>
+        public static string listadosconsultatesoreria {
+            get {
+                return ResourceManager.GetString("listadosconsultatesoreria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Listado de kits.
         /// </summary>
         public static string listadoskits {

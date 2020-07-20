@@ -144,4 +144,7 @@
   <data name="Costexm3" xml:space="preserve">
     <value>Coste x m3</value>
   </data>
+  <data name="TituloEntidadAcabados" xml:space="preserve">
+    <value>TransformacionesAcabados</value>
+  </data>
 </root>

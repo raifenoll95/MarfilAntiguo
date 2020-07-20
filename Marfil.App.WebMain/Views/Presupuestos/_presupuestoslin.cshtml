@@ -56,7 +56,7 @@
         settings.Styles.Footer.HorizontalAlign = HorizontalAlign.Right;
         settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
 
-        settings.Columns.Add("Id");
+        
         settings.Columns.Add(j =>
         {
             j.FieldName = "Fkarticulos";
@@ -81,6 +81,8 @@
             c.ColumnType = MVCxGridViewColumnType.Memo;
             c.CellStyle.Wrap = DefaultBoolean.True;
         });
+
+        
 
         settings.Columns.Add("Lote");
 
@@ -307,6 +309,8 @@
 
         });
 
+        settings.Columns.Add("Intaux");
+
 
         settings.Columns.Add(column =>
         {
@@ -346,29 +350,25 @@
         });
 
         settings.Columns.Add("Decimalesmonedas");
+        settings.Columns.Add("Decimalesmonedas");
         settings.Columns.Add("Decimalesunidades");
         settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.NextColumn;
         settings.Columns["Decimalesmonedas"].Visible = false;
         settings.Columns["Decimalesunidades"].Visible = false;
-        settings.Columns["Id"].Visible = false;
+        //settings.Columns["Id"].Visible = false;
+        settings.Columns["Intaux"].Visible = true;
 
         settings.Columns["Fkarticulos"].FixedStyle = GridViewColumnFixedStyle.Left;
         settings.Columns["Descripcion"].Width = Unit.Pixel(300);
         settings.Columns["Descripcion"].AllowTextTruncationInAdaptiveMode = true;
         settings.Columns["Descripcion"].CellStyle.Wrap = DefaultBoolean.False;
 
-
         settings.Columns["Tabla"].Visible = false;
-
-
-
-
 
         settings.Columns["Fkunidades"].Visible = false;
         settings.Columns["Fkregimeniva"].Visible = false;
 
         settings.Columns["Precioanterior"].Visible = false;
-
 
         settings.Columns["Importedescuento"].Visible = false;
         settings.Columns["Fktiposiva"].Visible = true;
@@ -378,7 +378,6 @@
         settings.Columns["Cuotaiva"].Visible = false;
         settings.Columns["Porcentajerecargoequivalencia"].Visible = false;
         settings.Columns["Cuotarecargoequivalencia"].Visible = false;
-
 
         settings.Settings.ShowFooter = true;
         settings.SetFooterCellTemplateContent(c =>
@@ -423,13 +422,14 @@
         {
             e.NewValues["SImporte"] = 0;
             e.NewValues["Cantidad"] = 1;
+            //e.NewValues["Intaux"] = "automatico";
 
             if (needCreatCopy)
             {
                 object keyValue = ViewData["key"];
 
                 MVCxGridView gridView = (MVCxGridView) s;
-                object[] rowValues = (object[]) gridView.GetRowValuesByKeyValue(keyValue, new string[] {"Fkarticulos", "Descripcion", "Lote", "Revision", "Canal", "Cantidad", "Largo", "Ancho", "Grueso", "Metros", "Precio", "Porcentajedescuento", "Porcentajeiva", "Importe","Orden","Fktiposiva"});
+                object[] rowValues = (object[]) gridView.GetRowValuesByKeyValue(keyValue, new string[] {"Fkarticulos", "Descripcion", "Lote", "Revision", "Canal", "Cantidad", "Largo", "Ancho", "Grueso", "Metros", "Precio", "Porcentajedescuento", "Porcentajeiva", "Importe","Orden","Fktiposiva","Intaux"});
 
                 e.NewValues["Fkarticulos"] = rowValues[0];
                 e.NewValues["Descripcion"] = rowValues[1];
@@ -454,6 +454,7 @@
                 e.NewValues["Importe"] = rowValues[13];
                 e.NewValues["Orden"] = rowValues[14];
                 e.NewValues["Fktiposiva"] = rowValues[15];
+                e.NewValues["Intaux"] = rowValues[16];
             }
         };
 

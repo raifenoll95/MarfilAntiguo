@@ -143,22 +143,16 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos
         public DateTime? Fechapago { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Monedabase")]
-        public int Monedabase { get; set; }
+        public int? Monedabase { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Monedagiro")]
-        public int Monedagiro { get; set; }
+        public int? Monedagiro { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Importegiro")]
         public double? Importegiro { get; set; }
 
-        //[Display(ResourceType = typeof(RCobrosYPagos), Name = "Cambioaplicado")]
-        //public decimal Cambioaplicado { get; set; }
-
-        //[Display(ResourceType = typeof(RCobrosYPagos), Name = "Importefactura")]
-        //public decimal Importefactura { get; set; }
-
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Monedafactura")]
-        public int Monedafactura { get; set; }
+        public int? Monedafactura { get; set; }
 
         [Display(ResourceType = typeof(RCobrosYPagos), Name = "Fkcuentastesoreria")]
         public String Fkcuentatesoreria { get; set; }

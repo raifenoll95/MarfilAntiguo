@@ -116,7 +116,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 model.Identificadorsegmento = identificadorsegmento;         
 
                 //Llamamos al base
-                base.create(obj);
+                base.create(model);
 
                 //Guardamos los cambios
                 _db.SaveChanges();

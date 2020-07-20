@@ -106,11 +106,9 @@
         <div class="col-md-10">
             @{
                 cvcuentastesoreria.Name = "Fkcuentatesoreria";
-                //cvcuentastesoreria.Url = Url.Action("CuentasTiposTercerosSemiExclusiveApi", "Api");
-                cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaExclusiveApi", "Api");
+                cvcuentastesoreria.Url = Url.Action("CuentasTesoreriaApi", "Api");
                 cvcuentastesoreria.Valor = Model.Fkcuentatesoreria;
                 cvcuentastesoreria.Titulo = Operarios.Fkcuentatesoreria;
-                cvcuentastesoreria.ControlesAsociados = "[{ \"tipoasignacion\":\"Tipo\" }, { \"fkcuentas\":\"Fkcuentas\" }, { \"importe\":\"ImportePantalla3\" } ]";
                 cvcuentastesoreria.Obligatorio = true;
             }
             @Html.Partial("CampoverificacionUI", cvcuentastesoreria)

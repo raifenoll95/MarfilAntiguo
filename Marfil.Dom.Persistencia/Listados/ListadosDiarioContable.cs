@@ -31,7 +31,7 @@ namespace Marfil.Dom.Persistencia.Listados
         {
             using (var db = MarfilEntities.ConnectToSqlServer(context.BaseDatos))
             {
-                Fkseriescontables = db.SeriesContables.Where(f => f.empresa == context.Empresa && f.fkejercicios == context.Ejercicio).Select(f => f.id).SingleOrDefault();
+                Fkseriescontables = db.SeriesContables.Where(f => f.empresa == context.Empresa && f.tipodocumento == "AST" && f.fkejercicios == context.Ejercicio).Select(f => f.id).SingleOrDefault();
             }
             FechaInforme = DateTime.Today;             
         }
