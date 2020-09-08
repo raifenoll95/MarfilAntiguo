@@ -149,7 +149,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Fkfacturasreferencia = _db.FacturasCompras.Include("FacturasComprasLin").Where(j => j.empresa == Empresa && j.FacturasComprasLin.Any(h => h.empresa == Empresa && h.fkalbaranes == result.Id)).ToList().Select(h => new StDocumentoReferencia() { CampoId = string.Format("{0}", h.id), Referencia = h.referencia }).ToList(),
                 Fkcontadoreslotes = f.fkcontadoreslotes,
                 Flagidentifier = f.flagidentifier,
-                Tipodealmacenlote = (TipoAlmacenlote?)f.tipoalmacenlote
+                Tipodealmacenlote = (TipoAlmacenlote?)f.tipoalmacenlote,
+                Fkreclamado = f.fkreclamado,
+                Fkreclamadoreferencia = f.fkreclamadoreferencia
             }).ToList();
 
             //Totales
@@ -272,6 +274,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.fkcontadoreslotes = item.Fkcontadoreslotes;
                 newItem.flagidentifier= Guid.NewGuid();
                 newItem.tipoalmacenlote = result.tipoalmacenlote;
+                newItem.fkreclamado = item.Fkreclamado;
+                newItem.fkreclamadoreferencia = item.Fkreclamadoreferencia;
                 result.AlbaranesComprasLin.Add(newItem);
             }
 
@@ -402,6 +406,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.fkcontadoreslotes = item.Fkcontadoreslotes;
                 newItem.flagidentifier = item.Flagidentifier;
                 newItem.tipoalmacenlote = (int?)item.Tipodealmacenlote;
+                newItem.fkreclamado = item.Fkreclamado;
+                newItem.fkreclamadoreferencia = item.Fkreclamadoreferencia;
 
                 result.AlbaranesComprasLin.Add(newItem);
             }

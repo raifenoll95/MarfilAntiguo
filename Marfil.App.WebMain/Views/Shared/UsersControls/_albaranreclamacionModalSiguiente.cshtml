@@ -1,0 +1,139 @@
+﻿@using Marfil.Dom.Persistencia.Helpers
+@using Marfil.Inf.ResourcesGlobalization.Textos.Entidades
+
+@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+    var action  = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+}
+@using Resources
+<script src="@Url.Content("~/Scripts/UserControls/Albaranes/Reclamaralbaran.js")"></script>
+@using (Html.BeginForm("Reclamacion", controller,  FormMethod.Post, new { @id = "reclamacionform" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden"  name="id" value="" />
+    <input type="hidden" name="lineas" value="" />
+    
+}
+<div ng-controller="ReclamaralbaranCtrl" >
+    <div class="modal" id="reclamaralbaransiguiente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width: 90% !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">@Albaranes.LblGenerarReclamacion</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-horizontal">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="active">
+                                        <th>Cód. Artículo</th>
+                                        <th>Artículo</th>
+                                        <th>Lote</th>
+                                        <th>Tabla</th>
+                                        <th>Caja</th>
+                                        <th>Bundle</th>
+                                        <th>Cantidad</th>
+                                        <th>Largo</th>
+                                        <th>Ancho</th>
+                                        <th>Grueso</th>
+                                        <th>Metros</th>
+                                        <th>Precio</th>
+                                        <th>%Desc.</th>
+                                        <th>Subtotal</th>
+                                        <th>IVA</th>
+                                        <th>%IVA</th>
+                                        <th>Orden</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="articulo in gridApi.selection.getSelectedRows() track by $index">
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Fkarticulos}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Descripcion}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Lote}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Tabla}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Caja}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Bundle}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Cantidad}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.SLargo}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.SAncho}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.SGrueso}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.SMetros}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.SPrecio}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Porcentajedescuento}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{aaa}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Iva}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Porcentaiva}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit">{{articulo.Orden}}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="articulo.showEdit" ng-click="toggleEdit(articulo)" class="center glyphicon glyphicon-pencil"></span>
+                                            <span ng-show="!articulo.showEdit" ng-click="toggleEdit(articulo)" class="center glyphicon glyphicon-ok"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-click="articulos.splice($index,1)" class="center glyphicon glyphicon-trash"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="modal-footer">
+                                <span class="text-danger pull-left col-md-8 text-left ng-binding" style="white-space:pre-wrap;">{{ErrorCantidadesADevolver}}</span>
+                                <button type="button" ng-click="cancelar()" id="btnAceptarreclamaralbaran" class="btn btn-ar btn-default">@General.LblCancelar</button>
+                                <button type="button" ng-click="aceptar()" id="btnCancelarreclamaralbaran" class="btn btn-ar btn-primary" ng-disabled="!selected || selected <= 0 ">@General.LblAceptar</button>  @*data-dismiss="modal"*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

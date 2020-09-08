@@ -65,6 +65,8 @@ namespace Marfil.Dom.Persistencia
         public string fkcontadoreslotes { get; set; }
         public System.Guid flagidentifier { get; set; }
         public Nullable<int> tipoalmacenlote { get; set; }
+        public Nullable<int> fkreclamado { get; set; }
+        public string fkreclamadoreferencia { get; set; }
     
         public virtual AlbaranesCompras AlbaranesCompras { get; set; }
     }

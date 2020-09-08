@@ -72,7 +72,9 @@ namespace Marfil.App.WebMain.Misc.Designer
             Guid usuario;
             string name;
             DocumentosUsuarioService.GetFromCustomId(url, out TipoDocumentoImpresion, out usuario, out name);
-            return _service.GetDocumento(TipoDocumentoImpresion, usuario, name).Datos;
+            var obj = _service.GetDocumento(TipoDocumentoImpresion, usuario, name);
+
+            return obj.Datos;
         }
 
 

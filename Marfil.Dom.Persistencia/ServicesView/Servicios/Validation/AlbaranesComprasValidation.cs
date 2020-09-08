@@ -137,7 +137,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
             if (!FlagActualizarCantidadesFacturadas &&!ModificarCostes && !ValidaRangoEjercicio(model))
                 throw new ValidationException(RAlbaranesCompras.ErrorFechaEjercicio);
 
-            if((model.tipoalbaran==(int)TipoAlbaran.Devolucion|| model.tipoalbaran == (int)TipoAlbaran.Reclamacion) && string.IsNullOrEmpty(model.fkmotivosdevolucion))
+            if((model.tipoalbaran==(int)TipoAlbaran.Devolucion && string.IsNullOrEmpty(model.fkmotivosdevolucion)))
             {
                 throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RAlbaranesCompras.Fkmotivosdevolucion));
             }

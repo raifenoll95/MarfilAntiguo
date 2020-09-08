@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using Marfil.Dom.Persistencia.Helpers;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
+using Marfil.Dom.Persistencia.ServicesView;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using Newtonsoft.Json;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -31,6 +33,14 @@ namespace Marfil.App.WebMain.Controllers
         public FamiliasproductosController(IContextService context) : base(context)
         {
 
+        }
+
+        public ActionResult Validar(string familia)
+        {
+            var servicioFamilia = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService) as FamiliasproductosService;
+            var familiaModel = servicioFamilia.get(familia) as FamiliasproductosModel;
+            var dataModel = JsonConvert.SerializeObject(familiaModel, Formatting.Indented);
+            return Json(dataModel, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

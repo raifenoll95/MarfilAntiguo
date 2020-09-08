@@ -152,6 +152,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
         EliminarCostes,
         [StringValue(typeof(RAlbaranes), "TipoOperacionServiceImputacionCostesInsertar")]
         InsertarImputacionCostes,
+        [StringValue(typeof(RAlbaranes), "TipoOperacionServiceSalidaReclamacion")]
+        SalidaReclamacion,
+        [StringValue(typeof(RAlbaranes), "TipoOperacionServiceEntradaReclamacion")]
+        EntradaReclamacion
     }
     
 
@@ -194,21 +198,24 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Stock
                 //METEMOS EN LA TABLA MOVIMIENTOS DE STOCK DE LA BD EL MOVIMIENTO GENERADO
                 GenerarMovimientostock(model, tipooperacion);
 
-                //jmm
-                var entrada = model as MovimientosstockModel;
+                //if (tipooperacion != TipoOperacionService.EntradaReclamacion && tipooperacion != TipoOperacionService.SalidaReclamacion)
+                //{
+                    //jmm
+                    var entrada = model as MovimientosstockModel;
 
-                if (tipooperacion == TipoOperacionService.MovimientoAlmacen)
-                {
-                    entrada.Tipomovimiento = TipoOperacionService.MovimientoAlmacen;
-                    entrada.Ubicaciondestino = Convert.ToInt32(ubicacionDestino);
-                }                    
-                else if (model is IKitStockPieza)
-                    entrada.Tipomovimiento = TipoOperacionService.MovimientoKit;
-                else if (model is IBundleStockPieza)
-                    entrada.Tipomovimiento = TipoOperacionService.MovimientoBundle;
+                    if (tipooperacion == TipoOperacionService.MovimientoAlmacen)
+                    {
+                        entrada.Tipomovimiento = TipoOperacionService.MovimientoAlmacen;
+                        entrada.Ubicaciondestino = Convert.ToInt32(ubicacionDestino);
+                    }
+                    else if (model is IKitStockPieza)
+                        entrada.Tipomovimiento = TipoOperacionService.MovimientoKit;
+                    else if (model is IBundleStockPieza)
+                        entrada.Tipomovimiento = TipoOperacionService.MovimientoBundle;
 
-                var service = new StockService(_context, _db);
-                service.GestionPieza(entrada);
+                    var service = new StockService(_context, _db);
+                    service.GestionPieza(entrada);
+                //}
 
                 tran.Complete();
             }

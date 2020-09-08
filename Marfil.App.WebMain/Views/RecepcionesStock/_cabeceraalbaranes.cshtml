@@ -23,18 +23,20 @@
 @Html.HiddenFor(f => Model.Integridadreferencialflag)
 @Html.HiddenFor(f => Model.Modo)
 @Html.HiddenFor(f => Model.Pedidosaldado)
+@Html.HiddenFor(f => Model.idOriginalReclamado)
+
 @if (Model.Tipoalbaran == (int)TipoAlbaran.Devolucion || Model.Tipoalbaran == (int)TipoAlbaran.Reclamacion)
 {
 
 
-    <div  class="alert alert-warning">
+    <div class="alert alert-warning">
         <span>@Albaranes.Fktiposalbaranes:</span> <strong> @Funciones.GetEnumByStringValueAttribute((TipoAlbaran)Model.Tipoalbaran)</strong>
-        
+
     </div>
 
 }
 
-@Html.HiddenFor(f=>Model.Tipoalbaran)
+@Html.HiddenFor(f => Model.Tipoalbaran)
 
 @if (isNuevo)
 {
@@ -70,33 +72,33 @@
         </div>
 
     </div>
-                }
+}
 
-                else
-                {
-                    @Html.HiddenFor(f => Model.Fkseries)
-                    @Html.HiddenFor(f => Model.Fkestados)
-                    <div class="form-group">
-                        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
-                        <div class="col-md-6">
-                            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
-                        </div>
+else
+{
+    @Html.HiddenFor(f => Model.Fkseries)
+    @Html.HiddenFor(f => Model.Fkestados)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
 
-                        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
-                            @Html.HiddenFor(f => Model.Fkestados)
-                            <label class="control-label bolder dark @Html.Raw(WebHelper.DevexpressAA ? "color-black" :"green")">@Model.Estado.Descripcion</label>
-                        </div>
+        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.HiddenFor(f => Model.Fkestados)
+            <label class="control-label bolder dark @Html.Raw(WebHelper.DevexpressAA ? "color-black" :"green")">@Model.Estado.Descripcion</label>
+        </div>
 
-                        <div class="col-md-12"></div>
-                        <div class="col-md-6 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-2 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                }
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
 
 
 <div class="form-group">
@@ -108,7 +110,7 @@
     {
         @Html.LabelFor(f => Model.Fkmotivosdevolucion, new { @class = "control-label col-md-2" })
         <div class="col-md-6">
-            @Html.DropDownListFor(f => Model.Fkmotivosdevolucion,listmotivos.Select(f=>new SelectListItem() {Text= f.Descripcion,Value=f.Valor}),new  {@class="form-control"})
+            @Html.DropDownListFor(f => Model.Fkmotivosdevolucion, listmotivos.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.Valor }), new { @class = "form-control" })
         </div>
     }
 
@@ -145,27 +147,27 @@
     </div>
 </div>
 <div class="form-group">
-    @Html.LabelFor(f => Model.Numerodocumentoproveedor, new {@class = "control-label col-md-2"})
+    @Html.LabelFor(f => Model.Numerodocumentoproveedor, new { @class = "control-label col-md-2" })
     <div class="col-md-3">
-        @Html.TextBoxFor(f => Model.Numerodocumentoproveedor, isreadonly ? (object) new {@class = "form-control", @readonly = "readonly"} : (object) new {@class = "form-control"})
+        @Html.TextBoxFor(f => Model.Numerodocumentoproveedor, isreadonly ? (object)new { @class = "form-control", @readonly = "readonly" } : (object)new { @class = "form-control" })
     </div>
 
-    @Html.LabelFor(f => Model.Fechadocumentoproveedor, new {@class = "control-label col-md-3"})
+    @Html.LabelFor(f => Model.Fechadocumentoproveedor, new { @class = "control-label col-md-3" })
     <div class="col-md-2">
         @Html.EditorFor(f => Model.Fechadocumentoproveedor)
     </div>
 
     <div class="col-md-12"></div>
     <div class="col-md-3 col-md-offset-2">
-        @Html.ValidationMessageFor(f => Model.Numerodocumentoproveedor, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Numerodocumentoproveedor, "", new { @class = "text-danger" })
     </div>
     <div class="col-md-2 col-md-offset-3">
-        @Html.ValidationMessageFor(f => Model.Fechadocumentoproveedor, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(f => Model.Fechadocumentoproveedor, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    <input type="hidden" name="Fkpedidos" id="Fkpedidos" value="@Model.Fkpedidoscompras"/>
+    <input type="hidden" name="Fkpedidos" id="Fkpedidos" value="@Model.Fkpedidoscompras" />
 
     @Html.LabelFor(f => Model.Fkpedidoscompras, new { @class = "col-md-2 control-label" })
     <div class="col-md-2">

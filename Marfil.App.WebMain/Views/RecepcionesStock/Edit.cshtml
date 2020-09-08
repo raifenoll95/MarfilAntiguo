@@ -64,7 +64,7 @@
         </div>
 
     </div>
-            }
+}
 
 @Html.Partial("_envioemails")
 @Html.Partial("_nuevoregistro")
@@ -72,20 +72,28 @@
 @Html.Partial("UsersControls/_importarlineasModal")
 
 <script>
+
     function CallGenerarDevolucion() {
         var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
         var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
 
         GenerarDevolucion(values, columnas, "@Url.Action("Devolucion","RecepcionesStock")","@modelview.Id");
     }
+
+    function CallGenerarReclamacion() {
+        var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+        var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
+
+        GenerarReclamacion(values, columnas, "@Url.Action("Reclamacion","RecepcionesStock")","@modelview.Id");
+    }
 </script>
 
 @Html.Partial("UsersControls/_saldarpedido")
 
 @{
-    using (Html.BeginForm("ForzarCambiarCostes", "RecepcionesStock", FormMethod.Post,new {@id= "forzarcostesadicionales" }))
+    using (Html.BeginForm("ForzarCambiarCostes", "RecepcionesStock", FormMethod.Post, new { @id = "forzarcostesadicionales" }))
     {
-        <input type="hidden" name="documentoReferencia" value="@modelview.Id"/>
+        <input type="hidden" name="documentoReferencia" value="@modelview.Id" />
         <input type="hidden" name="returnUrl" value="@Url.Action("Edit",new { modelview.Id })" />
     }
 }
@@ -102,11 +110,21 @@
 
 
 <script>
-        function CallGenerarDevolucion() {
-            var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
-            var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
+    function CallGenerarDevolucion() {
+        var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+        var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
 
-            GenerarDevolucion(values, columnas, "@Url.Action("Devolucion","RecepcionesStock")","@modelview.Id");
-        }
+        GenerarDevolucion(values, columnas, "@Url.Action("Devolucion","RecepcionesStock")", "@modelview.Id");
+    }
+    function CallGenerarReclamacion() {
+        var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+        var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
+
+        GenerarReclamacion(values, columnas, "@Url.Action("Reclamacion","RecepcionesStock")","@modelview.Id");
+    }
 </script>
+
+
 @Html.Partial("UsersControls/_albarandevolucionModal")
+@Html.Partial("UsersControls/_albaranreclamacionModal")
+@Html.Partial("UsersControls/_albaranreclamacionModalSiguiente")

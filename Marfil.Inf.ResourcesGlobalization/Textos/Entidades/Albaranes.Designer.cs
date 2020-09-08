@@ -1258,11 +1258,29 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Generar albarán de reclamación.
+        /// </summary>
+        public static string LblGenerarReclamacion {
+            get {
+                return ResourceManager.GetString("LblGenerarReclamacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Generar devolución.
         /// </summary>
         public static string LblGestionDevoluciones {
             get {
                 return ResourceManager.GetString("LblGestionDevoluciones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Generar reclamación.
+        /// </summary>
+        public static string LblGestionReclamaciones {
+            get {
+                return ResourceManager.GetString("LblGestionReclamaciones", resourceCulture);
             }
         }
         
@@ -1717,6 +1735,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Seleccionar líneas a reclamar.
+        /// </summary>
+        public static string SeleccionarReclamacion {
+            get {
+                return ResourceManager.GetString("SeleccionarReclamacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sello.
         /// </summary>
         public static string Sello {
@@ -1933,6 +1960,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Entrada en reclamación.
+        /// </summary>
+        public static string TipoOperacionServiceEntradaReclamacion {
+            get {
+                return ResourceManager.GetString("TipoOperacionServiceEntradaReclamacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Finalizar transformaciones.
         /// </summary>
         public static string TipoOperacionServiceFinalizarTransformacionloteStock {
@@ -1965,6 +2001,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string TipoOperacionServiceInsertarRecepcionStockDevolucion {
             get {
                 return ResourceManager.GetString("TipoOperacionServiceInsertarRecepcionStockDevolucion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Salida en reclamacion.
+        /// </summary>
+        public static string TipoOperacionServiceSalidaReclamacion {
+            get {
+                return ResourceManager.GetString("TipoOperacionServiceSalidaReclamacion", resourceCulture);
             }
         }
         

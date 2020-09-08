@@ -262,12 +262,105 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
+        public void Reclamar(IModelView obj, List<LineaImportarModel> lineas)
+        {
+            using (var tran = TransactionScopeBuilder.CreateTransactionObject())
+            {
+                var model = obj as AlbaranesComprasModel;
+
+                List<AlbaranesComprasLinModel> antiguas = new List<AlbaranesComprasLinModel>();
+                model.Lineas.Clear();
+
+                foreach(var linea in lineas)
+                {
+                    if(linea.Cantidad > 0)
+                    {
+                        model.Lineas.Add(new AlbaranesComprasLinModel
+                        {
+                            Id = linea.Id,
+                            Fkarticulos = linea.Fkarticulos,
+                            Descripcion = linea.Descripcion,
+                            Lote = linea.Lote,
+                            Tabla = linea.Tabla,
+                            Cantidad = linea.Cantidad,
+                            Canal = linea.Canal,
+                            Cuotaiva = linea.Cuotaiva,
+                            Cuotarecargoequivalencia = linea.Cuotarecargoequivalencia,
+                            Decimalesmedidas = linea.Decimalesmedidas,
+                            Decimalesmonedas = linea.Decimalesmonedas,
+                            Fkregimeniva = linea.Fkregimeniva,
+                            Fkunidades = linea.Fkunidades,
+                            Largo = linea.Largo,
+                            Ancho = linea.Ancho,
+                            Grueso = linea.Grueso,
+                            Metros = linea.Metros,
+                            Precio = linea.Precio,
+                            Fktiposiva = linea.Fktiposiva,
+                            Importe = linea.Importe,
+                            Importedescuento = linea.Importedescuento,
+                            Notas = linea.Notas,
+                            Porcentajedescuento = linea.Porcentajedescuento,
+                            Porcentajeiva = linea.Porcentajeiva,
+                            Precioanterior = linea.Precioanterior,
+                            Revision = linea.Revision,
+                            Bundle = linea.Bundle,
+                            Orden = linea.Orden
+                        });
+                    }
+                    
+                    else
+                    {
+                        antiguas.Add(new AlbaranesComprasLinModel
+                        {
+                            Id = linea.Id,
+                            Fkarticulos = linea.Fkarticulos,
+                            Descripcion = linea.Descripcion,
+                            Lote = linea.Lote,
+                            Tabla = linea.Tabla,
+                            Cantidad = linea.Cantidad * (-1),
+                            Canal = linea.Canal,
+                            Cuotaiva = linea.Cuotaiva,
+                            Cuotarecargoequivalencia = linea.Cuotarecargoequivalencia,
+                            Decimalesmedidas = linea.Decimalesmedidas,
+                            Decimalesmonedas = linea.Decimalesmonedas,
+                            Fkregimeniva = linea.Fkregimeniva,
+                            Fkunidades = linea.Fkunidades,
+                            Largo = linea.Largo,
+                            Ancho = linea.Ancho,
+                            Grueso = linea.Grueso,
+                            Metros = linea.Metros * (-1),
+                            Precio = linea.Precio,
+                            Fktiposiva = linea.Fktiposiva,
+                            Importe = linea.Importe * (-1),
+                            Importedescuento = linea.Importedescuento,
+                            Notas = linea.Notas,
+                            Porcentajedescuento = linea.Porcentajedescuento,
+                            Porcentajeiva = linea.Porcentajeiva,
+                            Precioanterior = linea.Precioanterior,
+                            Revision = linea.Revision,
+                            Bundle = linea.Bundle,
+                            Orden = linea.Orden
+                        });
+                    }
+                }
+
+                //Se editan las lineas del albaran
+                base.edit(model);
+                
+                GenerarMovimientosLineas(antiguas, model, TipoOperacionService.EliminarRecepcionStock);
+                GenerarMovimientosLineas(model.Lineas, model, TipoOperacionService.InsertarRecepcionStock); //Insertar
+
+                GestionarBundleLineas(obj as AlbaranesComprasModel);
+                _db.SaveChanges();
+                tran.Complete();
+            }
+        }
+
         public override void create(IModelView obj)
         {
             using (var tran = TransactionScopeBuilder.CreateTransactionObject())
             {
                 var model = obj as AlbaranesComprasModel;
-                // Calcular costesadicionales costexm2 o costexm3
                 CalcularCosteTotalMetros(model.Lineas, model.Costes);
 
                 RepartirCostesLineas(model.Lineas, model.Costes);
@@ -275,10 +368,30 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 base.create(obj);
 
-                //CrearStock(obj as AlbaranesComprasModel);
-
                 if (model.Tipoalbaran == (int)TipoAlbaran.Devolucion)
+                {
                     GenerarMovimientosLineas(model.Lineas, model, TipoOperacionService.InsertarRecepcionStockDevolucion);
+                }
+                
+                if(model.Tipoalbaran == (int)TipoAlbaran.Reclamacion)
+                {
+                    var antiguas = model.Lineas.Where(f => f.Cantidad < 0).ToList();
+                    var nuevas = model.Lineas.Where(f => f.Cantidad > 0).ToList();
+
+                    GenerarMovimientosLineas(antiguas, model, TipoOperacionService.EliminarRecepcionStock);
+                    GenerarMovimientosLineas(nuevas, model, TipoOperacionService.InsertarRecepcionStock);
+
+                    //Cuando creamos el albaran de reclamacion, necesitamos introducir en las lineas del albaran original el id y la referencia del reclamado
+                    var original = get(model.idOriginalReclamado.ToString()) as AlbaranesComprasModel;
+                    foreach (var linea in original.Lineas)
+                    {
+                        linea.Fkreclamado = model.Id;
+                        linea.Fkreclamadoreferencia = model.Referencia;
+                    }
+
+                    base.edit(original);  
+                }
+
                 else
                     GenerarMovimientosLineas(model.Lineas, model, TipoOperacionService.InsertarRecepcionStock);
 
@@ -286,7 +399,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 _db.SaveChanges();
                 tran.Complete();
             }
-
         }
 
         public override void edit(IModelView obj)
@@ -360,50 +472,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Movimientos stock
 
-        //private void CrearStock(AlbaranesComprasModel nuevo)
-        //{
-        //    OperarStock(nuevo, TipoOperacionStock.Entrada);
-        //}
-
-        //private void ActualizarStock(AlbaranesComprasModel original, AlbaranesComprasModel nuevo)
-        //{
-        //    var list = new List<AlbaranesComprasLinModel>();
-
-
-
-        //    var lineasModificadas = nuevo.Lineas.Where
-        //        (f => !original.Lineas.Any(j => j.Flagidentifier == f.Flagidentifier)
-        //        || !original.Lineas.Any(j => j.Tipodealmacenlote == f.Tipodealmacenlote) ).ToList();
-
-        //    var lineasEliminadas = original.Lineas.Where
-        //        (f => !nuevo.Lineas.Where(j=> !lineasModificadas.Any(h => h.Flagidentifier == f.Flagidentifier)).Any(j => j.Flagidentifier == f.Flagidentifier )
-        //        || !nuevo.Lineas.Any(j => j.Tipodealmacenlote == f.Tipodealmacenlote)).ToList();
-        //    foreach (var item in lineasEliminadas) 
-        //        item.Cantidad *= -1;
-
-        //    lineasModificadas.ForEach(f => f.Nueva = true);
-
-        //    list = lineasEliminadas.Union(lineasModificadas).ToList();  // ultima en actualizar las modificadas para que grabe en el stock actual el tipo de lote
-
-        //    nuevo.Tipoalbaranenum = TipoAlbaran.Habitual;
-        //    GenerarMovimientosLineas(list,nuevo,TipoOperacionStock.Actualizacion);
-        //}
-
-        //private void EliminarStock(AlbaranesComprasModel nuevo)
-        //{
-        //    foreach (var item in nuevo.Lineas)
-        //        item.Cantidad *= -1;
-        //    OperarStock(nuevo, TipoOperacionService.EliminarRecepcionStock);
-        //}
-
-        //private void OperarStock(AlbaranesComprasModel nuevo, TipoOperacionStock operacion)
-        //{
-        //    GenerarMovimientosLineas(nuevo.Lineas, nuevo, operacion);
-        //}
-
-
-
-
         private void GenerarMovimientosLineas(IEnumerable<AlbaranesComprasLinModel> lineas, AlbaranesComprasModel nuevo, TipoOperacionService movimiento)
         {
             var movimientosStockService = new MovimientosstockService(_context, _db);
@@ -456,27 +524,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                                 Codigoproveedor = nuevo.Fkproveedores,
                                 Linea = aux
                             }),
+
                         Fkusuarios = Usuarioid,
-                        //Tipooperacion = operacion,
                         Tipodealmacenlote = nuevo.Tipodealmacenlote,
 
-                        //jmm - mover xml
-                        //Codigoproveedor = nuevo.Fkproveedores,
-                        //Fechaentrada = nuevo.Fechadocumento,
-                        //Precioentrada = linea.Importe,
-                        //Referenciaentrada = nuevo.Referencia,
-                        //Codigodocumentoentrada = nuevo.Id,
-                        //Cantidadentrada = linea.Cantidad,
-                        //Largoentrada = linea.Largo,
-                        //Anchoentrada = linea.Ancho,
-                        //Gruesoentrada = linea.Grueso,
-                        //Metrosentrada = linea.Metros,
-                        //Netocompra = linea.Importe,
-                        //Preciovaloracion = linea.Precio,
+                        //En los albaranes de reclamacion, las lineas negativas (eliminar stock) ya vienen con la cantidad y los metros en negativo, no hace falta hacer *-1
+                        Cantidad = nuevo.Tipoalbaran == (int)TipoAlbaran.Reclamacion && linea.Cantidad < 0 ? (linea.Cantidad ?? 0) : (linea.Cantidad ?? 0) * operacion,
+                        Metros = nuevo.Tipoalbaran == (int)TipoAlbaran.Reclamacion && linea.Cantidad < 0 ? (linea.Metros ?? 0) : (linea.Metros ?? 0) * operacion,
+                        Pesoneto = nuevo.Tipoalbaran == (int)TipoAlbaran.Reclamacion && linea.Cantidad < 0 ? ((articuloObj.Kilosud ?? 0) * linea.Metros) : ((articuloObj.Kilosud ?? 0) * linea.Metros) * operacion,
 
-                        Cantidad = (linea.Cantidad ?? 0) * operacion,
-                        Metros = (linea.Metros ?? 0) * operacion,
-                        Pesoneto = ((articuloObj.Kilosud ?? 0) * linea.Metros) * operacion,
+                        //Seguimos
                         Costeadicionalmaterial = linea.Costeadicionalmaterial * operacion,
                         Costeadicionalotro = linea.Costeadicionalotro * operacion,
                         Costeadicionalvariable = linea.Costeadicionalvariable * operacion,
@@ -493,6 +550,17 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         operacionServicio = linea.Nueva
                         ? TipoOperacionService.InsertarRecepcionStockDevolucion
                         : TipoOperacionService.ActualizarRecepcionStockDevolucion;
+                    }
+
+                    if (nuevo.Tipoalbaranenum == TipoAlbaran.Reclamacion && linea.Cantidad < 0)
+                    {
+                        operacionServicio = TipoOperacionService.SalidaReclamacion;
+
+                    }
+                    if (nuevo.Tipoalbaranenum == TipoAlbaran.Reclamacion && linea.Cantidad > 0)
+                    {
+                        operacionServicio = TipoOperacionService.EntradaReclamacion;
+
                     }
                     movimientosStockService.GenerarMovimiento(model, operacionServicio);
                 }
@@ -568,6 +636,54 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
             else
                 throw new ValidationException(Inf.ResourcesGlobalization.Textos.Entidades.Presupuestos.ErrorNoExisteSerieAsociada);
+        }
+
+        public IEnumerable<AlbaranesComprasLinModel> ImportarLineasReclamadas(IEnumerable<ILineaImportar> duplicadas, int maxId)
+        {
+            List<AlbaranesComprasLinModel> lineas = new List<AlbaranesComprasLinModel>();
+            var id = maxId++;
+
+            foreach(var linea in duplicadas)
+            {
+                lineas.Add(new AlbaranesComprasLinModel
+                {         
+                    Cantidadpedida = 0,
+                    Id = id,
+                    Ancho = linea.Ancho,
+                    Canal = linea.Canal,
+                    Cantidad = linea.Cantidad,
+                    Cuotaiva = linea.Cuotaiva,
+                    Cuotarecargoequivalencia = linea.Cuotarecargoequivalencia,
+                    Decimalesmedidas = linea.Decimalesmedidas,
+                    Decimalesmonedas = linea.Decimalesmonedas,
+                    Descripcion = linea.Descripcion,
+                    Fkregimeniva = linea.Fkregimeniva,
+                    Fkunidades = linea.Fkunidades,
+                    Metros = linea.Metros,
+                    Precio = linea.Precio,
+                    Fkarticulos = linea.Fkarticulos,
+                    Fktiposiva = linea.Fktiposiva,
+                    Grueso = linea.Grueso,
+                    Importe = linea.Importe,
+                    Importedescuento = linea.Importedescuento,
+                    Largo = linea.Largo,
+                    Lote = linea.Lote,
+                    Notas = linea.Notas,
+                    Porcentajedescuento = linea.Porcentajedescuento,
+                    Porcentajeiva = linea.Porcentajeiva,
+                    Porcentajerecargoequivalencia = linea.Porcentajerecargoequivalencia,
+                    Precioanterior = linea.Precioanterior,
+                    Revision = linea.Revision,
+                    Tabla = linea.Tabla,
+                    Bundle = linea.Bundle,
+                    Fkpedidos = Funciones.Qint(linea.Fkdocumento),
+                    Fkpedidosid = Funciones.Qint(linea.Fkdocumentoid),
+                    Fkpedidosreferencia = linea.Fkdocumentoreferencia
+                });
+                id++;
+            }
+
+            return lineas;
         }
 
         public IEnumerable<AlbaranesComprasLinModel> ImportarLineas(int maxId, IEnumerable<ILineaImportar> linea)

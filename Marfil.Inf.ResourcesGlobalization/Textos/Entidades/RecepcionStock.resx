@@ -103,4 +103,7 @@
   <data name="TituloEntidadSingular" xml:space="preserve">
     <value>Recepción de stock</value>
   </data>
+  <data name="TituloReclamacion" xml:space="preserve">
+    <value>reclamación</value>
+  </data>
 </root>

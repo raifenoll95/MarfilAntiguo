@@ -80,9 +80,11 @@
             c.CellStyle.Wrap = DefaultBoolean.True;
         });
 
-        settings.Columns.Add(c=> {
-            c.FieldName="Lote";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Lote";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
         });
 
         settings.Columns.Add(c =>
@@ -93,9 +95,11 @@
 
         });
 
-        settings.Columns.Add(c=>{
-            c.FieldName="Tabla";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tabla";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
         });
 
         settings.Columns.Add(c =>
@@ -122,9 +126,11 @@
             c.ReadOnly = true;
         });
 
-        settings.Columns.Add(c=>{
-            c.FieldName="Bundle";
-            c.ReadOnly = true;});
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Bundle";
+            c.ReadOnly = true;
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Cantidad";
@@ -132,6 +138,7 @@
             var p = c.PropertiesEdit as SpinEditProperties;
             p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
 
         });
 
@@ -327,7 +334,7 @@
             c.FieldName = "Orden";
             c.Visible = true;
             c.ColumnType = MVCxGridViewColumnType.Default;
-            c.SortOrder=ColumnSortOrder.Ascending;
+            c.SortOrder = ColumnSortOrder.Ascending;
 
         });
         settings.Columns.Add(c =>
@@ -401,8 +408,12 @@
             settings.CommandColumn.ButtonType = GridCommandButtonRenderMode.Button;
 
             settings.CommandColumn.ShowNewButton = false;
-            settings.CommandColumn.ShowDeleteButton = true;
-            settings.CommandColumn.ShowEditButton = true;
+
+            if (Model.All(f => f.Cantidad > 0))
+            {
+                settings.CommandColumn.ShowDeleteButton = true;
+                settings.CommandColumn.ShowEditButton = true;
+            }
 
             settings.SettingsCommandButton.EditButton.Text = "<span tabindex=\"-1\" class=\"fa fa-pencil\" title=\"" + General.LblBorrar + " - (F2)\"></i>";
             settings.SettingsCommandButton.DeleteButton.Text = "<span tabindex=\"-1\" class=\"fa fa-trash\" title=\"" + General.LblBorrar + " - (Supr)\"></i>";
@@ -455,6 +466,50 @@
                     sb.AppendLine(string.Format("<a href='javascript:ModalDocumentosAsociados(&#39;Pedidos&#39;,&#39;{0}&#39;);' class=\"btn-xs btn btn-info\">", sbpedidos.ToString()));
                     sb.AppendLine("<i class=\"fa fa-eye\"></i>");
                     sb.AppendLine(General.LblVer + " " + Pedidos.TituloEntidad);
+                    sb.AppendLine("</a>");
+
+                    ViewContext.Writer.Write(sb.ToString());
+
+                }
+            });
+
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        //Reclamacion
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "#";
+            column.ColumnType = MVCxGridViewColumnType.TokenBox;
+
+            column.Width = Unit.Pixel(200);
+            column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+
+            column.SetDataItemTemplateContent(container =>
+            {
+                container.Column.CellStyle.HorizontalAlign = HorizontalAlign.Center;
+                if (!string.IsNullOrEmpty(DataBinder.Eval(container.DataItem, "Fkreclamado")?.ToString()))
+                {
+                    var idalbaran = string.Format("{0}", DataBinder.Eval(container.DataItem, "Fkreclamado"));
+                    var referencia = DataBinder.Eval(container.DataItem, "Fkreclamadoreferencia").ToString();
+                    var sb = new StringBuilder();
+                    var sbalbaranes = new StringBuilder();
+                    sbalbaranes.Append("[");
+                    sbalbaranes.Append(string.Format("{{\"url\":\"{0}\",\"referencia\":\"{1}\"}}", Url.Action("Details", "RecepcionesStock", new { id = idalbaran }), referencia));
+                    sbalbaranes.Append("]");
+                    sb.AppendLine(string.Format("<a href='javascript:ModalDocumentosAsociados(&#39;RecepcionesStock&#39;,&#39;{0}&#39;);' class=\"btn-xs btn btn-info\">", sbalbaranes.ToString()));
+                    sb.AppendLine("<i class=\"fa fa-eye\"></i>");
+
+                    if(Model.Any(f => f.Cantidad < 1))
+                    {
+                        sb.AppendLine(General.LblVer + " " + Albaranes.TituloEntidadSingular);
+                    }
+
+                    else
+                    {
+                        sb.AppendLine(General.LblVer + " " + RecepcionStock.TituloReclamacion);
+                    }
+                    
                     sb.AppendLine("</a>");
 
                     ViewContext.Writer.Write(sb.ToString());
@@ -590,12 +645,15 @@
     }
 
 }
-@grid.Bind(Model).GetHtml()
+@grid.Bind(Model.OrderBy(f => f.Lote).ThenBy(f => f.Tabla).ThenBy(f => f.Cantidad).ToList()).GetHtml()
+
+
 @if (!isreadonly)
 {
     <script type="text/javascript">
 
-
+        GridViewLineas.Focus();
+        GridViewLineas.Refresh();
 
         //start search prices
 
@@ -742,7 +800,7 @@
                 var index = s.GetFocusedRowIndex();
 
                 switch (keycode) {
-                   
+
                     case 46: //Eliminar
                         if (!GridViewLineas.IsEditing()) {
                             GridViewLineas.DeleteRow(index);

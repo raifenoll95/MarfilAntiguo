@@ -205,6 +205,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
 
         #region Properties
 
+        //Albaran de reclamacion, necesito saber cual es el id del original
+        public int idOriginalReclamado { get; set; }
+
         public bool? Pedidosaldado { get; set; }
 
         public DocumentosBotonImprimirModel DocumentosImpresion { get; set; }
@@ -875,6 +878,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.AlbaranesCompras
         public int? Fkpedidos { get; set; }
         public int? Fkpedidosid { get; set; }
         public string Fkpedidosreferencia { get; set; }
+
+        public int? Fkreclamado { get; set; }
+        public string Fkreclamadoreferencia { get; set; }
 
         public int? Tblnum { get; set; }
 

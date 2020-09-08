@@ -342,6 +342,8 @@
           <Property Name="fkcontadoreslotes" Type="varchar" MaxLength="12" />
           <Property Name="flagidentifier" Type="uniqueidentifier" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="int" />
+          <Property Name="fkreclamado" Type="int" />
+          <Property Name="fkreclamadoreferencia" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="AlbaranesComprasTotales">
           <Key>
@@ -11191,6 +11193,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="flagidentifier" Type="Guid" Nullable="false" />
           <Property Name="tipoalmacenlote" Type="Int32" />
           <NavigationProperty Name="AlbaranesCompras" Relationship="MarfilModel.FK_AlbaranesComprasLin_AlbaranesCompras" FromRole="AlbaranesComprasLin" ToRole="AlbaranesCompras" />
+          <Property Name="fkreclamado" Type="Int32" />
+          <Property Name="fkreclamadoreferencia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_AlbaranesComprasLin_AlbaranesCompras">
           <End Type="MarfilModel.AlbaranesCompras" Role="AlbaranesCompras" Multiplicity="1" />
@@ -16031,6 +16035,8 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="AlbaranesComprasLin">
             <EntityTypeMapping TypeName="MarfilModel.AlbaranesComprasLin">
               <MappingFragment StoreEntitySet="AlbaranesComprasLin">
+                <ScalarProperty Name="fkreclamadoreferencia" ColumnName="fkreclamadoreferencia" />
+                <ScalarProperty Name="fkreclamado" ColumnName="fkreclamado" />
                 <ScalarProperty Name="tipoalmacenlote" ColumnName="tipoalmacenlote" />
                 <ScalarProperty Name="flagidentifier" ColumnName="flagidentifier" />
                 <ScalarProperty Name="fkcontadoreslotes" ColumnName="fkcontadoreslotes" />

@@ -786,4 +786,19 @@
   <data name="Merma" xml:space="preserve">
     <value>Merma</value>
   </data>
+  <data name="LblGestionReclamaciones" xml:space="preserve">
+    <value>Generar reclamación</value>
+  </data>
+  <data name="LblGenerarReclamacion" xml:space="preserve">
+    <value>Generar albarán de reclamación</value>
+  </data>
+  <data name="SeleccionarReclamacion" xml:space="preserve">
+    <value>Seleccionar líneas a reclamar</value>
+  </data>
+  <data name="TipoOperacionServiceSalidaReclamacion" xml:space="preserve">
+    <value>Salida en reclamacion</value>
+  </data>
+  <data name="TipoOperacionServiceEntradaReclamacion" xml:space="preserve">
+    <value>Entrada en reclamación</value>
+  </data>
 </root>
