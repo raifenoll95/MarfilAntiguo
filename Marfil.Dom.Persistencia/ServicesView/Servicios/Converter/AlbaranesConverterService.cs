@@ -196,6 +196,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 Fkfacturasreferencia = _db.Facturas.Include("FacturasLin").Where(j => j.empresa == Empresa && j.FacturasLin.Any(h => h.empresa == Empresa && h.fkalbaranes == result.Id)).ToList().Select(h => new StDocumentoReferencia() { CampoId = string.Format("{0}", h.id), Referencia = h.referencia }).ToList(),
                 Flagidentifier = f.flagidentifier,
                 Tipodealmacenlote = (DOMAlbaranesComprasModel.TipoAlmacenlote?)f.tipoalmacenlote,
+                Fkreclamado = f.fkreclamado,
+                Fkreclamadoreferencia = f.fkreclamadoreferencia,
 
                 // Necesario para crear la url para ver el albaran
                 idAlbaranDevuelto = _db.Albaranes.Where(j => j.empresa == Empresa && j.referencia == f.documentoorigen).Select(j => j.id).SingleOrDefault()
@@ -321,6 +323,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.costeadicionalotro = item.Costeadicionalotro;
                 newItem.flagidentifier = Guid.NewGuid();
                 newItem.tipoalmacenlote = (int?)item.Tipodealmacenlote;
+                newItem.fkreclamado = item.Fkreclamado;
+                newItem.fkreclamadoreferencia = item.Fkreclamadoreferencia;
                 result.AlbaranesLin.Add(newItem);
             }
 
@@ -430,6 +434,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 newItem.costeadicionalotro = item.Costeadicionalotro;
                 newItem.orden = item.Orden;
                 newItem.flagidentifier = item.Flagidentifier;
+                newItem.fkreclamado = item.Fkreclamado;
+                newItem.fkreclamadoreferencia = item.Fkreclamadoreferencia;
 
                 newItem.tipoalmacenlote = (int?)item.Tipodealmacenlote;
 

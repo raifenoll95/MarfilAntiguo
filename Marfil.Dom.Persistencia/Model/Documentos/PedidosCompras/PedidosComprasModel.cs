@@ -400,6 +400,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras
     
     public class PedidosComprasLinModel:ILineaImportar
     {
+
         private int? _decimalesmonedas=2;
         private int? _decimalesmedidas=3;
         public int Id { get; set; }
@@ -702,6 +703,11 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.PedidosCompras
 
             set { Fkpresupuestosreferencia = value; }
         }
+
+        public string Contenedor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Sello { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int? Caja { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double? Pesoneto { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 
     public class PedidosComprasTotalesModel

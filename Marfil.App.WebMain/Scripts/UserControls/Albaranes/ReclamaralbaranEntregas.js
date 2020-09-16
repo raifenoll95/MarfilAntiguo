@@ -1,6 +1,6 @@
 ﻿//Raimundo Fenoll
 
-app.controller('ReclamaralbaranCtrl', ['$scope', '$rootScope', '$http', '$interval', 'uiGridConstants', '$timeout', function ($scope, $rootScope, $http, $interval, $uiGridConstants, $timeout) {
+app.controller('ReclamaralbaranEntregasCtrl', ['$scope', '$rootScope', '$http', '$interval', 'uiGridConstants', '$timeout', function ($scope, $rootScope, $http, $interval, $uiGridConstants, $timeout) {
 
     //configuracion Control
     $scope.campoIdentificador = "";
@@ -102,7 +102,7 @@ app.controller('ReclamaralbaranCtrl', ['$scope', '$rootScope', '$http', '$interv
             $scope.articulosduplicados = JSON.parse(data).Lineas;
             $scope.articulosduplicados.forEach(function (articulo) {
                 if (articulo.Cantidad < 0) {
-                    articulo["noeditable"] = true; //Lineas negativas
+                    articulo["noeditable"] = true; //Lineas positivas
                 }
                 var familiaArticulo = articulo.Fkarticulos.substring(0, 2);
                 articulo["showEdit"] = true;
@@ -149,6 +149,7 @@ app.controller('ReclamaralbaranCtrl', ['$scope', '$rootScope', '$http', '$interv
         }
     }
 
+    //Poner las medidas anteriores debido a un fallo
     $scope.MedidasAnteriores = function (articulo) {
         articulo.SLargo = articulo["largooriginal"];
         articulo.SAncho = articulo["anchooriginal"];
@@ -168,6 +169,7 @@ app.controller('ReclamaralbaranCtrl', ['$scope', '$rootScope', '$http', '$interv
         $scope.$apply();
     }
 
+    //Validar dimensiones y recalcular campos
     $scope.ValidarYRecalcular = function (articulo) {
 
         var familiaArticulo = articulo.Fkarticulos.substring(0, 2);
@@ -202,7 +204,7 @@ app.controller('ReclamaralbaranCtrl', ['$scope', '$rootScope', '$http', '$interv
                 $scope.MedidasAnteriores(articulo);
             }
 
-            $scope.CalcularPrecioMetros(articulo, familia); 
+            $scope.CalcularPrecioMetros(articulo,familia);   
 
         }).error(function (error) {
             console.log("error call validar dimensiones");

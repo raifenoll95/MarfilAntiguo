@@ -801,4 +801,10 @@
   <data name="TipoOperacionServiceEntradaReclamacion" xml:space="preserve">
     <value>Entrada en reclamación</value>
   </data>
+  <data name="LblGestionContenedores" xml:space="preserve">
+    <value>Asignar contenedores</value>
+  </data>
+  <data name="Fechabl" xml:space="preserve">
+    <value>Fecha B.L.</value>
+  </data>
 </root>

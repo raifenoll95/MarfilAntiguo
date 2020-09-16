@@ -11,10 +11,10 @@
 @{
     var isreadonly = ViewData["readonly"] != null ? (bool)ViewData["readonly"] : false;
     var iseditable = ViewData["operacion"] != null && (ViewData["operacion"] == "Edit");
-    var isNuevo = (!isreadonly && !iseditable) ;
+    var isNuevo = (!isreadonly && !iseditable);
 
     var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
-    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);    
+    var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosDevolucion().Select(f => new SelectListItem()
     {
         Text = f.Descripcion,
@@ -33,16 +33,17 @@
 @Html.HiddenFor(f => Model.Id)
 @Html.HiddenFor(f => Model.Identificadorsegmento)
 @Html.HiddenFor(f => Model.Fkejercicio)
-@Html.HiddenFor(f=> Model.Pedidosaldado)
+@Html.HiddenFor(f => Model.Pedidosaldado)
 @Html.HiddenFor(f => Model.Tipoalbaran)
+@Html.HiddenFor(f => Model.idOriginalReclamado)
 
 @if (Model.Tipoalbaran == (int)TipoAlbaran.Devolucion || Model.Tipoalbaran == (int)TipoAlbaran.Reclamacion)
 {
 
 
-    <div  class="alert alert-warning">
+    <div class="alert alert-warning">
         <span>@Albaranes.Fktiposalbaranes:</span> <strong> @Funciones.GetEnumByStringValueAttribute((TipoAlbaran)Model.Tipoalbaran)</strong>
-        
+
     </div>
 
 }
@@ -71,14 +72,14 @@
         </div>
 
         @Html.LabelFor(f => Model.Tipoalbaranenum, new { @class = "control-label col-md-2" })
-        <div class="col-md-2">                        
+        <div class="col-md-2">
             @Html.DropDownListFor(f => Model.Tipoalbaranenum, Enumerable.Empty<SelectListItem>(), isreadonly ? (object)new { @disabled = "disabled", @class = "form-control" } : (object)new { @class = "form-control" })
         </div>
 
         @Html.LabelFor(f => Model.Estado, new { @class = "control-label col-md-2" })
         <div class="col-md-2">
             @Html.DropDownListFor(f => Model.Fkestados, Model.EstadosAsociados.Select(f => new SelectListItem() { Text = f.Descripcion, Value = f.CampoId }), new { @class = "form-control", aria_label = "Estados" })
-        </div> 
+        </div>
 
         <div class="col-md-12"></div>
         <div class="col-md-2 col-md-offset-2">
@@ -90,33 +91,33 @@
         </div>
 
     </div>
-                }
+}
 
-                else
-                {
-                    @Html.HiddenFor(f => Model.Fkseries)
-                    @Html.HiddenFor(f => Model.Fkestados)
-                    <div class="form-group">
-                        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
-                        <div class="col-md-6">
-                            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
-                        </div>
+else
+{
+    @Html.HiddenFor(f => Model.Fkseries)
+    @Html.HiddenFor(f => Model.Fkestados)
+    <div class="form-group">
+        @Html.LabelFor(f => Model.Referencia, new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(f => Model.Referencia, new { @class = "form-control", @readonly = "readonly" })
+        </div>
 
-                        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
-                            @Html.HiddenFor(f => Model.Fkestados)
-                            <label class="control-label bolder dark green">@Model.Estado.Descripcion</label>
-                        </div>
+        @Html.LabelFor(f => Model.Fkestados, new { @class = "control-label col-md-2" })
+        <div class="col-md-2">
+            @Html.HiddenFor(f => Model.Fkestados)
+            <label class="control-label bolder dark green">@Model.Estado.Descripcion</label>
+        </div>
 
-                        <div class="col-md-12"></div>
-                        <div class="col-md-6 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-2 col-md-offset-2">
-                            @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                }
+        <div class="col-md-12"></div>
+        <div class="col-md-6 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Referencia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+            @Html.ValidationMessageFor(f => Model.Estado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
 
 
 <div class="form-group">

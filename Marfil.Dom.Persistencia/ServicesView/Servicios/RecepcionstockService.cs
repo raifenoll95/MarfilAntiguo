@@ -373,7 +373,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     GenerarMovimientosLineas(model.Lineas, model, TipoOperacionService.InsertarRecepcionStockDevolucion);
                 }
                 
-                if(model.Tipoalbaran == (int)TipoAlbaran.Reclamacion)
+                else if(model.Tipoalbaran == (int)TipoAlbaran.Reclamacion)
                 {
                     var antiguas = model.Lineas.Where(f => f.Cantidad < 0).ToList();
                     var nuevas = model.Lineas.Where(f => f.Cantidad > 0).ToList();

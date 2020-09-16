@@ -190,6 +190,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
         public DocumentosBotonImprimirModel DocumentosImpresion { get; set; }
 
+        public int idOriginalReclamado { get; set; }
+
         public int Id { get; set; }
 
         public bool? Importado { get; set; }
@@ -233,6 +235,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
 
         [Display(ResourceType = typeof(RAlbaranes), Name = "Fechavalidez")]
         public DateTime? Fechavalidez { get; set; }
+        [Display(ResourceType = typeof(RAlbaranes), Name = "Fechabl")]
+        public DateTime? Fechabl { get; set; }
 
         [Display(ResourceType = typeof(RAlbaranes), Name = "Fechaentrega")]
         public DateTime? Fechaentrega { get; set; }
@@ -668,6 +672,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
         private bool _enFactura = false;
         public int Fkalbaranes { get; set; }
 
+        public int? Fkreclamado { get; set; }
+
+        public string Fkreclamadoreferencia { get; set; }
+
         public int Id { get; set; }
         public bool Nueva { get; set; }
         public int? Orden
@@ -851,7 +859,7 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
         //clave ajena
         public int? Fkpedidos { get; set; }
         public int? Fkpedidosid { get; set; }
-        public string Fkpedidosreferencia { get; set; }       
+        public string Fkpedidosreferencia { get; set; }
 
         public int? Tblnum { get; set; }
 

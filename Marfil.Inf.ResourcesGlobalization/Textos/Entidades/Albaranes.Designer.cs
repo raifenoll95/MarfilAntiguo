@@ -718,6 +718,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Fecha B.L..
+        /// </summary>
+        public static string Fechabl {
+            get {
+                return ResourceManager.GetString("Fechabl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Fecha desde.
         /// </summary>
         public static string FechaDesde {
@@ -1263,6 +1272,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         public static string LblGenerarReclamacion {
             get {
                 return ResourceManager.GetString("LblGenerarReclamacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Asignar contenedores.
+        /// </summary>
+        public static string LblGestionContenedores {
+            get {
+                return ResourceManager.GetString("LblGestionContenedores", resourceCulture);
             }
         }
         

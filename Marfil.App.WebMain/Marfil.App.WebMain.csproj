@@ -2442,6 +2442,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\UserControls\Albaranes\AsignarContenedores.js" />
+    <Content Include="Scripts\UserControls\Albaranes\ReclamaralbaranEntregas.js" />
     <Content Include="Scripts\UserControls\Albaranes\Reclamaralbaran.js" />
     <Content Include="Scripts\UserControls\Albaranes\Devolveralbaran.js" />
     <Content Include="Scripts\UserControls\BancosMandatos\BancosMandatosController.js" />
@@ -3528,7 +3530,8 @@
     <Content Include="Views\Presupuestos\_componenteslin.cshtml" />
     <Content Include="Views\ListadosConsultaTesoreria\ConsultaTesoreria.cshtml" />
     <Content Include="Views\Shared\UsersControls\_albaranreclamacionModal.cshtml" />
-    <Content Include="Views\Shared\UsersControls\_albaranreclamacionModalSiguiente.cshtml" />
+    <Content Include="Views\Shared\UsersControls\_albaranreclamacionModalEntregas.cshtml" />
+    <Content Include="Views\Shared\UsersControls\_albaranasignarcontenedores.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

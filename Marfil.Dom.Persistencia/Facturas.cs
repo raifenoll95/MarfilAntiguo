@@ -126,6 +126,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> criterioiva { get; set; }
         public string canalcontable { get; set; }
         public Nullable<int> fkasiento { get; set; }
+        public Nullable<System.DateTime> fechabl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FacturasLin> FacturasLin { get; set; }

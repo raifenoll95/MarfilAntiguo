@@ -213,7 +213,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Validation
                     throw new ValidationException(string.Format(General.ErrorCampoObligatorio, RFacturas.Importe));
 
                 var familiacodigo = ArticulosService.GetCodigoFamilia(item.fkarticulos);
-                familiasProductosService.ValidarDimensiones(familiacodigo, item.largo, item.ancho, item.grueso);
+                //familiasProductosService.ValidarDimensiones(familiacodigo, item.largo, item.ancho, item.grueso);
 
                 //ang calcular importe neto
                 item.importenetolinea = Math.Round((baseimponible * (1 - ((model.porcentajedescuentocomercial??0)/100)) * (1-((model.porcentajedescuentoprontopago ?? 0)/100))), (item.decimalesmonedas ?? 2));

@@ -83,6 +83,7 @@
         {
             c.FieldName= "Lote";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
         });
 
         settings.Columns.Add(c =>
@@ -96,6 +97,7 @@
         {
             c.FieldName = "Tabla";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
         });
 
         settings.Columns.Add(c =>
@@ -128,6 +130,7 @@
             var p = c.PropertiesEdit as SpinEditProperties;
             p.ClientSideEvents.ValueChanged = "OnSuperficieChanged";
             c.ReadOnly = true;
+            c.SortOrder = ColumnSortOrder.Ascending;
 
         });
 

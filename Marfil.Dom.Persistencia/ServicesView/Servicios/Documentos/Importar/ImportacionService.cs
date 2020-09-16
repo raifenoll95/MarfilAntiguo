@@ -43,7 +43,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar
         string Bundle { get; set; }
         string Fkdocumentoreferencia { get; set; }
         int? Orden { get; set; }
-
+        string Contenedor { get; set; }
+        string Sello { get; set; }
+        int? Caja { get; set; }
+        double? Pesoneto { get; set; }
     }
 
     public class LineaImportarModel:ILineaImportar
@@ -81,6 +84,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar
         public string Fkdocumentoreferencia { get; set; }
         public string Bundle { get; set; }
         public int? Orden { get; set; }
+        public string Contenedor { get; set; }
+        
+        public string Sello { get; set; }
+
+        public int? Caja { get; set; }
+
+        public double? Pesoneto { get; set; }
     }
 
     public interface IImportacionService

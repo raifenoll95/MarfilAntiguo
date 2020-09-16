@@ -219,6 +219,31 @@ namespace Marfil.App.WebMain.Controllers
             result.Fkdocumento = item.Value<string>("Fkpedidos");
             result.Fkdocumentoid = item.Value<int?>("Id")?.ToString() ?? "";
             result.Fkdocumentoreferencia = item.Value<string>("Fkpedidosreferencia");
+            result.Contenedor = item.Value<string>("Contenedor");
+            result.Sello = item.Value<string>("Sello");
+            var valorcaja = item.Value<string>("Caja");
+
+            if(String.IsNullOrEmpty(valorcaja))
+            {
+                result.Caja = null;
+            }
+
+            else
+            {
+                result.Caja = Int32.Parse(valorcaja);
+            }
+
+            var valorpesoneto = item.Value<string>("Pesoneto");
+
+            if (String.IsNullOrEmpty(valorpesoneto))
+            {
+                result.Pesoneto = null;
+            }
+
+            else
+            {
+                result.Pesoneto = Convert.ToDouble(valorpesoneto);
+            }
 
             return result;
         }
@@ -255,6 +280,12 @@ namespace Marfil.App.WebMain.Controllers
                 model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
                 model.Lineas = Session[session] as List<AlbaranesLinModel>;
                 model.Totales = Session[sessiontotales] as List<AlbaranesTotalesModel>;
+
+                if(model.Tipodeportes != Tipoportes.Debidos || model.Tipodeportes != Tipoportes.Pagados)
+                {
+                    model.Tipodeportes = null;
+                }
+
                 if (ModelState.IsValid)
                 {
 
@@ -416,7 +447,7 @@ namespace Marfil.App.WebMain.Controllers
 
         #endregion
 
-        #region Devolucion
+        #region Asistentes Devolucion, Reclamacion, Asignar Contenedores
 
         public ActionResult Devolucion(string id, string lineas)
         {
@@ -458,6 +489,113 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             TempData["errors"] = "Ocurrión un problema al generar el albarán de devolución";
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        public ActionResult getLineasDuplicadas(string id, string lineas)
+        {
+            using (var service = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
+            {
+                var model = service.get(id) as AlbaranesModel;
+                var data = JsonConvert.DeserializeObject(lineas);
+                var list = data is JArray ? data as JArray : new JArray(new[] { data });
+
+                var maxId = model.Lineas.Any() ? model.Lineas.Max(f => f.Id) : 0;
+                model.Lineas.Clear();
+
+                var positivas = list.Select(CrearLineaImportar).ToList();
+                var negativas = list.Select(CrearLineaImportar).ToList();
+
+                foreach (var item in negativas)
+                {
+                    item.Cantidad *= -1;
+                }
+
+                model.Lineas.AddRange(service.ImportarLineas(maxId, positivas));
+                model.Lineas.AddRange(service.ImportarLineas(maxId, negativas));
+
+                var dataModel = JsonConvert.SerializeObject(model, Formatting.Indented);
+                return Json(dataModel, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reclamar(string id, string lineas)
+        {
+            if (!string.IsNullOrEmpty(lineas))
+            {
+                using (var service = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
+                {
+                    var model = service.get(id) as AlbaranesModel;
+                    model.Tipoalbaran = (int)TipoAlbaran.Reclamacion;
+                    model.Fechadocumento = DateTime.Now;
+                    model.Fkestados = appService.GetConfiguracion()?.Estadoalbaranescomprasinicial ?? string.Empty;
+                    model.Fkmotivosdevolucion = appService.GetListMotivosDevolucion().FirstOrDefault()?.Valor;
+                    var maxId = model.Lineas.Any() ? model.Lineas.Max(f => f.Id) : 0;
+                    var data = JsonConvert.DeserializeObject(lineas);
+                    var list = data is JArray ? data as JArray : new JArray(new[] { data });
+                    var lineasimputadas = list.Select(CrearLineaImportar).ToList(); //Lineas de clase "Importar"
+
+                    var newmodel = Helper.fModel.GetModel<EntregasStockModel>(ContextService);
+                    model.Lineas.Clear();
+                    model.Lineas.AddRange(service.ImportarLineasReclamadas(lineasimputadas, maxId).OrderBy(f => f.Lote).ThenBy(f => f.Tabla));
+
+                    foreach (var linea in model.Lineas)
+                    {
+                        linea.Fkreclamado = Int32.Parse(id);
+                        linea.Fkreclamadoreferencia = model.Referencia;
+                        linea.Documentoorigen = model.Referencia;
+                    }
+
+                    model.idOriginalReclamado = Int32.Parse(id);
+                    model.Criteriosagrupacionlist = newmodel.Criteriosagrupacionlist;
+                    model.Totales = service.Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 0, model.Decimalesmonedas).ToList();
+                    var modelReclamacion = new EntregasStockModel(model);
+                    TempData["model"] = modelReclamacion;
+                    return RedirectToAction("Create");
+                }
+            }
+
+            TempData["errors"] = "Ocurrió un problema al generar el albarán de reclamación";
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AsignarContenedores(string id, string lineas)
+        {
+            if (!string.IsNullOrEmpty(lineas))
+            {
+                using (var service = FService.Instance.GetService(typeof(EntregasStockModel), ContextService) as EntregasService)
+                {
+                    var model = service.get(id) as AlbaranesModel;
+                    model.Fechadocumento = DateTime.Now;
+                    model.Fkestados = appService.GetConfiguracion()?.Estadoalbaranescomprasinicial ?? string.Empty;
+                    model.Fkmotivosdevolucion = appService.GetListMotivosDevolucion().FirstOrDefault()?.Valor;
+                    var maxId = model.Lineas.Any() ? model.Lineas.Max(f => f.Id) : 0;
+                    var data = JsonConvert.DeserializeObject(lineas);
+                    var list = data is JArray ? data as JArray : new JArray(new[] { data });
+                    var lineasimputadas = list.Select(CrearLineaImportar).ToList(); //Lineas de clase "Importar"
+
+                    foreach(var linea in model.Lineas)
+                    {
+                        if(lineasimputadas.Any(f => f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla))
+                        {
+                            var modificada = lineasimputadas.Single(f => f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla);
+                            linea.Contenedor = modificada.Contenedor;
+                            linea.Sello = modificada.Sello;
+                            linea.Pesoneto = modificada.Pesoneto;
+                            linea.Caja = modificada.Caja;
+                        }            
+                    }
+                    
+                    service.edit(model);
+                    return RedirectToAction("Index");
+                }
+            }
+
+            TempData["errors"] = "Ocurrió un problema al generar el albarán de reclamación";
             return RedirectToAction("Edit", new { id = id });
         }
 
@@ -866,6 +1004,31 @@ namespace Marfil.App.WebMain.Controllers
                     Texto = Albaranes.LblGestionDevoluciones,
                     Url = "javascript:CallGenerarDevolucion();"
                 });
+            }
+
+            result.Add(new ToolbarSeparatorModel());
+            if (objModel.Tipoalbaran < (int)TipoAlbaran.Reclamacion)
+            {
+                result.Add(new ToolbarActionModel()
+                {
+                    Icono = "fa fa-undo",
+                    Texto = RAlbaranes.LblGestionReclamaciones,
+                    Url = "javascript:CallGenerarReclamacion();"
+                });
+
+                result.Add(new ToolbarSeparatorModel());
+            }
+
+            if (objModel.Tipoalbaran < (int)TipoAlbaran.Reclamacion)
+            {
+                result.Add(new ToolbarActionModel()
+                {
+                    Icono = "fa fa-archive",
+                    Texto = RAlbaranes.LblGestionContenedores,
+                    Url = "javascript:CallGenerarContenedores();"
+                });
+
+                result.Add(new ToolbarSeparatorModel());
             }
 
             if (!string.IsNullOrEmpty(objModel.Fkseriefactura) && objModel.Estado?.Tipoestado < TipoEstado.Finalizado)

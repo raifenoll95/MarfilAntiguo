@@ -25,6 +25,7 @@ using Marfil.Inf.Genericos;
 using Marfil.Inf.Genericos.Helper;
 using Resources;
 using RFacturas=Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Facturas;
+using RAlbaranes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Albaranes;
 using RCliente = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes;
 
 namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
@@ -65,6 +66,10 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Facturas
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? Fechadocumento { get; set; }
+
+
+        [Display(ResourceType = typeof(RAlbaranes), Name = "Fechabl")]
+        public DateTime? Fechabl { get; set; }
 
         [Display(ResourceType = typeof(RFacturas), Name = "Fkalmacen")]
         public string Fkalmacen { get; set; }

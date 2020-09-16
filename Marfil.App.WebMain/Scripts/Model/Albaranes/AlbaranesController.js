@@ -559,6 +559,28 @@ var GenerarDevolucion = function(lineas, columnas, url,id) {
     eventAggregator.Publish("_lanzarbusquedadevolveralbaran", obj);
 }
 
+var GenerarReclamacion = function (lineas, columnas, url, id) {
+    var obj = {
+        Values: lineas,
+        Columns: columnas,
+        Url: url,
+        Idalbaran: id
+    };
+
+    eventAggregator.Publish("_lanzarbusquedareclamaralbaran", obj);
+}
+
+var GenerarContenedores = function (lineas, columnas, url, id) {
+    var obj = {
+        Values: lineas,
+        Columns: columnas,
+        Url: url,
+        Idalbaran: id
+    };
+
+    eventAggregator.Publish("_lanzarbusquedarasignarcontendores", obj);
+}
+
 eventAggregator.RegisterEvent("Fktransportista-cv", function(message) {
     $("[name='Nombretransportista']").val(message.Descripcion);
 });
