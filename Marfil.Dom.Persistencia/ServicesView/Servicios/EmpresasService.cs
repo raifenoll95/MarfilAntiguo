@@ -18,6 +18,9 @@ using Marfil.Dom.Persistencia.Model.Iva;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Startup;
 using Marfil.Inf.Genericos;
+using System.Web.Hosting;
+using System.Threading;
+using Marfil.Inf.Genericos.Helper;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -55,12 +58,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     GuardarDirecciones(obj as EmpresaModel);
                     CrearTarifasBase(model.Id);
                     CrearEjercicio(model.Id, model.EjercicioNuevo);
-                    CrearPlanGeneral(model.Id, model.Fkplangeneralcontable, model.Fkpais);
+                    //RAI -- Plan general antes se hacía aquí, ahora lo he hecho en Segundo plano -> EmpresasController
+                    //CrearPlanGeneral(model.Id, model.Fkplangeneralcontable, model.Fkpais);
                     CrearCarpetas(model.Id);
-
                     CrearDatosDefecto(model.Id);
-                    
                     tran.Complete();
+                    _db.SaveChanges();
+
                 }
                 catch (Exception ex)
                 {
@@ -291,7 +295,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             service.create(ejercicioNuevo);
         }
 
-        private void CrearPlanGeneral(string empresa, string plangeneralid, string pais)
+        public void CrearPlanGeneral(string empresa, string plangeneralid, string pais)
         {
             var newContext = new ContextLogin()
             {
@@ -306,9 +310,6 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
             var cuentasStartup = new Startup.CuentasStartup(newContext, _db, empresa, pais);
             cuentasStartup.CrearDatos(item.Fichero);
-
-
-
         }
 
         private void CrearTarifasBase(string empresa)
@@ -351,6 +352,18 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 base.edit(obj);
                 GuardarDirecciones(obj as EmpresaModel);
                 tran.Complete();
+            }
+        }
+
+        #endregion
+
+        #region delete
+
+        public override void delete(IModelView obj)
+        {
+            using (var tran = TransactionScopeBuilder.CreateTransactionObject())
+            {
+
             }
         }
 
@@ -413,10 +426,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var direccionesService = fservice.GetService(typeof(DireccionesLinModel), auxContext, _db) as DireccionesService;
             ProcessDirecciones(model);
 
-            direccionesService.CleanAllDirecciones(-1, model.Id);
+            direccionesService.CleanAllDirecciones(model.Id, -1, model.Id);
             foreach (var item in model.Direcciones.Direcciones)
             {
                 direccionesService.create(item);
+            }
+        }
+
+        private void EditarDirecciones(EmpresaModel model)
+        {
+            if (model.Direcciones == null) return;
+            var fservice = FService.Instance;
+            var auxContext = _context;
+            auxContext.Empresa = model.Id;
+            var direccionesService = fservice.GetService(typeof(DireccionesLinModel), auxContext, _db) as DireccionesService;
+            ProcessDirecciones(model);
+
+            foreach (var item in model.Direcciones.Direcciones)
+            {
+                direccionesService.edit(item);
             }
         }
 

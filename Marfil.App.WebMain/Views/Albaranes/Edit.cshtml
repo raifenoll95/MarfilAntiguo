@@ -30,6 +30,25 @@
         new ColumnDefinition() {field = "Porcentajeiva", displayName = "% IVA", visible = true, width = 100},
 
     };
+
+    var columnsAsignarContenedores = new[]
+    {
+        new ColumnDefinition() {field = "Id", displayName = "Id", visible = false, width = 80 },
+        new ColumnDefinition() {field = "Fkarticulos", displayName = "Cod. Artículo", visible = true, width = 150},
+        new ColumnDefinition() {field = "Descripcion", displayName = "Descripción", visible = true, width = 180},
+        new ColumnDefinition() {field = "Lote", displayName = "Lote", visible = true, width = 100, enableCellEdit = false},
+        new ColumnDefinition() {field = "Tabla", displayName = "Tabla", visible = true, width = 60, enableCellEdit = false},
+        new ColumnDefinition() {field = "Cantidad", displayName = "Cantidad", visible = true, width = 90, enableCellEdit = true, type = "number"},
+        new ColumnDefinition() {field = "SLargo", displayName = "Largo", visible = true, width = 100},
+        new ColumnDefinition() {field = "SAncho", displayName = "Ancho", visible = true, width = 100},
+        new ColumnDefinition() {field = "SGrueso", displayName = "Grueso", visible = true, width = 100},
+        new ColumnDefinition() {field = "SMetros", displayName = "Metros", visible = true, width = 100},
+        new ColumnDefinition() {field = "Contenedor", displayName = "Contenedor", visible = true, width = 100},
+        new ColumnDefinition() {field = "Sello", displayName = "Sello", visible = true, width = 100},
+        new ColumnDefinition() {field = "Pesoneto", displayName = "Peso neto", visible = true, width = 100},
+        new ColumnDefinition() {field = "Caja", displayName = "Caja", visible = true, width = 100},
+
+    };
 }
 
 @using (Html.BeginForm("Facturar", "Facturas", FormMethod.Post, new { @id = "facturarform" }))
@@ -42,11 +61,11 @@
 }
 
 
-@using (Html.BeginForm("EditOperacion", "Albaranes", FormMethod.Post, new { @class = "form-horizontal" , @id="mainform"}))
+@using (Html.BeginForm("EditOperacion", "Albaranes", FormMethod.Post, new { @class = "form-horizontal", @id = "mainform" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        
+
 
         @{
             ViewData["operacion"] = "Edit";
@@ -64,7 +83,7 @@
         </div>
 
     </div>
-            }
+}
 
 @Html.Partial("_envioemails")
 <script>
@@ -73,6 +92,12 @@
             var columnas = @Html.Raw(JsonConvert.SerializeObject(columns));
 
             GenerarDevolucion(values, columnas, "@Url.Action("Devolucion","Albaranes")","@modelview.Id");
+        }
+        function CallGenerarContenedores() {
+            var values = @Html.Raw(JsonConvert.SerializeObject(modelview.Lineas));
+            var columnas = @Html.Raw(JsonConvert.SerializeObject(columnsAsignarContenedores));
+
+            GenerarContenedores(values, columnas, "@Url.Action("AsignarContenedores","Albaranes")", "@modelview.Id");
         }
 </script>
 @Html.Partial("UsersControls/_albarandevolucionModal")
@@ -86,4 +111,6 @@
 )
 
 }
+
+@Html.Partial("UsersControls/_albaranasignarcontenedores")
 

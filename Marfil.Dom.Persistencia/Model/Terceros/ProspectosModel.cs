@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Marfil.Dom.Persistencia.Model.CRM;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Inf.Genericos.Helper;
@@ -17,6 +18,7 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
     {
         private readonly FModel fModel = new FModel();
         private List<SelectListItem> _lstTarifas = new List<SelectListItem>();
+        private List<OportunidadesModel> _oportunidades = new List<OportunidadesModel>();
 
         #region CTR
 
@@ -147,6 +149,12 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
         {
             get { return _fkpuertos; }
             set { _fkpuertos = value; }
+        }
+
+        public List<OportunidadesModel> Oportunidades
+        {
+            get { return _oportunidades; }
+            set { _oportunidades = value; }
         }
 
         [Required]

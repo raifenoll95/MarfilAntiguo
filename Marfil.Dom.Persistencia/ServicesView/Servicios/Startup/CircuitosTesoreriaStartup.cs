@@ -57,7 +57,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                 Descripcion = vector[2],
                 Situacioninicial = vector[3],
                 Situacionfinal = vector[4],
-                Datos = Int32.Parse(vector[5]),
+                //Datos = !String.IsNullOrEmpty(vector[5]) ? Int32.Parse(vector[5]) : null,
                 Asientocontable = string.Equals(vector[6], '0') ? false : true,
                 Fecharemesa = string.Equals(vector[7], '0') ? false : true,
                 Fechapago = string.Equals(vector[8], '0') ? false : true,
@@ -87,6 +87,16 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
                 Documentocartera = string.Equals(vector[32], '0') ? false : true,
                 Actualizarcobrador = string.Equals(vector[33], '0') ? false : true
             };
+
+            if(!string.Equals(vector[5],"NULL"))
+            {
+                model.Datos = Int32.Parse(vector[5]);
+            }
+
+            else
+            {
+                model.Datos = null;
+            }
 
             _tablasVariasService.create(model);
         }

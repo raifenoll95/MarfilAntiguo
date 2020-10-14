@@ -58,6 +58,7 @@ namespace Marfil.Dom.Persistencia.Model
         public string Empresa { get; set; }
         public string Ejercicio { get; set; }
         public string Fkalmacen { get; set; }
+
         public TipoLicencia Tipolicencia { get; set; }
         bool ICustomPrincipalData.IsSuperAdmin
         {
@@ -124,7 +125,6 @@ namespace Marfil.Dom.Persistencia.Model
 
             }
         }
-
 
 
         public string ServerMapPath(string ruta)

@@ -1196,6 +1196,7 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         #region Empresas
 
+        //Rai
         public IEnumerable<Tuple<string, string>> GetEmpresas()
         {
             var user = _context;
@@ -1205,8 +1206,29 @@ namespace Marfil.Dom.Persistencia.Helpers
                 if (empresa != EmpresaMock)
                     using (var service = FService.Instance.GetService(typeof(EmpresaModel), _context))
                     {
-                        return service.getAll().Select(f => new Tuple<string, string>(((EmpresaModel)f).Id, ((EmpresaModel)f).Nombre));
+                        var serviceusuarios = FService.Instance.GetService(typeof(UsuariosModel), _context);
+                        List<Tuple<string, string>> empresas = new List<Tuple<string, string>>();
 
+                        if (_context.Usuario == UsuariosAdministrador)
+                        {
+                            empresas = service.getAll().Select(f => new Tuple<string, string>(((EmpresaModel)f).Id, ((EmpresaModel)f).Nombre)).ToList();
+                        }
+
+                        else
+                        {
+                            var usuario = serviceusuarios.getAll().Where(f => ((UsuariosModel)f).Usuario == _context.Usuario).SingleOrDefault() as UsuariosModel;
+                            var nivelusuario = usuario.Nivel;
+                            var list = service.getAll();
+                            foreach (var item in list)
+                            {
+                                if (Int32.Parse(((EmpresaModel)item).Nivel) <= nivelusuario)
+                                {
+                                    empresas.Add(new Tuple<string, string>(((EmpresaModel)item).Id, ((EmpresaModel)item).Nombre));
+                                }
+                            }
+                        } 
+
+                        return empresas;
                     }
             }
 

@@ -2,8 +2,10 @@
 using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.Model.CRM;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Inf.Genericos.Helper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,19 +23,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
         public override IModelView CreateView(string id)
         {
-            var obj = _db.Set<CostesVariablesPeriodo>().Include("CostesVariablesPeriodoLin").Single(f => f.fkejercicio.ToString() == id && f.empresa == Empresa);
+            var identificador = Funciones.Qint(id);
+            var obj = _db.Set<CostesVariablesPeriodo>().Where(f => f.empresa == Empresa && f.fkejercicio == identificador).Single();
             var result = GetModelView(obj) as CostesVariablesPeriodoModel;
-            result._costes =
-               obj.CostesVariablesPeriodoLin.ToList().Select(
-                   item =>
-                       new CostesVariablesPeriodoLinModel()
-                       {
-                           Id = item.id,
-                           Tablavaria = item.tablavaria,
-                           Descripcion = item.descripcion,
-                           Precio = (float)item.precio
-                       }).ToList();
-
             return result;
         }
         
@@ -44,6 +36,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var ejercicioService = FService.Instance.GetService(typeof(EjerciciosModel), Context, _db);
             var ejerciciomodel = ejercicioService.get(obj.fkejercicio.ToString()) as EjerciciosModel;
             result.Descripcion_ejercicio = ejerciciomodel?.Descripcion;
+
+            result._costes = obj.CostesVariablesPeriodoLin.ToList().Select(f => new CostesVariablesPeriodoLinModel()
+            {
+                Id = f.id,
+                Tablavaria = f.tablavaria,
+                Descripcion = f.descripcion,
+                Precio = (float)f.precio
+            }).ToList();
+
             return result;
         }
 

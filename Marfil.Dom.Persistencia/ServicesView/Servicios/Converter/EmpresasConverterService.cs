@@ -34,12 +34,12 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var ejerciciosService = fService.GetService(typeof(EjerciciosModel), auxContext, _db) as EjerciciosService;
             result.Direcciones=new DireccionesModel();
             result.Direcciones.Empresa = id;
-            result.Direcciones.Direcciones = direccionesService.GetDirecciones(-1,Empresa);
+            result.Direcciones.Direcciones = direccionesService.GetDirecciones(id, -1,id);
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero =-1;
             result.LstTarifasVentas = _appService.GetListTarifasBase(TipoFlujo.Venta,_db).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion });
             result.LstTarifasCompras = _appService.GetListTarifasBase(TipoFlujo.Compra,_db).Select(f => new SelectListItem() { Value = f.Fktarifa, Text = f.Descripcion });
-            result.Ejercicios = ejerciciosService.getAll().Select(f => (EjerciciosModel) f);
+            result.Ejercicios = ejerciciosService.getEjercicios(id);
             return result;
         }
 

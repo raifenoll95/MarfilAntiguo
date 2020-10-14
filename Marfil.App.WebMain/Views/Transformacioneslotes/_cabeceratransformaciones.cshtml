@@ -17,6 +17,7 @@
     var cvserie = FCampoverificacion.Instance.GetModel<SeriesModel>(WebHelper.ContextService);
     var campoverificacion = FCampoverificacion.Instance.GetModel<CuentasModel>(WebHelper.ContextService);
     var cvtrabajos = FCampoverificacion.Instance.GetModel<TrabajosModel>(WebHelper.ContextService);
+    var cvmateriales = FCampoverificacion.Instance.GetModel<MaterialesModel>(WebHelper.ContextService);
     var listmotivos = WebHelper.GetApplicationHelper().GetListMotivosDevolucion();
 }
 @Html.HiddenFor(f => Model.Empresa)
@@ -144,13 +145,40 @@
             cvtrabajos.Name = "Fktrabajos";
             cvtrabajos.Url = Url.Action("TrabajosApi", "Api");
             cvtrabajos.Valor = Model.Fktrabajos;
+            cvtrabajos.SoloLectura = isreadonly;
             cvtrabajos.Obligatorio = true;
         }
 
         @Html.Partial("CampoverificacionUI", cvtrabajos)
     </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(f => Model.Fkmateriales, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            cvmateriales.Name = "Fkmateriales";
+            cvmateriales.Url = Url.Action("MaterialesApi", "Api");
+            cvmateriales.Valor = Model.Fkmateriales;
+
+            //Rai -- Si es lectura, no se puede modificar, si no, que mire la configuracion
+            if(isreadonly)
+            {
+                cvmateriales.SoloLectura = true;
+            }
+
+            else
+            {
+                cvmateriales.SoloLectura = Model.PuedeReclasificarMaterial;
+            }
+            cvmateriales.Obligatorio = true;
+        }
+
+        @Html.Partial("CampoverificacionUI", cvmateriales)
+    </div>
 
 </div>
+
+
 <div class="form-group">
     @Html.LabelFor(f => Model.Notas, new {@class = "control-label col-md-2"})
     <div class="col-md-10">

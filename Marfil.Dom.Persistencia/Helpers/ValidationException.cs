@@ -44,6 +44,19 @@ namespace Marfil.Dom.Persistencia.Helpers
 
         }
     }
+
+    public class CambiarEmpresaException : Exception
+    {
+        public CambiarEmpresaException(string message) : base(message)
+        {
+
+        }
+
+        public CambiarEmpresaException(Exception ex):base(ex.Message,ex)
+        {
+
+        }
+    }
     public class ValidationException:Exception
     {
         public ValidationException(string message) : base(message)

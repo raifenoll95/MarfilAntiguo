@@ -34,21 +34,14 @@ namespace Marfil.App.WebMain.Controllers
 
         #endregion
 
+
+        //Rai
         #region Cambiar Empresa
-        [HttpPost]
         public ActionResult Index(string id)
         {
-
-            
-            
-
-                
-                HttpCookie cookie;
-                _serviceLogin.SetEmpresaUser(_dominio,_contextService.BaseDatos, _contextService.Usuario, id,string.Empty,string.Empty, _contextService.Idconexion, out cookie);
-                // FormsAuthentication.SignOut();
-                Response.Cookies.Add(cookie);
-            
-
+            HttpCookie cookie;
+            _serviceLogin.SetEmpresaUser(_dominio, _contextService.BaseDatos, _contextService.Usuario, id, string.Empty, string.Empty, _contextService.Idconexion, out cookie);
+            Response.Cookies.Add(cookie);
             return RedirectToAction("Index", "Home");
         }
 

@@ -145,4 +145,13 @@
   <data name="Copiaremitente" xml:space="preserve">
     <value>Enviar copia al remitente</value>
   </data>
+  <data name="Nivel" xml:space="preserve">
+    <value>Nivel</value>
+  </data>
+  <data name="Cambiarempresa" xml:space="preserve">
+    <value>Cambiar de empresa</value>
+  </data>
+  <data name="Cambiaralmacen" xml:space="preserve">
+    <value>Cambiar de almacén</value>
+  </data>
 </root>

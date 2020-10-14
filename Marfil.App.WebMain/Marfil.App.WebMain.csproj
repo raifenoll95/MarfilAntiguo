@@ -1231,6 +1231,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Generic\Ups.html" />
     <Content Include="Global.asax" />
+    <Content Include="Images\alerta.png" />
     <Content Include="Images\almacenicon\jigsaw.svg" />
     <Content Include="Images\almacenicon\ruler.svg" />
     <Content Include="Images\almacenicon\warehouse.svg" />
@@ -2456,6 +2457,7 @@
     <Content Include="Scripts\UserControls\Contactos\ContactosController.js" />
     <Content Include="Scripts\UserControls\Designer\SavedialogController.js" />
     <Content Include="Scripts\UserControls\Direcciones\DireccionesController.js" />
+    <Content Include="Scripts\UserControls\Oportunidades\OportunidadesController.js" />
     <Content Include="Scripts\UserControls\Pedidos\pedidoscomprascontroller.js" />
     <Content Include="Scripts\UserControls\Facturas\facturarcontroller.js" />
     <Content Include="Scripts\UserControls\Obras\ObrasController.js" />
@@ -3532,6 +3534,10 @@
     <Content Include="Views\Shared\UsersControls\_albaranreclamacionModal.cshtml" />
     <Content Include="Views\Shared\UsersControls\_albaranreclamacionModalEntregas.cshtml" />
     <Content Include="Views\Shared\UsersControls\_albaranasignarcontenedores.cshtml" />
+    <Content Include="Views\Clientes\_oportunidades.cshtml" />
+    <Content Include="Views\Oportunidades\Oportunidades.cshtml" />
+    <Content Include="Views\Prospectos\_oportunidades.cshtml" />
+    <Content Include="Views\Home\CambioEmpresa.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

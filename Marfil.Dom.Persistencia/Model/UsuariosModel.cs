@@ -91,6 +91,15 @@ namespace Marfil.Dom.Persistencia.Model
         [Display(ResourceType = typeof(RUsuarios), Name = "Copiaremitente")]
         public TipoCopiaRemitente? Copiaremitente { get; set; }
 
+        [Display(ResourceType = typeof(RUsuarios), Name = "Nivel")]
+        public int Nivel { get; set; }
+
+        [Display(ResourceType = typeof(RUsuarios), Name = "Cambiarempresa")]
+        public bool Cambiarempresa { get; set; }
+
+        [Display(ResourceType = typeof(RUsuarios), Name = "Cambiaralmacen")]
+        public bool Cambiaralmacen { get; set; }
+
         public bool IsValidEmailConfiguration
         {
             get

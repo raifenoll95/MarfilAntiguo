@@ -42,6 +42,32 @@
     </div>
 </div>
 
+<div class="form-group">
+    @Html.LabelFor(f => Model.Nivel, new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(f => Model.Nivel, (new[] { "0", "1", "2", "3", "4", "5" }).Select(f => new SelectListItem() { Value = f, Text = f }), isreadonly ? (object)new { @class = "form-control", @autofocus = "", @disabled = "disabled" } : (object)new { @class = "form-control", @autofocus = "" })
+        @Html.ValidationMessageFor(f => Model.Nivel, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(f => Model.Cambiarempresa, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Cambiarempresa, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @class = "align-center" })
+    </div>
+    <div class="col-md-offset-1">
+        @Html.ValidationMessageFor(f => Model.Cambiarempresa, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.LabelFor(f => Model.Cambiaralmacen, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-2">
+        @Html.CheckBoxFor(f => Model.Cambiaralmacen, isreadonly ? (object)new { @disabled = "disabled" } : (object)new { @class = "align-center" })
+    </div>
+    <div class="col-md-offset-1">
+        @Html.ValidationMessageFor(f => Model.Cambiaralmacen, "", new { @class = "text-danger" })
+    </div>
+</div>
+
 
 
 

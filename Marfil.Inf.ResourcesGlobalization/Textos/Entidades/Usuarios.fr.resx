@@ -129,4 +129,7 @@
   <data name="confirmacionPassword" xml:space="preserve">
     <value>Check pass</value>
   </data>
+  <data name="Nivel" xml:space="preserve">
+    <value>Level</value>
+  </data>
 </root>

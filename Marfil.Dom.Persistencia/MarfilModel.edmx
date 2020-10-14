@@ -4064,6 +4064,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="fechamodificacion" Type="datetime" Nullable="false" />
           <Property Name="integridadreferencialflag" Type="uniqueidentifier" />
           <Property Name="fkcarpetas" Type="uniqueidentifier" />
+          <Property Name="fkmateriales" Type="nvarchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Transformacioneslotescostesadicionales">
           <Key>
@@ -4398,6 +4399,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.SaldosAcumuladosPeriodosLi
           <Property Name="firma" Type="ntext" />
           <Property Name="nombre" Type="nvarchar" MaxLength="200" />
           <Property Name="copiaremitente" Type="int" />
+          <Property Name="nivel" Type="int" />
+          <Property Name="cambiarempresa" Type="bit" />
+          <Property Name="cambiaralmacen" Type="bit" />
         </EntityType>
         <EntityType Name="Usuariosactivos">
           <Key>
@@ -8411,6 +8415,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <Property Name="copiaremitente" Type="Int32" />
           <NavigationProperty Name="AppPermisos" Relationship="MarfilModel.AppPermisosUsuarios" FromRole="Usuarios" ToRole="AppPermisos" />
           <NavigationProperty Name="Roles" Relationship="MarfilModel.RolesUsuarios" FromRole="Usuarios" ToRole="Roles" />
+          <Property Name="nivel" Type="Int32" />
+          <Property Name="cambiarempresa" Type="Boolean" />
+          <Property Name="cambiaralmacen" Type="Boolean" />
         </EntityType>
         <Association Name="FK_AlmacenesZona_Almacenes">
           <End Type="MarfilModel.Almacenes" Role="Almacenes" Multiplicity="1" />
@@ -10795,6 +10802,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <NavigationProperty Name="Transformacioneslotescostesadicionales" Relationship="MarfilModel.FK_Transformacioneslotescostesadicionales_Transformacioneslotes" FromRole="Transformacioneslotes" ToRole="Transformacioneslotescostesadicionales" />
           <NavigationProperty Name="Transformacionesloteslin" Relationship="MarfilModel.FK_Transformacionesloteslin_Transformacioneslotes" FromRole="Transformacioneslotes" ToRole="Transformacionesloteslin" />
           <Property Name="fkcarpetas" Type="Guid" />
+          <Property Name="fkmateriales" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Transformacionesloteslin">
           <Key>
@@ -14078,6 +14086,9 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="MarfilModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="cambiaralmacen" ColumnName="cambiaralmacen" />
+                <ScalarProperty Name="cambiarempresa" ColumnName="cambiarempresa" />
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
                 <ScalarProperty Name="copiaremitente" ColumnName="copiaremitente" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="firma" ColumnName="firma" />
@@ -15779,6 +15790,7 @@ advertencia 6002: La tabla o vista 'marfilestable.dbo.Lotes' no tiene definida n
           <EntitySetMapping Name="Transformacioneslotes">
             <EntityTypeMapping TypeName="MarfilModel.Transformacioneslotes">
               <MappingFragment StoreEntitySet="Transformacioneslotes">
+                <ScalarProperty Name="fkmateriales" ColumnName="fkmateriales" />
                 <ScalarProperty Name="fkcarpetas" ColumnName="fkcarpetas" />
                 <ScalarProperty Name="integridadreferencialflag" ColumnName="integridadreferencialflag" />
                 <ScalarProperty Name="fechamodificacion" ColumnName="fechamodificacion" />

@@ -19,6 +19,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Newtonsoft.Json;
 using Marfil.Dom.Persistencia.Model.Documentos.Presupuestos;
 using Marfil.Dom.Persistencia.Model.Configuracion;
+using Marfil.Dom.Persistencia;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -90,9 +91,6 @@ namespace Marfil.App.WebMain.Controllers
         {
             try
             {
-
-                var a = 3;
-
                 var modelview = Helper.fModel.GetModel<ArticulosModel>(ContextService);
                 model.TarifasEspecificasVentas = Session[Sessionventas] as TarifaEspecificaArticulo;
                 model.TarifasEspecificasCompras = Session[Sessioncompras] as TarifaEspecificaArticulo;
@@ -296,7 +294,7 @@ namespace Marfil.App.WebMain.Controllers
                 {
                     if (item.Obligatorio && !item.Precio.HasValue)
                     {
-                        ModelState.AddModelError("Precio", string.Format(General.ErrorCampoObligatorio, Tarifas.Precio));
+                        ModelState.AddModelError("Precio", string.Format(General.ErrorCampoObligatorio, Inf.ResourcesGlobalization.Textos.Entidades.Tarifas.Precio));
                        
                     }
                     else

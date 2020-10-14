@@ -35,7 +35,7 @@ namespace Marfil.App.WebMain.Controllers
                 var tipocuenta = Funciones.Qint(nvc["tipotercero"]) ?? 0;
                 var result = new ResultBusquedas<DireccionesLinModel>()
                 {
-                    values = service.GetDirecciones(tipocuenta, fkentidad).ToList(),
+                    values = service.GetDirecciones(ContextService.Empresa, tipocuenta, fkentidad).ToList(),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = false, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},

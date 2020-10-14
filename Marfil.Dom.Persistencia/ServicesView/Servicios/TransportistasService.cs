@@ -262,7 +262,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             var direccionesService = fservice.GetService(typeof(DireccionesLinModel), _context, _db) as DireccionesService;
             ProcessDirecciones(model);
 
-            direccionesService.CleanAllDirecciones(TiposCuentas.Transportistas, model.Fkcuentas);
+            direccionesService.CleanAllDirecciones(Empresa, TiposCuentas.Transportistas, model.Fkcuentas);
             foreach (var item in model.Direcciones.Direcciones)
             {
                 direccionesService.create(item);

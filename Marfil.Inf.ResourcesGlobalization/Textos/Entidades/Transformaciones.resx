@@ -147,4 +147,7 @@
   <data name="TituloEntidadAcabados" xml:space="preserve">
     <value>TransformacionesAcabados</value>
   </data>
+  <data name="Fkmateriales" xml:space="preserve">
+    <value>Reclasificar material</value>
+  </data>
 </root>

@@ -103,6 +103,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             
         }
 
+        public IEnumerable<EjerciciosModel> getEjercicios(string empresa)
+        {
+
+            var result = new List<EjerciciosModel>();
+            var list = _db.Ejercicios.Where(f => f.empresa == empresa);
+
+            foreach (var ejercicio in list)
+            {
+                var ejercicioModel = _converterModel.GetModelView(ejercicio) as EjerciciosModel;
+                result.Add(ejercicioModel);
+            }
+            return result;
+        }
+
         public override string GetSelectPrincipal() {
 
             return string.Format("select * from Ejercicios where empresa='{0}'", Empresa);

@@ -41,6 +41,8 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
         
         public string Empresa { get; set; }
 
+        public bool PuedeReclasificarMaterial { get; set; }
+
         [Required]
         [Display(ResourceType = typeof(RAlbaranesCompras), Name = "Fkseries")]
         public string Fkseries { get; set; }
@@ -73,6 +75,9 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Transformacioneslotes
         [Required]
         [Display(ResourceType = typeof(RTransformaciones), Name = "Fktrabajos")]
         public string Fktrabajos { get; set; }
+
+        [Display(ResourceType = typeof(RTransformaciones), Name = "Fkmateriales")]
+        public string Fkmateriales { get; set; }
 
         [Display(ResourceType = typeof(RTransformaciones), Name = "Fktrabajos")]
         public string Trabajosdescripcion { get; set; }

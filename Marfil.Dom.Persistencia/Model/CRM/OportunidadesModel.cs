@@ -37,6 +37,8 @@ namespace Marfil.Dom.Persistencia.Model.CRM
         private readonly FModel fModel = new FModel();
         private List<SeguimientosModel> _seguimientos = new List<SeguimientosModel>();
 
+        public bool ReadOnly { get; set; }
+
         #region Properties
 
         [Required]        
@@ -57,6 +59,8 @@ namespace Marfil.Dom.Persistencia.Model.CRM
         [Display(ResourceType = typeof(RCRM), Name = "Fechaapertura")]
         public DateTime? Fechadocumento { get; set; }
 
+        public String FechaAperturaStr { get; set; }
+
         [Display(ResourceType = typeof(RCRM), Name = "Asunto")]
         public string Asunto { get; set; }
 
@@ -65,6 +69,10 @@ namespace Marfil.Dom.Persistencia.Model.CRM
 
         [Display(ResourceType = typeof(RCRM), Name = "Fechaproximoseguimiento")]
         public DateTime? Fechaproximoseguimiento { get; set; }
+
+        public string fechaproximo { get; set; }
+
+        public string fechaultimo { get; set; }
 
         [Display(ResourceType = typeof(RCRM), Name = "Empresa")]
         public string Fkempresa { get; set; }

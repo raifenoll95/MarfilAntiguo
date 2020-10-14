@@ -190,7 +190,7 @@ namespace Marfil.App.WebMain.Controllers
         {
             var result = new LineaImportarModel();
 
-
+            result.Id = item.Value<int>("Id");
             result.Decimalesmedidas = item.Value<int?>("Decimalesmedidas") ?? 0;
             result.Decimalesmonedas = item.Value<int?>("Decimalesmonedas") ?? 0;
             result.Ancho = item.Value<double?>("Ancho") ?? 0;
@@ -580,9 +580,9 @@ namespace Marfil.App.WebMain.Controllers
 
                     foreach(var linea in model.Lineas)
                     {
-                        if(lineasimputadas.Any(f => f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla))
+                        if(lineasimputadas.Any(f => f.Id == linea.Id && f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla))
                         {
-                            var modificada = lineasimputadas.Single(f => f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla);
+                            var modificada = lineasimputadas.Single(f => f.Id == linea.Id && f.Fkarticulos == linea.Fkarticulos && f.Lote == linea.Lote && f.Tabla == linea.Tabla);
                             linea.Contenedor = modificada.Contenedor;
                             linea.Sello = modificada.Sello;
                             linea.Pesoneto = modificada.Pesoneto;

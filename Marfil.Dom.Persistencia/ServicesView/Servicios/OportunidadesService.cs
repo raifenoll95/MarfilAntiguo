@@ -53,7 +53,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             st.ExcludedColumns =
                 propiedades.Where(f => !propiedadesVisibles.Any(j => j == f.property.Name)).Select(f => f.property.Name).ToList();
             st.ColumnasCombo.Add("Fketapa", estadosService.GetStates(DocumentoEstado.Oportunidades, TipoMovimientos.Todos).Select(f => new Tuple<string, string>(f.CampoId, f.Descripcion)));
-            return st;            
+            return st;
         }
 
         public override string GetSelectPrincipal()
@@ -81,9 +81,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             {
                 var model = obj as OportunidadesModel;
                 var validation = _validationService as OportunidadesValidation;
-                
+
                 model.Id = NextId();
-                var appService = new ApplicationHelper(_context);                                
+                var appService = new ApplicationHelper(_context);
                 if (model.Fechadocumento == null)
                     model.Fechadocumento = DateTime.Now;
                 var contador = ServiceHelper.GetNextId<Oportunidades>(_db, Empresa, model.Fkseries);
@@ -108,23 +108,23 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 var etapaAnterior = _db.Oportunidades.Where(f => f.empresa == model.Empresa && f.id == model.Id).Select(f => f.fketapa).SingleOrDefault();
                 var s = etapaAnterior.Split('-');
                 var documento = Funciones.Qint(s[0]);
-                var id = s[1];              
+                var id = s[1];
                 var estadoAnterior = _db.Estados.Where(f => f.documento == documento && f.id == id).Select(f => f.tipoestado).SingleOrDefault();
 
                 if (model.Cerrado && (estadoAnterior != (int)TipoEstado.Finalizado && estadoAnterior != (int)TipoEstado.Caducado && estadoAnterior != (int)TipoEstado.Anulado))
                 {
                     var estadoFinalizado = _db.Estados.Where(f => f.documento == (int)DocumentoEstado.Oportunidades && f.tipoestado == (int)TipoEstado.Finalizado).SingleOrDefault()
                         ?? _db.Estados.Where(f => f.documento == (int)DocumentoEstado.Todos && f.tipoestado == (int)TipoEstado.Finalizado).SingleOrDefault();
-                    
+
                     model.Fketapa = estadoFinalizado.documento + "-" + estadoFinalizado.id;
-                    currentValidationService.CambiarEstado = true;                                        
+                    currentValidationService.CambiarEstado = true;
                 }
 
                 base.edit(obj);
-                
+
                 _db.SaveChanges();
                 tran.Complete();
-            }            
+            }
         }
 
         public override void delete(IModelView obj)
@@ -140,9 +140,9 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                 if (tipoEstado != (int)TipoEstado.Finalizado && tipoEstado != (int)TipoEstado.Caducado && tipoEstado != (int)TipoEstado.Anulado)
                 {
-                    base.delete(obj);                                        
+                    base.delete(obj);
                     _db.Seguimientos.RemoveRange(_db.Seguimientos.Where(f => f.empresa == Empresa && f.origen == model.Referencia));
-                    _db.SaveChanges();                    
+                    _db.SaveChanges();
                     tran.Complete();
                 }
                 else
@@ -152,6 +152,55 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
         }
 
-    }
+        public List<OportunidadesModel> getOportunidaesCliente(string cliente)
+        {
+            var oportunidadesService = new OportunidadesService(_context, _db);
+            List<OportunidadesModel> oportunidades = new List<OportunidadesModel>();
 
+            var list = _db.Oportunidades.Where(f => f.empresa == Empresa && f.fkempresa == cliente).ToList();
+
+            foreach (var f in list)
+            {
+                if ((Int32.Parse(f.fketapa.Split('-')[0]) == (int)DocumentoEstado.Oportunidades || Int32.Parse(f.fketapa.Split('-')[0]) == (int)DocumentoEstado.Todos) && f.cerrado == false)
+                {
+                    OportunidadesModel oportunidad = new OportunidadesModel();
+                    oportunidad.Empresa = f.empresa;
+                    oportunidad.Id = f.id;
+                    oportunidad.Fkseries = f.fkseries;
+                    oportunidad.Identificadorsegmento = f.identificadorsegmento;
+                    oportunidad.Referencia = f.referencia;
+                    oportunidad.Fechadocumento = f.fechadocumento;
+                    oportunidad.Asunto = f.asunto;
+                    if(f.fechaproximoseguimiento != null)
+                    {
+                        oportunidad.fechaproximo = f.fechaproximoseguimiento.ToString().Split(' ')[0];
+                    }
+
+                    if(f.fechaultimoseguimiento != null)
+                    {
+                        oportunidad.fechaultimo = f.fechaultimoseguimiento.ToString().Split(' ')[0];
+                    }
+                    if (f.fechadocumento != null)
+                    {
+                        oportunidad.FechaAperturaStr = f.fechadocumento.ToString().Split(' ')[0];
+                    }
+                    oportunidad.Fkempresa = f.fkempresa;
+                    oportunidad.Fkcontacto = f.fkcontacto;
+                    oportunidad.Fkorigen = f.fkorigen;
+                    var documento = Int32.Parse(f.fketapa.Split('-')[0]);
+                    var id = f.fketapa.Split('-')[1];
+                    oportunidad.Fketapa = _db.Estados.Where(a => a.documento == documento && a.id == id).Select(a => a.descripcion).FirstOrDefault();
+                    oportunidad.Fkcomercial = f.fkcomercial;
+                    oportunidad.Fkagente = f.fkagente;
+                    oportunidad.Fkmargen = f.fkmargen;
+                    oportunidad.Fkoperario = f.fkoperario;
+                    oportunidad.Fechacierre = f.fechacierre;
+
+                    oportunidades.Add(oportunidad);
+                }
+            }
+
+            return oportunidades;
+        }
+    }
 }

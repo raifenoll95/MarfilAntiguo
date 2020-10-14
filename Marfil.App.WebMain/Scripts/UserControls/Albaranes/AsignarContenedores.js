@@ -104,32 +104,60 @@ app.controller('AsignarContenedoresCtrl', ['$scope', '$rootScope', '$http', '$in
         var pesoneto = document.getElementById("pesoneto").value;
         var caja = document.getElementById("caja").value;
 
-        $scope.articulos.forEach(function (articulo) {
-            articulo["showEdit"] = true;
-            articulo["Contenedor"] = contenedor;
-            articulo["Sello"] = sello;
-            articulo["Pesoneto"] = pesoneto;
-            articulo["Caja"] = caja;
-            articulo["anothercolor"] = true;
+        //Validar
+        if ($scope.Validar(contenedor, sello, pesoneto, caja)) {
+            $scope.articulos.forEach(function (articulo) {
+                articulo["showEdit"] = true;
+                articulo["Contenedor"] = contenedor;
+                articulo["Sello"] = sello;
+                articulo["Pesoneto"] = pesoneto;
+                articulo["Caja"] = caja;
+                articulo["anothercolor"] = true;
 
-            if (articulo["Contenedor"] == null || articulo["Contenedor"] == "") {
-                articulo["Contenedor"] = articulo["contenedororiginal"];
-            }
-            if (articulo["Sello"] == null || articulo["Sello"] == "") {
-                articulo["Sello"] = articulo["sellooriginal"];
-            }
-            if (articulo["Pesoneto"] == null || articulo["Pesoneto"] == "") {
-                articulo["Pesoneto"] = articulo["pesonetooriginal"];
-            }
-            if (articulo["Caja"] == null || articulo["Caja"] == "") {
-                articulo["Caja"] = articulo["cajaoriginal"];
-            }
-        });
+                if (articulo["Contenedor"] == null || articulo["Contenedor"] == "") {
+                    articulo["Contenedor"] = articulo["contenedororiginal"];
+                }
+                if (articulo["Sello"] == null || articulo["Sello"] == "") {
+                    articulo["Sello"] = articulo["sellooriginal"];
+                }
+                if (articulo["Pesoneto"] == null || articulo["Pesoneto"] == "") {
+                    articulo["Pesoneto"] = articulo["pesonetooriginal"];
+                }
+                if (articulo["Caja"] == null || articulo["Caja"] == "") {
+                    articulo["Caja"] = articulo["cajaoriginal"];
+                }
+            });
 
-        document.getElementById("myForm").reset();
+            document.getElementById("myForm").reset();
 
-        $('#introducircampos').modal('hide');
-        $('#asignarcontenedoresultimo').modal('show');
+            $('#introducircampos').modal('hide');
+            $('#asignarcontenedoresultimo').modal('show');
+        }
+    }
+
+    //Validar campos
+    $scope.Validar = function (contenedor, sello, pesoneto, caja) {
+
+        var validacion = true;
+
+        if (contenedor.length > 12 && !!contenedor.length) {
+            validacion = false;
+            bootbox.alert("El campo contenedor debe tener un máximo de 12 caracteres");
+        }
+        if (sello.length > 10 && !!sello.length) {
+            validacion = false;
+            bootbox.alert("El campo sello debe tener un máximo de 10 caracteres");
+        }
+        if (!Number.isInteger(parseInt(pesoneto)) && !!pesoneto.length) {
+            validacion = false;
+            bootbox.alert("El campo peso neto debe ser de tipo dígito");
+        }
+        if (!Number.isInteger(parseInt(caja)) && !!caja.length) {
+            validacion = false;
+            bootbox.alert("El campo caja debe ser de tipo dígito");
+        }
+
+        return validacion;
     }
     
     //Tercera pantalla

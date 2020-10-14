@@ -121,8 +121,8 @@ namespace Marfil.App.WebMain.Controllers
         private LineaImportarModel CrearLineaImportar(JToken item)
         {
             var result = new LineaImportarModel();
-
-
+            result.Id = item.Value<int>("Id");
+            result.Fkalbaranes = item.Value<int>("Fkalbaranes");
             result.Decimalesmedidas = item.Value<int?>("Decimalesmedidas") ?? 0;
             result.Decimalesmonedas = item.Value<int?>("Decimalesmonedas") ?? 0;
             result.Ancho = item.Value<double?>("Ancho") ?? 0;
@@ -151,6 +151,32 @@ namespace Marfil.App.WebMain.Controllers
             result.Fkdocumento = item.Value<string>("Fkpedidos");
             result.Fkdocumentoid = item.Value<int?>("Id")?.ToString() ?? "";
             result.Fkdocumentoreferencia = item.Value<string>("Fkpedidosreferencia");
+
+            result.Contenedor = item.Value<string>("Contenedor");
+            result.Sello = item.Value<string>("Sello");
+            var valorcaja = item.Value<string>("Caja");
+
+            if (String.IsNullOrEmpty(valorcaja))
+            {
+                result.Caja = null;
+            }
+
+            else
+            {
+                result.Caja = Int32.Parse(valorcaja);
+            }
+
+            var valorpesoneto = item.Value<string>("Pesoneto");
+
+            if (String.IsNullOrEmpty(valorpesoneto))
+            {
+                result.Pesoneto = null;
+            }
+
+            else
+            {
+                result.Pesoneto = Convert.ToDouble(valorpesoneto);
+            }
 
             return result;
         }
@@ -374,6 +400,45 @@ namespace Marfil.App.WebMain.Controllers
             }
 
             TempData["errors"] = "Ocurrión un problema al generar el albarán de devolución";
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AsignarContenedores(string id, string lineas)
+        {
+            if (!string.IsNullOrEmpty(lineas))
+            {
+                using (var service = FService.Instance.GetService(typeof(AlbaranesModel), ContextService) as AlbaranesService)
+                {
+                    var model = service.get(id) as AlbaranesModel;
+                    model.Fechadocumento = DateTime.Now;
+                    model.Fkestados = appService.GetConfiguracion()?.Estadoalbaranescomprasinicial ?? string.Empty;
+                    model.Fkmotivosdevolucion = appService.GetListMotivosDevolucion().FirstOrDefault()?.Valor;
+                    var maxId = model.Lineas.Any() ? model.Lineas.Max(f => f.Id) : 0;
+                    var data = JsonConvert.DeserializeObject(lineas);
+                    var list = data is JArray ? data as JArray : new JArray(new[] { data });
+                    
+                    var lineasimputadas = list.Select(CrearLineaImportar).ToList(); //Lineas de clase "Importar"
+
+                    foreach (var linea in model.Lineas)
+                    {
+                        if (lineasimputadas.Any(f => f.Id == linea.Id))
+                        {
+                            var modificada = lineasimputadas.Single(f => f.Id == linea.Id);
+                            linea.Contenedor = modificada.Contenedor;
+                            linea.Sello = modificada.Sello;
+                            linea.Pesoneto = modificada.Pesoneto;
+                            linea.Caja = modificada.Caja;
+                        }
+                    }
+
+                    service.edit(model);
+                    return RedirectToAction("Index");
+                }
+            }
+
+            TempData["errors"] = "Ocurrió un problema al generar el albarán de reclamación";
             return RedirectToAction("Edit", new { id = id });
         }
 
@@ -722,7 +787,21 @@ namespace Marfil.App.WebMain.Controllers
                     Url = "javascript:CallGenerarDevolucion();"
                 });
             }
-           
+
+            result.Add(new ToolbarSeparatorModel());
+
+            if (objModel.Tipoalbaran < (int)TipoAlbaran.Reclamacion)
+            {
+                result.Add(new ToolbarActionModel()
+                {
+                    Icono = "fa fa-archive",
+                    Texto = RAlbaranes.LblGestionContenedores,
+                    Url = "javascript:CallGenerarContenedores();"
+                });
+
+                result.Add(new ToolbarSeparatorModel());
+            }
+
 
             if (!string.IsNullOrEmpty(objModel.Fkseriefactura) && objModel.Estado?.Tipoestado<TipoEstado.Finalizado)
             {

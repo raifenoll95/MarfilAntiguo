@@ -37,11 +37,16 @@ namespace Marfil.Dom.Persistencia.Model.Documentos.Albaranes
                                                                           " left join unidades as u on fp.fkunidadesmedida=u.id"));
                 DataSource.Queries.Add(new CustomSqlQuery("Albaranestotales", "SELECT * FROM [AlbaranesTotales]"));
                 DataSource.Queries.Add(new CustomSqlQuery("Formaspago", "SELECT * FROM [formaspago]"));
+                DataSource.Queries.Add(new CustomSqlQuery("Articulos", "SELECT * FROM Articulos"));
             // Create a master-detail relation between the queries.
 
             DataSource.Relations.Add("Albaranes", "Albaraneslin", new[] {
                     new RelationColumnInfo("empresa", "empresa"),
                     new RelationColumnInfo("id", "fkalbaranes")});
+
+            DataSource.Relations.Add("Albaraneslin", "Articulos", new[] { 
+                new RelationColumnInfo("empresa", "empresa"), 
+                new RelationColumnInfo("fkarticulos", "id") });
 
             DataSource.Relations.Add("Albaranes", "Formaspago", new[] {
                     new RelationColumnInfo("fkformaspago", "id")});

@@ -258,8 +258,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 DocumentosHelpers.GenerarCarpetaAsociada(obj, TipoDocumentos.FacturasVentas, _context, _db);
                          
                 var model = obj as FacturasModel;
+                // Esta línea añande a 'FacturasLin' el campo de fecha de los albaranes
+                foreach (var linea in model.Lineas)
+                {
+                    linea.Fkalbaranesfecha = _db.Albaranes.Where(f => f.empresa == Empresa && f.id == linea.Fkalbaranes).Select(f => f.fechadocumento).FirstOrDefault();
+                }
                 model.Totales = Recalculartotales(model.Lineas, model.Porcentajedescuentoprontopago ?? 0, model.Porcentajedescuentocomercial ?? 0, 
                                     model.Importeportes ?? 0, model.Decimalesmonedas, model.Porcentajeretencion ?? 0).ToList();
+
                 CalcularTotalesCabecera(model);
                 model.Vencimientos = RefrescarVencimientos(model, model.Fkformaspago.ToString());
 
@@ -444,7 +450,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 Fkalbaranesfecha = albaran?.fechadocumento,
                 Fkalbaranesreferencia = albaran?.referencia,
                 Fkalbaranesfkcriteriosagrupacion = albaran?.fkcriteriosagrupacion,
-                Orden=linea.Orden??0
+                Orden=linea.Orden??0,
+                Contenedor = linea.Contenedor,
+                Sello = linea.Sello,
+                Caja = linea.Caja,
+                Pesoneto = linea.Pesoneto
             };
 
         }

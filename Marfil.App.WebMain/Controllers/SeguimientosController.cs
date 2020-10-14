@@ -24,6 +24,7 @@ using System.Net.Http;
 using Marfil.Dom.Persistencia.Model.Terceros;
 using Newtonsoft.Json;
 using Marfil.Dom.ControlsUI.Email;
+using System.Web.Script.Serialization;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -288,7 +289,7 @@ namespace Marfil.App.WebMain.Controllers
             return (obj);
         }
 
-        //Crear los correos enviados
+        //Rai - Crear los correos enviados
         public ActionResult crearCorreosEnviados(string asunto, string destinatario, int id, string fkorigen)
         {
             SeguimientosCorreoModel correo = new SeguimientosCorreoModel();
@@ -302,6 +303,16 @@ namespace Marfil.App.WebMain.Controllers
             var seguimientosService = new SeguimientosCorreoService(ContextService);
             seguimientosService.createLineasCorreos(correo);
             var data = JsonConvert.SerializeObject(1, Formatting.Indented);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        //Rai - recoge la accion del CRM y la fecha del ejercicio y devuelve el coste - costes variables periodo
+        public JsonResult costeAccionCRM(string accion, string fechaejercicio)
+        {
+            JavaScriptSerializer serializer1 = new JavaScriptSerializer();
+            var serviceSeguimientos = FService.Instance.GetService(typeof(SeguimientosModel), ContextService) as SeguimientosService;
+            var coste = serviceSeguimientos.getCosteCRM(accion, fechaejercicio);
+            var data = JsonConvert.SerializeObject(coste, Formatting.Indented);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

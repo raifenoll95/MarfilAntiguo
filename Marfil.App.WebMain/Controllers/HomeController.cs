@@ -16,6 +16,8 @@ using Marfil.Dom.Persistencia;
 using Marfil.Dom.Persistencia.Model.Graficaslistados;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Dom.Persistencia.ServicesView.Servicios.Preferencias;
+using Marfil.Dom.Persistencia.ServicesView.Interfaces;
+using Marfil.Dom.Persistencia.ServicesView.Servicios.Login;
 
 namespace Marfil.App.WebMain.Controllers
 {
@@ -32,6 +34,11 @@ namespace Marfil.App.WebMain.Controllers
 
         public ActionResult Index()
         {
+
+            //Rai- errores permisos niveles
+            if (TempData["errors"] != null)
+                ModelState.AddModelError("", TempData["errors"].ToString());
+
             var model = new PanelcontrolModel();
             try
             {
@@ -52,6 +59,34 @@ namespace Marfil.App.WebMain.Controllers
                 
             }
             return View(model);
+        }
+
+        //Rai
+        public ActionResult CambioEmpresa(string id)
+        {
+            var model = new PanelcontrolModel();
+            try
+            {
+                using (var db = MarfilEntities.ConnectToSqlServer(_context.BaseDatos))
+                {
+                    using (var service = new PreferenciasUsuarioService(db))
+                    {
+                        LoginService _serviceLogin = new LoginService();
+                        var dominio = System.Web.HttpContext.Current.Request.Url.DnsSafeHost;
+
+                        if (_serviceLogin.puedeCambiarEmpresa(_context.BaseDatos, _context.Usuario, id, dominio))
+                        {
+                            return RedirectToAction("Index", "CambioEmpresa", new { id = id });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["errors"] = ex.Message;
+
+            }
+            return RedirectToAction("Index");
         }
 
         [ValidateInput(false)]

@@ -157,6 +157,10 @@ namespace Marfil.App.WebMain.Controllers
             return PartialView("_seguimientoslin", model);
         }
 
-
+        [ChildActionOnly]
+        public ActionResult Oportunidades(List<OportunidadesModel> oportunidades)
+        {
+            return PartialView("Oportunidades", oportunidades);
+        }
     }
 }

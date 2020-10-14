@@ -1,4 +1,6 @@
-﻿app.controller('SeguimientosCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
+﻿//Rai
+
+app.controller('SeguimientosCtrl', ['$scope', '$http', '$location', '$window', '$timeout', function ($scope, $http, $location, $window, $timeout) {
 
     $scope.modeloProspecto;
     $scope.UrlEmpresa;
@@ -7,15 +9,26 @@
     $scope.UrlToEdit
     $scope.tipo;
     $scope.UrlCrearCorreos;
+    $scope.UrlCosteAccionCRM;
 
-    $scope.init = function (urlEmpresa, urlCuentas, urlContacto, urlEdit, urlCorreos) {
+    $scope.init = function (urlEmpresa, urlCuentas, urlContacto, urlEdit, urlCorreos, urlCosteAccionCRM) {
 
         $scope.UrlEmpresa = urlEmpresa;
         $scope.UrlCuentas = urlCuentas;
         $scope.UrlContacto = urlContacto;
         $scope.UrlToEdit = urlEdit;
         $scope.UrlCrearCorreos = urlCorreos;
+        $scope.UrlCosteAccionCRM = urlCosteAccionCRM;
     }
+
+    //Recoge la accion CRM que devuelve el coste en ese ejercicio
+    eventAggregator.RegisterEvent("_cargarCosteCRM", function (data) {
+        $.get($scope.UrlCosteAccionCRM, { accion: data.accion, fechaejercicio: data.fechaejercicio }).success(function (result) {
+            $("[name='Coste']").val(result);   
+        }).error(function (jqXHR, textStatus, errorThrown) {
+            console.log("error call obtener coste crm");
+        });
+    });
 
     //Recargar pantalla correo cuando se haya enviado
     eventAggregator.RegisterEvent("_recargarCorreos", function (msg) {

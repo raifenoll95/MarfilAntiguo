@@ -26,13 +26,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
         public override IEnumerable<IModelView> GetAll()
         {
             var list = _db.SeriesContables.Where(f => f.empresa == Empresa).ToList().Select(f => GetModelView(f) as SeriesContablesModel).ToList();
-            foreach (var item in list)
-                if (!string.IsNullOrEmpty(item.Fkejercicios))
-                {
-                    var idejercicio = Funciones.Qint(item.Fkejercicios);
-                    item.Fkejerciciosdescripcion =
-                        _db.Ejercicios.Single(j => j.empresa == Empresa && j.id == idejercicio.Value).descripcion;
-                }
+            
+            //foreach (var item in list)
+            //    if (!string.IsNullOrEmpty(item.Fkejercicios))
+            //    {
+            //        var idejercicio = Funciones.Qint(item.Fkejercicios);
+            //        item.Fkejerciciosdescripcion =
+            //            _db.Ejercicios.Single(j => j.empresa == Empresa && j.id == idejercicio.Value).descripcion;
+            //    }
 
             return list;
 

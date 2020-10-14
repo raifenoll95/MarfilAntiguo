@@ -82,7 +82,17 @@
                     campoverificacion.Valor = Model.Fkempresa;
                     campoverificacion.Titulo = "Clientes";
                     campoverificacion.SoloLectura = isreadonly;
-                    campoverificacion.Obligatorio = true;
+
+                    //Rai
+                    if(Model.Tipo == (int)DocumentoEstado.Campañas)
+                    {
+                        campoverificacion.Obligatorio = false;
+                    }
+
+                    else
+                    {
+                        campoverificacion.Obligatorio = true;
+                    }
                 }
                 @Html.Partial("CampoverificacionUI", campoverificacion)
             </div>

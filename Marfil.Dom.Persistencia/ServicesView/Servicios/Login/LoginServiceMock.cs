@@ -112,5 +112,20 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
         {
             throw new NotImplementedException();
         }
+
+        public bool puedeCambiarEmpresa(string baseDatos, string usuario, string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool puedeCambiarEmpresa(string baseDatos, string usuario, string id, string dnsSafeHost)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CambiarEmpresa(string baseDatos, string usuario, string id, string dnsSafeHost)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

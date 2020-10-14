@@ -11,6 +11,8 @@ using Resources;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using RClientes = Marfil.Inf.ResourcesGlobalization.Textos.Entidades.Clientes;
+using Marfil.Dom.Persistencia.Model.CRM;
+
 namespace Marfil.Dom.Persistencia.Model.Terceros
 {
     public class CuentasBusqueda:IModelView
@@ -96,6 +98,7 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
 
         #region Properties
 
+        private List<OportunidadesModel> _oportunidades = new List<OportunidadesModel>();
 
         public bool EsProspecto { get { return false; } }
 
@@ -332,6 +335,12 @@ namespace Marfil.Dom.Persistencia.Model.Terceros
                 return _direcciones;
             }
             set { _direcciones = value; }
+        }
+
+        public List<OportunidadesModel> Oportunidades
+        {
+            get { return _oportunidades; }
+            set { _oportunidades = value; }
         }
 
 

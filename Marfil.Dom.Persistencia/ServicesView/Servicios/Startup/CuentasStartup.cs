@@ -12,7 +12,7 @@ using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
 {
-    internal class CuentasStartup : IStartup, IDisposable
+    public class CuentasStartup : IStartup, IDisposable
     {
         #region Members
 
@@ -47,7 +47,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Startup
             var lineas = xml.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var item in lineas)
             {
-                if (!string.IsNullOrEmpty(item))
+                  if (!string.IsNullOrEmpty(item))
                     CrearModel(item);
             }
 

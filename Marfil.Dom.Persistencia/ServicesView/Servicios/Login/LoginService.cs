@@ -142,6 +142,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                     throw;
                 if (ex is UsuarioensuoException)
                     throw;
+                if (ex is CambiarEmpresaException)
+                    throw;
                 Console.Write(ex.Message);
             }
 
@@ -204,47 +206,58 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                             return false;
                     }
 
-                    Validarlicencia(tid,usuario,licenciaModel, db);
-
+                    //Rai
                     tempresa = string.IsNullOrEmpty(empresa) ? GetEmpresaDefecto(tid, db) : empresa;
-                    var context = new LoginContextService(tempresa, licenciaModel.Basedatos);
-                    var ejercicioService = FService.Instance.GetService(typeof(EjerciciosModel), context, db) as EjerciciosService;
-                    var almacenService = FService.Instance.GetService(typeof (AlmacenesModel), context, db) as AlmacenesService;
-                    var talmacen = string.IsNullOrEmpty(almacen) ? almacenService.GetAlmacenDefecto(tid, db, tempresa):almacen;
-                    var tejercicio = string.IsNullOrEmpty(ejercicio) ? ejercicioService.GetEjercicioDefecto(tid, db, tempresa) : ejercicio;
+                    var descripcionempresa = db.Empresas.Where(f => f.id == tempresa).Select(f => f.nombre).SingleOrDefault();
 
-                    model = new SecurityTicket
+                    if (puedeEntrarEmpresa(tbasedatos, tusuario, tempresa, dominio))
                     {
-                        Usuario = tusuario,
-                        Id = tid,
-                        RoleId = troleid,
-                        BaseDatos = tbasedatos,
-                        Empresa = tempresa,
-                        Ejercicio = tejercicio,
-                        Fkalmacen = talmacen,
-                        Tipolicencia = licenciaModel.TipoLicencia,
-                        Azureblob= tazureblob
-                        //serializeModel.Roles = db.USUARIOROLE.Where(i => i.IDUSUARIO == u.ID).Select(i => i.ROLE.NOMBRE).ToList();
-                    };
-                    CreateUsuarioActivo(model,db);
-                    // esto es la validación
-                    //var u = db.Usuarios.FirstOrDefault(i => i.Usuario == usu.Email && i.PWD == usu.Password && i.IFACTIVO);
+                        Validarlicencia(tid, usuario, licenciaModel, db);
+                        
+                        var context = new LoginContextService(tempresa, licenciaModel.Basedatos);
+                        var ejercicioService = FService.Instance.GetService(typeof(EjerciciosModel), context, db) as EjerciciosService;
+                        var almacenService = FService.Instance.GetService(typeof(AlmacenesModel), context, db) as AlmacenesService;
+                        var talmacen = string.IsNullOrEmpty(almacen) ? almacenService.GetAlmacenDefecto(tid, db, tempresa) : almacen;
+                        var tejercicio = string.IsNullOrEmpty(ejercicio) ? ejercicioService.GetEjercicioDefecto(tid, db, tempresa) : ejercicio;
 
-                    var preferencias = new PreferenciasUsuarioService(db);
-                    preferencias.SetPreferencia(TiposPreferencias.EmpresaDefecto, tid, PreferenciaEmpresaDefecto.Id, PreferenciaEmpresaDefecto.Nombre, new PreferenciaEmpresaDefecto() { Empresa = tempresa });
+                        model = new SecurityTicket
+                        {
+                            Usuario = tusuario,
+                            Id = tid,
+                            RoleId = troleid,
+                            BaseDatos = tbasedatos,
+                            Empresa = tempresa,
+                            Ejercicio = tejercicio,
+                            Fkalmacen = talmacen,
+                            Tipolicencia = licenciaModel.TipoLicencia,
+                            Azureblob = tazureblob
+                            //serializeModel.Roles = db.USUARIOROLE.Where(i => i.IDUSUARIO == u.ID).Select(i => i.ROLE.NOMBRE).ToList();
+                        };
+                        CreateUsuarioActivo(model, db);
+                        // esto es la validación
+                        //var u = db.Usuarios.FirstOrDefault(i => i.Usuario == usu.Email && i.PWD == usu.Password && i.IFACTIVO);
 
-                    if (tempresa != ApplicationHelper.EmpresaMock)
+                        var preferencias = new PreferenciasUsuarioService(db);
+                        preferencias.SetPreferencia(TiposPreferencias.EmpresaDefecto, tid, PreferenciaEmpresaDefecto.Id, PreferenciaEmpresaDefecto.Nombre, new PreferenciaEmpresaDefecto() { Empresa = tempresa });
+
+                        if (tempresa != ApplicationHelper.EmpresaMock)
+                        {
+                            var ejercicioPreferencia = new PreferenciaEjercicioDefecto();
+                            ejercicioPreferencia.SetEjercicio(tempresa, tejercicio);
+
+                            var almacenPreferencia = new PreferenciaAlmacenDefecto();
+                            almacenPreferencia.SetAlmacen(tempresa, talmacen);
+
+                            preferencias.SetPreferencia(TiposPreferencias.EjercicioDefecto, tid, PreferenciaEjercicioDefecto.Id, PreferenciaEjercicioDefecto.Nombre, ejercicioPreferencia);
+                            preferencias.SetPreferencia(TiposPreferencias.AlmacenDefecto, tid, PreferenciaAlmacenDefecto.Id, PreferenciaAlmacenDefecto.Nombre, almacenPreferencia);
+
+
+                        }
+                    }
+                    
+                    else
                     {
-                        var ejercicioPreferencia = new PreferenciaEjercicioDefecto();
-                        ejercicioPreferencia.SetEjercicio(tempresa, tejercicio);
-
-                        var almacenPreferencia =new PreferenciaAlmacenDefecto();
-                        almacenPreferencia.SetAlmacen(tempresa,talmacen);
-
-                        preferencias.SetPreferencia(TiposPreferencias.EjercicioDefecto, tid, PreferenciaEjercicioDefecto.Id, PreferenciaEjercicioDefecto.Nombre, ejercicioPreferencia);
-                        preferencias.SetPreferencia(TiposPreferencias.AlmacenDefecto, tid, PreferenciaAlmacenDefecto.Id, PreferenciaAlmacenDefecto.Nombre, almacenPreferencia);
-
-
+                        throw new CambiarEmpresaException("No tiene permisos sobre la empresa "  + descripcionempresa + " Consulte con su administrador");
                     }
                 }
             }
@@ -256,6 +269,8 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                 if (ex is UsuarioactivoException)
                     throw;
                 if (ex is UsuarioensuoException)
+                    throw;
+                if (ex is CambiarEmpresaException)
                     throw;
                 result = false;
             }
@@ -321,6 +336,66 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
                
                 Login(dominio,tusuario, tpassword,  out cookie, empresa, ejercicio,almacen);
             }
+        }
+
+        //Rai ---> puedeCambiarEempresa para el botón de arriba del header, se tienen en cuenta el check de poder cambiar de empresa
+        public bool puedeCambiarEmpresa(string basedatos, string user, string empresa, string dominio)
+        {
+            var result = true;        
+            try
+            {
+                var licenciaModel = new LicenciasaplicacionService(dominio);
+                using (var db = MarfilEntities.ConnectToSqlServer(licenciaModel.Basedatos))
+                {
+                    var descripcionempresa = db.Empresas.Where(f => f.id == empresa).Select(f => f.nombre).SingleOrDefault();
+                    var usuariodb = db.Usuarios.Where(f => f.usuario == user).Single();
+                    var empresadb = db.Empresas.Where(f => f.id == empresa).Single();
+
+                    if (!(ApplicationHelper.UsuariosAdministrador == user || ((usuariodb.nivel >= empresadb.nivel || (usuariodb.nivel == null && empresadb.nivel == 0)) && usuariodb.cambiarempresa == true)))
+                    {
+                        throw new CambiarEmpresaException("No tiene permisos sobre la empresa " + descripcionempresa + " Consulte con su administrador");
+                    }
+                }
+                    
+            }
+            catch(Exception ex)
+            {
+                if (ex is CambiarEmpresaException)
+                    throw;
+                result = false;
+            }
+
+            return result;
+        }
+
+        //Rai ---> puedeEntrarEempresa para el botón de arriba del header, NO se tienen en cuenta el check de poder cambiar de empresa
+        public bool puedeEntrarEmpresa(string basedatos, string user, string empresa, string dominio)
+        {
+            var result = true;
+            try
+            {
+                var licenciaModel = new LicenciasaplicacionService(dominio);
+                using (var db = MarfilEntities.ConnectToSqlServer(licenciaModel.Basedatos))
+                {
+                    var descripcionempresa = db.Empresas.Where(f => f.id == empresa).Select(f => f.nombre).SingleOrDefault();
+                    var usuariodb = db.Usuarios.Where(f => f.usuario == user).Single();
+                    var empresadb = db.Empresas.Where(f => f.id == empresa).Single();
+
+                    if (!(ApplicationHelper.UsuariosAdministrador == user || (usuariodb.nivel >= empresadb.nivel) || (usuariodb.nivel == null && empresadb.nivel == 0)))
+                    {
+                        throw new CambiarEmpresaException("No tiene permisos sobre la empresa " + descripcionempresa + " Consulte con su administrador");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex is CambiarEmpresaException)
+                    throw;
+                result = false;
+            }
+
+            return result;
         }
 
         public void Logout(ICustomPrincipal customPrincipal)
@@ -433,6 +508,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Login
         public void Dispose()
         {
             
+        }
+
+        public bool CambiarEmpresa(string baseDatos, string usuario, string id, string dnsSafeHost)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -83,7 +83,6 @@ namespace Marfil.App.Web.Controllers
                             }
 
                             ModelState.AddModelError("", "Usuario, contraseña o base de datos incorrectas");
-                            //añadir lenguaje settings
                         }
                         else
                         {
@@ -104,6 +103,12 @@ namespace Marfil.App.Web.Controllers
                 catch (UsuarioensuoException ex)
                 {
                     model.Usuariobloqueado = true;
+                }
+
+                //Rai
+                catch (CambiarEmpresaException ex)
+                {
+                    ModelState.AddModelError("", ex.Message); //añadir lenguaje settings
                 }
                 catch (Exception ex)
                 {

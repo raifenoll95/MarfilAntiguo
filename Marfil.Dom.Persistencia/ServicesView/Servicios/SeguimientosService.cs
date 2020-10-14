@@ -15,6 +15,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Inf.Genericos.Helper;
 using Resources;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
+using System.Globalization;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 {
@@ -105,6 +106,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     if (model.Fechaproximoseguimiento != null)
                         modelPadre.fechaproximoseguimiento = model.Fechaproximoseguimiento;
 
+                    //Rai
+                    //Se van totalizando los costes imputados de los seguimientos
+                    modelPadre.coste += model.Coste;
+
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<OportunidadesModel, Oportunidades>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
 
@@ -128,6 +133,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     modelPadre.fechaultimoseguimiento = model.Fechadocumento;
                     if (model.Fechaproximoseguimiento != null)
                         modelPadre.fechaproximoseguimiento = model.Fechaproximoseguimiento;
+
+                    //Rai
+                    //Se van totalizando los costes imputados de los seguimientos
+                    modelPadre.coste += model.Coste;
 
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<ProyectosModel, Proyectos>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
@@ -153,6 +162,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     if (model.Fechaproximoseguimiento != null)
                         modelPadre.fechaproximoseguimiento = model.Fechaproximoseguimiento;
 
+                    //Rai
+                    //Se van totalizando los costes imputados de los seguimientos
+                    modelPadre.coste += model.Coste;
+
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<CampañasModel, Campañas>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
 
@@ -176,6 +189,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     modelPadre.fechaultimoseguimiento = model.Fechadocumento;
                     if (model.Fechaproximoseguimiento != null)
                         modelPadre.fechaproximoseguimiento = model.Fechaproximoseguimiento;
+
+                    //Rai
+                    //Se van totalizando los costes imputados de los seguimientos
+                    modelPadre.coste += model.Coste;
 
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<IncidenciasCRMModel, IncidenciasCRM>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
@@ -244,6 +261,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<OportunidadesModel, Oportunidades>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
 
+                    //Rai
+                    //Hay que tener en cuenta que si se edita un seguimiento, podrían cambiarle el coste, 
+                    //luego al grabar hay que restar el coste que tenga y sumar el que haya al grabarlo.
+                    var antiguocosteSeguimiento = _db.Seguimientos.Where(f => f.empresa == Empresa && f.origen == model.Origen && f.id == model.Id).Select(f => f.coste).FirstOrDefault();
+                    modelPadre.coste -= antiguocosteSeguimiento;
+                    modelPadre.coste += model.Coste;
+
                     var service = FService.Instance.GetService(typeof(OportunidadesModel), _context);
                     service.edit(modelview);
                 }
@@ -267,6 +291,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<ProyectosModel, Proyectos>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
+
+                    //Rai
+                    //Hay que tener en cuenta que si se edita un seguimiento, podrían cambiarle el coste, 
+                    //luego al grabar hay que restar el coste que tenga y sumar el que haya al grabarlo.
+                    var antiguocosteSeguimiento = _db.Seguimientos.Where(f => f.empresa == Empresa && f.origen == model.Origen && f.id == model.Id).Select(f => f.coste).FirstOrDefault();
+                    modelPadre.coste -= antiguocosteSeguimiento;
+                    modelPadre.coste += model.Coste;
 
                     var service = FService.Instance.GetService(typeof(ProyectosModel), _context);
                     service.edit(modelview);
@@ -292,6 +323,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<CampañasModel, Campañas>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
 
+                    //Rai
+                    //Hay que tener en cuenta que si se edita un seguimiento, podrían cambiarle el coste, 
+                    //luego al grabar hay que restar el coste que tenga y sumar el que haya al grabarlo.
+                    var antiguocosteSeguimiento = _db.Seguimientos.Where(f => f.empresa == Empresa && f.origen == model.Origen && f.id == model.Id).Select(f => f.coste).FirstOrDefault();
+                    modelPadre.coste -= antiguocosteSeguimiento;
+                    modelPadre.coste += model.Coste;
+
                     var service = FService.Instance.GetService(typeof(CampañasModel), _context);
                     service.edit(modelview);
                 }
@@ -315,6 +353,13 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
                     var converterModel = FConverterModel.Instance.CreateConverterModelService<IncidenciasCRMModel, IncidenciasCRM>(_context, _db, Empresa);
                     var modelview = converterModel.GetModelView(modelPadre);
+
+                    //Rai
+                    //Hay que tener en cuenta que si se edita un seguimiento, podrían cambiarle el coste, 
+                    //luego al grabar hay que restar el coste que tenga y sumar el que haya al grabarlo.
+                    var antiguocosteSeguimiento = _db.Seguimientos.Where(f => f.empresa == Empresa && f.origen == model.Origen && f.id == model.Id).Select(f => f.coste).FirstOrDefault();
+                    modelPadre.coste -= antiguocosteSeguimiento;
+                    modelPadre.coste += model.Coste;
 
                     var service = FService.Instance.GetService(typeof(IncidenciasCRMModel), _context);
                     service.edit(modelview);
@@ -385,6 +430,37 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             }
 
             return seguimientos;
+        }
+
+        //Rai - Devuelve el coste del CRM en funcion de la accion y de la fecha
+        public int getCosteCRM(string accion, string fecha)
+        {
+            var coste = 0;
+            DateTime? dt = DateTime.ParseExact(fecha, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            if(dt.HasValue)
+            {
+                var ejercicioId = _db.Ejercicios.Where(f => f.empresa == Empresa && f.desde <= dt && dt <= f.hasta).SingleOrDefault();
+                var serviceCostesVariablePeriodo = FService.Instance.GetService(typeof(CostesVariablesPeriodoModel), _context);
+
+                //Es posible que no se ha creado ningun coste variable con un ejercicio correspondiente a la fecha del seguimiento
+                if (ejercicioId != null)
+                {
+                    var modelCostes = serviceCostesVariablePeriodo.get(ejercicioId.id.ToString()) as CostesVariablesPeriodoModel;
+                    var service = new TablasVariasService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos));
+                    var descripcionaccion = service.GetListAcciones().Where(f => f.Valor == accion).Select(f => f.Descripcion).SingleOrDefault().ToString();
+
+                    foreach (var linea in modelCostes._costes)
+                    {
+                        if (linea.Descripcion == descripcionaccion)
+                        {
+                            coste = (int)linea.Precio;
+                        }
+                    }
+                }     
+            }
+
+            return coste;
         }
 
         public IEnumerable<SeguimientosModel> getDocumentosRelacionados(string tipodocumento, string tercero)

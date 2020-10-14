@@ -54,6 +54,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.AgrupacionFacturacion
                                 Fkarticulos = Funciones.Qnull(row["Fkarticulos"]),
                                 Descripcion = Funciones.Qnull(row["Descripcion"]),
                                 Fktiposiva = Funciones.Qnull(row["Fktiposiva"]),
+                                Contenedor = Funciones.Qnull(row["Contenedor"]) ?? "",
+                                Sello = Funciones.Qnull(row["Sello"]),
+                                Pesoneto = Funciones.Qdouble(row["Pesoneto"]) ?? 0,
+                                Caja = Funciones.Qint(row["Caja"]),
                                 Ancho = lineas.Columns.Contains("Ancho") ? Funciones.Qdouble(row["Ancho"]) : null,
                                 Grueso = lineas.Columns.Contains("Grueso") ? Funciones.Qdouble(row["Grueso"]) : null,
                                 Largo = lineas.Columns.Contains("Largo") ? Funciones.Qdouble(row["Largo"]) : null,
@@ -111,11 +115,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.AgrupacionFacturacion
                 if (!lineas.Any(f => f.Campoenum == CamposAgrupacionAlbaran.Porcentajedescuento))
                     agrupacion += ",al.Porcentajedescuento";
 
-                agrupacion += ",al.empresa,al.Fkunidades,al.Fktiposiva,al.Porcentajerecargoequivalencia,al.Porcentajeiva,al.Decimalesmedidas,al.Decimalesmonedas";
+                agrupacion += ",al.empresa,al.Fkunidades,al.Fktiposiva,al.Sello,al.Caja,al.Pesoneto,al.Porcentajerecargoequivalencia,al.Porcentajeiva,al.Decimalesmedidas,al.Decimalesmonedas";
 
                 sb.Append(" al.Descripcion as Descripcion,Min(al.Id) as Id,Sum(al.cantidad) as Cantidad,sum(al.Metros) as Metros,al.Porcentajeiva,Sum(al.Cuotaiva) as Cuotaiva," +
                           " al.Porcentajerecargoequivalencia,sum(al.Cuotarecargoequivalencia) as Cuotarecargoequivalencia,'" + albaran.Fkregimeniva + "' as Fkregimeniva," +
-                          " al.Fkunidades, al.Fktiposiva,Sum(al.Importe) as Importe,Sum(al.importedescuento) as Importedescuento,al.Decimalesmedidas,al.Decimalesmonedas, " + string.Join(",", lineas.Select(f => "al." + f.Campoenum.ToString())));
+                          " al.Fkunidades, al.Fktiposiva, al.Sello, al.Caja, al.Pesoneto, Sum(al.Importe) as Importe,Sum(al.importedescuento) as Importedescuento,al.Decimalesmedidas,al.Decimalesmonedas, " + string.Join(",", lineas.Select(f => "al." + f.Campoenum.ToString())));
 
                 if (!lineas.Any(f => f.Campoenum == CamposAgrupacionAlbaran.Fkarticulos))
                     sb.Append(", al.Fkarticulos");

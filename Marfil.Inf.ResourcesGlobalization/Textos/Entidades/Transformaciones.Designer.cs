@@ -106,6 +106,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.Entidades {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Reclasificar material.
+        /// </summary>
+        public static string Fkmateriales {
+            get {
+                return ResourceManager.GetString("Fkmateriales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Trabajo.
         /// </summary>
         public static string Fktrabajos {

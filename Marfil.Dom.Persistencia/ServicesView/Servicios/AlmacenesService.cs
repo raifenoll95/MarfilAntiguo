@@ -163,7 +163,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         private void GuardarDirecciones(AlmacenesModel model)
         {
             var direccionesService = FService.Instance.GetService(typeof(DireccionesLinModel), _context, _db) as DireccionesService;
-            direccionesService.CleanAllDirecciones(ApplicationHelper.ALMACENDIRECCIONINT, model.Id);
+            direccionesService.CleanAllDirecciones(Empresa, ApplicationHelper.ALMACENDIRECCIONINT, model.Id);
             if (model.Direcciones == null) return;
 
             ProcessDirecciones(model);

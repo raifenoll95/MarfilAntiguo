@@ -31,6 +31,10 @@ namespace Marfil.Dom.Persistencia.Model.FicherosGenerales
         Contenedor,
         [StringValue(typeof(RAlbaranes), "Caja")]
         Caja,
+        [StringValue(typeof(RAlbaranes), "Sello")]
+        Sello,
+        [StringValue(typeof(RAlbaranes), "Pesoneto")]
+        Pesoneto,
         [StringValue(typeof(RAlbaranes), "Largo")]
         Largo,
         [StringValue(typeof(RAlbaranes), "Ancho")]

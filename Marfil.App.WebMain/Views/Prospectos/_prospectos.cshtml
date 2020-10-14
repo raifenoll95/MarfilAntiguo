@@ -12,6 +12,7 @@
             <li><a data-toggle="tab" href="#comercial">@Prospectos.Comercial</a></li>
             <li><a data-toggle="tab" href="#direcciones">@General.LblDirecciones</a></li>
             <li><a data-toggle="tab" href="#contactos">@General.LblContactos</a></li>
+            <li><a data-toggle="tab" href="#oportunidades">Oportunidades</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -35,6 +36,10 @@
         <div id="contactos" class="tab-pane fade margin-bottom">
             <script src="@Url.Content("~/Scripts/UserControls/Contactos/ContactosController.js")"></script>
             @Html.Partial("_contactos", Model)
+        </div>
+        <div id="oportunidades" class="tab-pane fade margin-bottom">
+            <script src="@Url.Content("~/Scripts/UserControls/Oportunidades/OportunidadesController.js")"></script>
+            @Html.Partial("_oportunidades", Model)
         </div>
     </div>
 </div>

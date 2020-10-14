@@ -156,6 +156,7 @@ namespace Marfil.Dom.Persistencia.Model.Configuracion.Empresa
         {
             get
             {
+                _direcciones = _direcciones ?? fModel.GetModel<DireccionesModel>(Context);
                 return _direcciones;
             }
             set { _direcciones = value; }

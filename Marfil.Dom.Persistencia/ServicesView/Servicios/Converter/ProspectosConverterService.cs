@@ -10,6 +10,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
 using Marfil.Dom.Persistencia.Model;
 using Marfil.Dom.Persistencia.Model.FicherosGenerales;
 using Marfil.Dom.Persistencia.Model.Interfaces;
+using Marfil.Dom.Persistencia.Model.CRM;
 
 namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 {
@@ -44,7 +45,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 var newitem = GetModelView(item) as ProspectosModel;
                 newitem.Cuentas = cuentasService.get(item.fkcuentas) as CuentasModel;
                 newitem.Direcciones = fModel.GetModel<DireccionesModel>(Context);
-                newitem.Direcciones.Direcciones = direccionesService.GetDirecciones(TiposCuentas.Prospectos, newitem.Fkcuentas);
+                newitem.Direcciones.Direcciones = direccionesService.GetDirecciones(Empresa, TiposCuentas.Prospectos, newitem.Fkcuentas);
                 newitem.Direcciones.Id = Guid.NewGuid();
                 newitem.Direcciones.Tipotercero = (int)TiposCuentas.Prospectos;
                 result.Add(newitem);
@@ -67,10 +68,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             var cuentasService = fService.GetService(typeof(CuentasModel), Context, _db);
             var direccionesService = fService.GetService(typeof(DireccionesLinModel), Context, _db) as DireccionesService;
             var contactosService = fService.GetService(typeof(ContactosLinModel), Context, _db) as ContactosService;
+            var oportunidadesService = fService.GetService(typeof(OportunidadesModel), Context, _db) as OportunidadesService;
 
             result.Cuentas = cuentasService.get(result.Fkcuentas) as CuentasModel;
             result.Direcciones = fModel.GetModel<DireccionesModel>(Context);
-            result.Direcciones.Direcciones = direccionesService.GetDirecciones(TiposCuentas.Prospectos, obj.fkcuentas);
+            result.Direcciones.Direcciones = direccionesService.GetDirecciones(Empresa, TiposCuentas.Prospectos, obj.fkcuentas);
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero = (int)TiposCuentas.Prospectos;
 
@@ -79,7 +81,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
             result.Contactos.Id = Guid.NewGuid();
             result.Contactos.Tipotercero = (int)TiposCuentas.Prospectos;
             result.Contactos.Direcciones = result.Direcciones;
-           var appService = new ApplicationHelper(Context);
+
+            result.Oportunidades = oportunidadesService.getOportunidaesCliente(result.Fkcuentas).ToList();
+
+            var appService = new ApplicationHelper(Context);
             result.LstTarifas = appService.GetTarifasCuenta(TipoFlujo.Venta, id,Empresa).Select(f => new SelectListItem() { Value = f.Id, Text = f.Descripcion });
 
             return result;

@@ -91,6 +91,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Documentos.Importar
         public int? Caja { get; set; }
 
         public double? Pesoneto { get; set; }
+        public int Fkalbaranes { get; set; }
     }
 
     public interface IImportacionService

@@ -40,7 +40,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
                 
                 newitem.Cuentas = cuentasService.get(item.fkcuentas) as CuentasModel;
                 newitem.Direcciones = fModel.GetModel<DireccionesModel>(Context);
-                newitem.Direcciones.Direcciones = direccionesService.GetDirecciones(TiposCuentas.Cuentastesoreria, newitem.Fkcuentas);
+                newitem.Direcciones.Direcciones = direccionesService.GetDirecciones(Empresa, TiposCuentas.Cuentastesoreria, newitem.Fkcuentas);
                 newitem.Direcciones.Id = Guid.NewGuid();
                 newitem.Direcciones.Tipotercero = (int)TiposCuentas.Cuentastesoreria;
                 result.Add(newitem);
@@ -67,7 +67,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.Cuentas = cuentasService.get(result.Fkcuentas) as CuentasModel;
             result.Direcciones = fModel.GetModel<DireccionesModel>(Context);
-            result.Direcciones.Direcciones = direccionesService.GetDirecciones(TiposCuentas.Cuentastesoreria, obj.fkcuentas);
+            result.Direcciones.Direcciones = direccionesService.GetDirecciones(Empresa, TiposCuentas.Cuentastesoreria, obj.fkcuentas);
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero = (int)TiposCuentas.Cuentastesoreria;
 

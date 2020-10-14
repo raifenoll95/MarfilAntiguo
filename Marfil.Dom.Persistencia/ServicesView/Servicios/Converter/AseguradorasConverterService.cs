@@ -63,7 +63,7 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios.Converter
 
             result.Cuentas = cuentasService.get(result.Fkcuentas) as CuentasModel;
             result.Direcciones=fModel.GetModel<DireccionesModel>(Context);
-            result.Direcciones.Direcciones = direccionesService.GetDirecciones(TiposCuentas.Aseguradoras, obj.fkcuentas);
+            result.Direcciones.Direcciones = direccionesService.GetDirecciones(Empresa, TiposCuentas.Aseguradoras, obj.fkcuentas);
             result.Direcciones.Id = Guid.NewGuid();
             result.Direcciones.Tipotercero = (int)TiposCuentas.Aseguradoras;
 

@@ -53,10 +53,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
 
         #region Api
        
-        public IEnumerable<DireccionesLinModel> GetDirecciones(int tipo,string fkCuentas)
+        public IEnumerable<DireccionesLinModel> GetDirecciones(string empresa, int tipo,string fkCuentas)
         {
             var tipoInt = tipo;
-            var list = _db.Direcciones.Where(f => f.empresa == Empresa && f.fkentidad == fkCuentas && f.tipotercero == tipo).ToList();
+            var list = _db.Direcciones.Where(f => f.empresa == empresa && f.fkentidad == fkCuentas && f.tipotercero == tipo).ToList();
             List<DireccionesLinModel> direcciones = new List<DireccionesLinModel>();
 
             foreach(var d in list)
@@ -86,26 +86,19 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 }) ;
             }
 
-            //var list =
-            //    _db.Set<Direcciones>()
-            //        .Where(f => f.empresa == Empresa  && f.fkentidad == fkCuentas)
-            //        .ToList();
-            //return list.Select(f => _converterModel.GetModelView(f) as DireccionesLinModel).ToList();
-            //return list.Select(f => (DireccionesLinModel)f).ToList();
-
             return direcciones;
         }
 
-        public IEnumerable<DireccionesLinModel> GetDirecciones(TiposCuentas tipo, string fkCuentas)
+        public IEnumerable<DireccionesLinModel> GetDirecciones(string empresa, TiposCuentas tipo, string fkCuentas)
         {
-            return GetDirecciones((int) tipo, fkCuentas);
+            return GetDirecciones(empresa, (int) tipo, fkCuentas);
         }
 
-        public void CleanAllDirecciones(int tipoInt, string fkCuentas)
+        public void CleanAllDirecciones(string empresa, int tipoInt, string fkCuentas)
         {
             var list =
              _db.Set<Direcciones>()
-                 .Where(f => f.empresa == Empresa && f.tipotercero == tipoInt && f.fkentidad == fkCuentas)
+                 .Where(f => f.empresa == empresa && f.tipotercero == tipoInt && f.fkentidad == fkCuentas)
                  .ToList();
 
 
@@ -116,10 +109,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             _db.SaveChanges();
         }
 
-        public void CleanAllDirecciones(TiposCuentas tipo, string fkCuentas)
+        public void CleanAllDirecciones(string empresa, TiposCuentas tipo, string fkCuentas)
         {
             var tipoInt = (int)tipo;
-            CleanAllDirecciones(tipoInt, fkCuentas);
+            CleanAllDirecciones(empresa, tipoInt, fkCuentas);
         }
 
         #endregion

@@ -177,11 +177,15 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                     base.edit(obj);
                     var trabajosService = FService.Instance.GetService(typeof(TrabajosModel), _context) as TrabajosService;
                     var trabajosObj = trabajosService.get(editado.Fktrabajos) as TrabajosModel;
+
+                    var materialesService = FService.Instance.GetService(typeof(MaterialesModel), _context) as MaterialesService;
+                    var materialesObj = materialesService.get(editado.Fkmateriales) as MaterialesModel;
+
                     //ActualizarStock(original,editado, trabajosObj);
                     //GenerarMovimientosLineas(original.Lineas, original, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj);
                     //GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj);
-                    GenerarMovimientosLineas(original.Lineas, original, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj,false);
-                    GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj,false);
+                    GenerarMovimientosLineas(original.Lineas, original, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj, materialesObj, false);
+                    GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj, materialesObj, false);
                     _db.SaveChanges();
                     tran.Complete();
                 }
@@ -233,12 +237,14 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var trabajosService = FService.Instance.GetService(typeof (TrabajosModel), _context) as TrabajosService;
             var trabajosObj = trabajosService.get(editado.Fktrabajos) as TrabajosModel;
+            var materialesService = FService.Instance.GetService(typeof(MaterialesModel), _context) as MaterialesService;
+            var materialesObj = materialesService.get(editado.Fkmateriales) as MaterialesModel;
 
-            if(trabajosObj.Fkacabadoinicial==trabajosObj.Fkacabadofinal && !editado.Costes.Any())
+            if (trabajosObj.Fkacabadoinicial==trabajosObj.Fkacabadofinal && !editado.Costes.Any())
                 throw new Exception("No se han añadido costes adicionales. El parte no se grabará al no haber transformación.");
 
             //CrearStock(editado, trabajosObj);
-            GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj);
+            GenerarMovimientosLineas(editado.Lineas, editado, TipoOperacionService.InsertarTransformacionloteStock, trabajosObj, materialesObj);
         }
 
 
@@ -267,30 +273,21 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
         {
             var trabajosService = FService.Instance.GetService(typeof(TrabajosModel), _context) as TrabajosService;
             var trabajosObj = trabajosService.get(nuevo.Fktrabajos) as TrabajosModel;
+            var materialesService = FService.Instance.GetService(typeof(MaterialesModel), _context) as MaterialesService;
+            var materialesObj = materialesService.get(nuevo.Fkmateriales) as MaterialesModel;
 
             if (trabajosObj.Fkacabadoinicial == trabajosObj.Fkacabadofinal && !nuevo.Costes.Any())
                 throw new Exception("No se han añadido costes adicionales. El parte no se grabará al no haber transformación.");
 
-            GenerarMovimientosLineas(nuevo.Lineas, nuevo, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj, true);
-            //OperarStock(nuevo, TipoOperacionStock.Entrada,trabajosObj);
+            GenerarMovimientosLineas(nuevo.Lineas, nuevo, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj, materialesObj, true);
         }
 
-        //private void CrearStock(TransformacioneslotesModel nuevo, TrabajosModel trabajosObj)
-        //{
-        //    foreach (var item in nuevo.Lineas)
-        //        item.Nueva = true;
-
-        //    // OperarStock(nuevo, TipoOperacionStock.Entrada, trabajosObj);
-        //    // realmente es una salida de stock
-        //    OperarStock(nuevo, TipoOperacionStock.Salida, trabajosObj);
-        //}
-
-        private void FinalizarStock(TransformacioneslotesModel original, TransformacioneslotesModel nuevo, TrabajosModel trabajosObj)
+        private void FinalizarStock(TransformacioneslotesModel original, TransformacioneslotesModel nuevo, TrabajosModel trabajosObj, MaterialesModel materialesObj)
         {
-            GenerarMovimientosLineas(nuevo.Lineas, nuevo, TipoOperacionService.FinalizarTransformacionloteStock, trabajosObj,true);
+            GenerarMovimientosLineas(nuevo.Lineas, nuevo, TipoOperacionService.FinalizarTransformacionloteStock, trabajosObj, materialesObj, true);
         }
 
-        private void ActualizarStock(TransformacioneslotesModel original, TransformacioneslotesModel nuevo, TrabajosModel trabajosObj)
+        private void ActualizarStock(TransformacioneslotesModel original, TransformacioneslotesModel nuevo, TrabajosModel trabajosObj, MaterialesModel materialesObj)
         {
             var list = new List<TransformacioneslotesLinModel>();
             var lineasModificadas = nuevo.Lineas.Where(f => !original.Lineas.Any(j => j.Flagidentifier == f.Flagidentifier)).ToList();
@@ -301,11 +298,11 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                 item.Cantidad *= -1;
 
             list = lineasEliminadas.Union(lineasModificadas).ToList();
-            GenerarMovimientosLineas(list, nuevo, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj);
+            GenerarMovimientosLineas(list, nuevo, TipoOperacionService.ActualizarTransformacionloteStock, trabajosObj, materialesObj);
         }
 
 
-        private void GenerarMovimientosLineas(IEnumerable<TransformacioneslotesLinModel> lineas, TransformacioneslotesModel nuevo, TipoOperacionService movimiento, TrabajosModel trabajosObj,bool finalizarstock=false)
+        private void GenerarMovimientosLineas(IEnumerable<TransformacioneslotesLinModel> lineas, TransformacioneslotesModel nuevo, TipoOperacionService movimiento, TrabajosModel trabajosObj, MaterialesModel materialesObj, bool finalizarstock=false)
         {
             var movimientosStockService = new MovimientosstockService(_context, _db);
             var articulosService = FService.Instance.GetService(typeof (ArticulosModel), _context, _db);
@@ -316,25 +313,25 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
             if (movimiento == TipoOperacionService.InsertarTransformacionloteStock)
                 operacion = -1;
 
-            //RFL
-            // ordenamos lineas por articulo y cantidad para procesar primero las positivas evitando error stock negativo no autorizado
+            //Rai
+            // Ordenamos lineas por articulo y cantidad para procesar primero las positivas evitando error stock negativo no autorizado
             // (ya que se procesan las lineas antes existentes con cantidad negativa para quitarlas
             //   y luego se añade las lineas de grid cantidad +)
             var mylineas = lineas.OrderBy(x => x.Fkarticulos).ThenByDescending(x => x.Cantidad).ToList();
 
             foreach (var linea in mylineas)
             {
+                //Rai -- sustituye el codigo del acabado y el codigo del material en caso de que sea necesario
                 var codigoarticulonuevo = linea.Fkarticulos;
+                var acabado = !string.IsNullOrEmpty(trabajosObj.Fkacabadofinal) ? trabajosObj.Fkacabadofinal : ArticulosService.GetCodigoAcabado(linea.Fkarticulos);
+                var material = !string.IsNullOrEmpty(materialesObj.Id) ? materialesObj.Id : ArticulosService.GetCodigoMaterial(linea.Fkarticulos);
+
+                codigoarticulonuevo = string.Format("{0}{1}{2}{3}{4}", ArticulosService.GetCodigoFamilia(linea.Fkarticulos),
+                        material, ArticulosService.GetCodigoCaracteristica(linea.Fkarticulos),
+                        ArticulosService.GetCodigoGrosor(linea.Fkarticulos), acabado);
                 
-                if (!string.IsNullOrEmpty(trabajosObj.Fkacabadofinal))
-                {
-                   
-                    codigoarticulonuevo = string.Format("{0}{1}{2}{3}{4}", ArticulosService.GetCodigoFamilia(linea.Fkarticulos),
-                        ArticulosService.GetCodigoMaterial(linea.Fkarticulos), ArticulosService.GetCodigoCaracteristica(linea.Fkarticulos),
-                        ArticulosService.GetCodigoGrosor(linea.Fkarticulos), trabajosObj.Fkacabadofinal);
-                    if (!articulosService.exists(codigoarticulonuevo))
-                        throw new Exception(string.Format("El articulo {0} no existe", codigoarticulonuevo));
-                }
+                if (!articulosService.exists(codigoarticulonuevo))
+                    throw new Exception(string.Format("El articulo {0} no existe", codigoarticulonuevo));
 
                 ArticulosModel articuloObj;
                 if (vectorArticulos.ContainsKey(linea.Fkarticulos))
@@ -781,8 +778,10 @@ namespace Marfil.Dom.Persistencia.ServicesView.Servicios
                         {
                             var trabajosService = FService.Instance.GetService(typeof(TrabajosModel), _context) as TrabajosService;
                             var trabajosObj = trabajosService.get(editado.Fktrabajos) as TrabajosModel;
+                            var materialesService = FService.Instance.GetService(typeof(MaterialesModel), _context) as MaterialesService;
+                            var materialesObj = materialesService.get(editado.Fkmateriales) as MaterialesModel;
                             RepartirCostesLineas(editado.Lineas, editado.Costes, original.Costes);
-                            FinalizarStock(original, editado, trabajosObj);
+                            FinalizarStock(original, editado, trabajosObj, materialesObj);
                         }
 
                         _db.SaveChanges();

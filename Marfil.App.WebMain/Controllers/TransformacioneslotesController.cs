@@ -139,7 +139,9 @@ namespace Marfil.App.WebMain.Controllers
             var newModel = Helper.fModel.GetModel<TransformacioneslotesModel>(ContextService);
             using (var gestionService = createService(newModel))
             {
-                var model = TempData["model"] != null ? TempData["model"] as TransformacioneslotesModel : gestionService.get(id);
+                var model = TempData["model"] != null ? TempData["model"] as TransformacioneslotesModel : gestionService.get(id) as TransformacioneslotesModel;
+                var serviceConfiguracion = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService;
+                model.PuedeReclasificarMaterial = serviceConfiguracion.GetModel().Materialentradaigualsalida;
 
                 if (model == null)
                 {
@@ -210,7 +212,10 @@ namespace Marfil.App.WebMain.Controllers
             using (var gestionService = createService(newModel))
             {
 
-                var model = gestionService.get(id);
+                var model = gestionService.get(id) as TransformacioneslotesModel;
+                var serviceConfiguracion = FService.Instance.GetService(typeof(ConfiguracionModel), ContextService) as ConfiguracionService;
+                model.PuedeReclasificarMaterial = serviceConfiguracion.GetModel().Materialentradaigualsalida;
+
                 if (model == null)
                 {
                     return HttpNotFound();
