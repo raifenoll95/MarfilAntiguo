@@ -44,5 +44,8 @@ namespace Marfil.Dom.Persistencia
         public string fkCuentaSalidasVariasAlmacen { get; set; }
         public string ean13 { get; set; }
         public Nullable<int> decimalesprecios { get; set; }
+    
+        public virtual Empresas Empresas1 { get; set; }
+        public virtual Empresas Empresas2 { get; set; }
     }
 }

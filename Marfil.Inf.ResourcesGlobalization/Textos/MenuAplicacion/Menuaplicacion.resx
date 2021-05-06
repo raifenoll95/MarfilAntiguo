@@ -579,4 +579,7 @@
   <data name="listadosconsultatesoreria" xml:space="preserve">
     <value>Listados de consulta de tesorería</value>
   </data>
+  <data name="inmuebles" xml:space="preserve">
+    <value>Inmuebles</value>
+  </data>
 </root>

@@ -314,7 +314,10 @@
     <Compile Include="Controllers\ArticulosTerceroController.cs" />
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
+    <Compile Include="Controllers\InmueblesController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
+    <Compile Include="Controllers\MunicipiosApiController.cs" />
+    <Compile Include="Controllers\MunicipiosProvinciasApiController.cs" />
     <Compile Include="Controllers\PresupuestosAsistenteApiController.cs" />
     <Compile Include="Controllers\CuentasTesoreriaApiController.cs" />
     <Compile Include="Controllers\MovimientosTesoreriaController.cs" />
@@ -1912,6 +1915,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\192.168.223.210 - MarfilBeta.pubxml" />
     <None Include="Properties\PublishProfiles\Azure MarfilNet.pubxml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -3538,6 +3542,14 @@
     <Content Include="Views\Oportunidades\Oportunidades.cshtml" />
     <Content Include="Views\Prospectos\_oportunidades.cshtml" />
     <Content Include="Views\Home\CambioEmpresa.cshtml" />
+    <Content Include="Views\Inmuebles\Index.cshtml" />
+    <Content Include="Views\Inmuebles\Details.cshtml" />
+    <Content Include="Views\Inmuebles\Edit.cshtml" />
+    <Content Include="Views\Inmuebles\Delete.cshtml" />
+    <Content Include="Views\Inmuebles\Create.cshtml" />
+    <Content Include="Views\Inmuebles\_inmuebles.cshtml" />
+    <Content Include="Views\Inmuebles\_direccion.cshtml" />
+    <Content Include="Views\Inmuebles\_general.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -3568,6 +3580,7 @@
     <Folder Include="Views\EmpresasApi\" />
     <Folder Include="Views\HelperView\" />
     <Folder Include="Views\MaesApi\" />
+    <Folder Include="Views\MunicipiosApi\" />
     <Folder Include="Views\PrecioCosteApi\" />
     <Folder Include="Views\SeccionesAnaliticasApi\" />
     <Folder Include="Views\SeriesContablesApi\" />

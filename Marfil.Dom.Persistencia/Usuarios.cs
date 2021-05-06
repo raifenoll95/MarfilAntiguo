@@ -37,6 +37,8 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> nivel { get; set; }
         public Nullable<bool> cambiarempresa { get; set; }
         public Nullable<bool> cambiaralmacen { get; set; }
+        public Nullable<bool> usuario_cliente { get; set; }
+        public string codigoclienteusuario { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AppPermisos> AppPermisos { get; set; }

@@ -691,6 +691,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Inmuebles.
+        /// </summary>
+        public static string inmuebles {
+            get {
+                return ResourceManager.GetString("inmuebles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Gestión de Inventarios.
         /// </summary>
         public static string inventarios {

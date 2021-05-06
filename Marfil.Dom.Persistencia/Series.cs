@@ -35,5 +35,6 @@ namespace Marfil.Dom.Persistencia
         public Nullable<int> tipoalmacenlote { get; set; }
         public Nullable<bool> entradasvarias { get; set; }
         public Nullable<bool> salidasvarias { get; set; }
+        public string fkgruposusuarios { get; set; }
     }
 }

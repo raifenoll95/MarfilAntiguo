@@ -112,6 +112,7 @@ namespace Marfil.Dom.Persistencia
         public string fkprospectos { get; set; }
         public Nullable<int> tipoalmacenlote { get; set; }
         public Nullable<System.DateTime> fechabl { get; set; }
+        public string remolque { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbaranesLin> AlbaranesLin { get; set; }

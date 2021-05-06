@@ -51,6 +51,7 @@ namespace Marfil.Dom.Persistencia.ServicesView
             _validationServices.Add(typeof(Tarifasbase), typeof(TarifasbaseValidation));
             _validationServices.Add(typeof(Cuentas),typeof(CuentasValidation));
             _validationServices.Add(typeof(Tiposcuentas),typeof(TiposcuentasValidation));
+            _validationServices.Add(typeof(Inmuebles), typeof(InmueblesValidation));
             _validationServices.Add(typeof(Unidades),typeof(UnidadesValidation));
             _validationServices.Add(typeof(Direcciones),typeof(DireccionesValidation));
             _validationServices.Add(typeof(Contactos),typeof(ContactosValidation));

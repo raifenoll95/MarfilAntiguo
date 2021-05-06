@@ -804,6 +804,14 @@ namespace Marfil.Dom.Persistencia.Helpers
             }
         }
 
+        //Municipios
+        public IEnumerable<MunicipiosModel> GetListMunicipios(string provincia)
+        {
+            using (var service = new MunicipiosService(_context, MarfilEntities.ConnectToSqlServer(_context.BaseDatos)))
+            {
+                return service.GetMunicipiosProvincia(provincia);
+            }
+        }
 
         public IEnumerable<TablasVariasGeneralModel> GetListTiposVias()
         {

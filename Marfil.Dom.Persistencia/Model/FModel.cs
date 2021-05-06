@@ -14,6 +14,7 @@ using Marfil.Dom.Persistencia.Model.Configuracion;
 using Marfil.Dom.Persistencia.ServicesView.Servicios;
 using Marfil.Dom.Persistencia.Model.Configuracion.Planesgenerales;
 using Marfil.Dom.Persistencia.Model.Configuracion.Cuentas;
+using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
 using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias;
 using Marfil.Dom.Persistencia.Model.Configuracion.TablasVarias.Derivados;
 using Marfil.Dom.Persistencia.Model.Documentos.Albaranes;
@@ -52,6 +53,7 @@ using Marfil.Dom.Persistencia.Model.Documentos.DivisionLotes;
 using Marfil.Dom.Persistencia.Model.Documentos.GrupoMateriales;
 using Marfil.Dom.Persistencia.Model.Documentos.CobrosYPagos;
 using Marfil.Dom.Persistencia.Model.Contabilidad;
+using Marfil.Dom.Persistencia.Model.Configuracion.Inmueble;
 
 namespace Marfil.Dom.Persistencia.Model
 {
@@ -778,6 +780,14 @@ namespace Marfil.Dom.Persistencia.Model
                 var empresa = appService.GetCurrentEmpresa();
                 result.Empresa = empresa.Id;
                 result.Categoria = CategoriasCuentas.Contables;
+                return result as T;
+            }
+            else if (typeof(InmueblesModel) == typeof(T))
+            {
+
+                var result = new InmueblesModel();
+                var empresa = appService.GetCurrentEmpresa();
+                result.Empresa = empresa.Id;
                 return result as T;
             }
             else if (typeof(AgentesModel) == typeof(T))

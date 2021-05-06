@@ -76,6 +76,7 @@ namespace Marfil.Dom.Persistencia
         public Nullable<System.Guid> fkcarpetas { get; set; }
         public Nullable<bool> consumibles { get; set; }
         public string clasificacion { get; set; }
+        public string ean13 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticulosTercero> ArticulosTercero { get; set; }
