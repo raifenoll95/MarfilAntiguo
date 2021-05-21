@@ -582,4 +582,7 @@
   <data name="inmuebles" xml:space="preserve">
     <value>Inmuebles</value>
   </data>
+  <data name="listadoinformemargen" xml:space="preserve">
+    <value>Listado de Margen</value>
+  </data>
 </root>

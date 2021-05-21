@@ -29,9 +29,12 @@ namespace Marfil.App.WebMain.Controllers
            
             using (var service = FService.Instance.GetService(typeof(FamiliasproductosModel),ContextService))
             {
+
+                var listadomargen = HttpUtility.ParseQueryString(Request.RequestUri.Query)["listadomargen"];
+
                 var result = new ResultBusquedas<FamiliasproductosModel>()
                 {
-                    values = service.getAll().Select(f=>(FamiliasproductosModel)f),
+                    values = listadomargen.Equals("1") ? service.getAll().Select(f=>(FamiliasproductosModel)f).Where(f => f.Tipofamilia == TipoFamilia.Bloque || f.Tipofamilia == TipoFamilia.Tabla) : service.getAll().Select(f => (FamiliasproductosModel)f),
                     columns = new[]
                     {
                         new ColumnDefinition() { field = "Id", displayName = "Id", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
@@ -55,14 +58,51 @@ namespace Marfil.App.WebMain.Controllers
 
                 var list = service.get(id) as FamiliasproductosModel;
                 var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8,
-                    "application/json");
+                response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8, "application/json");
                 return response;
                
 
             }
         }
 
-       
+        /*[HttpGet]
+        [Route("Api/FamiliasproductosApi/GetFamiliaPorTipo")]
+        public HttpResponseMessage GetFamiliaPorTipo()
+        {
+
+            using (var service = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService))
+            {
+                var result = new ResultBusquedas<FamiliasproductosModel>()
+                {
+                    values = service.getAll().Select(f => (FamiliasproductosModel)f).Where(f => f.Tipofamilia == TipoFamilia.Bloque || f.Tipofamilia == TipoFamilia.Tabla),
+                    columns = new[]
+                    {
+                        new ColumnDefinition() { field = "Id", displayName = "Id", visible = true, filter = new  Filter() { condition = ColumnDefinition.STARTS_WITH }},
+                        new ColumnDefinition() { field = "Descripcion", displayName = "Descripcion", visible = true }
+                    }
+                };
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(result), Encoding.UTF8, "application/json");
+                return response;
+            }
+        }
+
+        [HttpGet]
+        [Route("Api/FamiliasproductosApi/GetFamiliaPorTipo/{id}")]
+        public HttpResponseMessage GetFamiliaPorTipo(string id)
+        {
+
+            using (var service = FService.Instance.GetService(typeof(FamiliasproductosModel), ContextService))
+            {
+
+                var list = service.get(id) as FamiliasproductosModel;
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(list), Encoding.UTF8, "application/json");
+                return response;
+
+
+            }
+        }*/
+
     }
 }

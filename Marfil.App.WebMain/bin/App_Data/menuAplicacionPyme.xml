@@ -82,8 +82,8 @@
       <item name="listado" text="Listados" icono="fa fa-list">
         <item name="listadogeneralpresupuestos" eslistado="true" text="Listado de general" icono="fa fa-file" url="~/ListadosPresupuestos/Listado/PresupuestosCabecera" />
         <item name="listadodetalladopresupuestos" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoPresupuestos/Listado/PresupuestosDetallado" />
-      <item name="listadoproductospresupuestos"  eslistado="true" text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestos/Listado/ProductosEnPresupuestos" />
-      </item>
+        <item name="listadoproductospresupuestos"  eslistado="true" text="Listado productos en presupuestos" icono="fa fa-file" url="~/ListadoProductosPresupuestos/Listado/ProductosEnPresupuestos" />
+	 </item>
       <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/0" />
     </item>
     <item name="headerpedidos" text="pedidos" icono="fa fa-folder-o">
@@ -108,7 +108,7 @@
         <item name="listadogeneralalbaranes" eslistado="true"  text="Listado de general" icono="fa fa-file" url="~/Listadosalbaranes/Listado/AlbaranesCabecera" />
         <item name="listadodetalladoalbaranes" eslistado="true"  text="Listado detallado" icono="fa fa-file" url="~/ListadoDetalladoalbaranes/Listado/AlbaranesDetallado" />
         <item name="listadoproductosalbaranes" eslistado="true"  text="Listado productos en albaranes" icono="fa fa-file" url="~/ListadoProductosAlbaranes/Listado/ProductosEnAlbaranes" />
-        <item name="listadomargen" eslistado="true"  text="Listado Margen" icono="fa fa-file" url="~/ListadoMargen/ListadoMargen" />
+		<item name="listadoinformemargen"  eslistado="true" text="Listado de margen" icono="fa fa-file" url="~/ListadoInformeMargen/Listado/InformeMargen" />
       </item>
       <item name="configurardocumentos" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/2" />
       <item name="configurardocumentoslistadomargen" excluirConAA="true"  text="Configurar documentos" icono="fa fa-print" url="~/Documentos/Index/1025" />

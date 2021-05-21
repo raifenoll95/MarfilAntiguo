@@ -844,6 +844,15 @@ namespace Marfil.Inf.ResourcesGlobalization.Textos.MenuAplicacion {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Listado de Margen.
+        /// </summary>
+        public static string listadoinformemargen {
+            get {
+                return ResourceManager.GetString("listadoinformemargen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Informe de lotes.
         /// </summary>
         public static string listadolotes {

@@ -249,6 +249,7 @@
         <AssociationConnector Association="MarfilModel.FK__PresupuestosComp__4C5715F6" />
         <AssociationConnector Association="MarfilModel.FK_Empresas_Empresas" />
         <EntityTypeShape EntityType="MarfilModel.Inmuebles" Width="1.5" PointX="35.375" PointY="8.75" />
+        <EntityTypeShape EntityType="MarfilModel.InformeMargen" Width="1.5" PointX="32.375" PointY="39.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

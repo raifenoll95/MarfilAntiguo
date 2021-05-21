@@ -315,6 +315,7 @@
     <Compile Include="Controllers\AsistenteMovimientosTesoreriaApiController.cs" />
     <Compile Include="Controllers\ArticulosComponentesApiController.cs" />
     <Compile Include="Controllers\InmueblesController.cs" />
+    <Compile Include="Controllers\ListadoInformeMargenController.cs" />
     <Compile Include="Controllers\ListadosConsultaTesoreriaController.cs" />
     <Compile Include="Controllers\MunicipiosApiController.cs" />
     <Compile Include="Controllers\MunicipiosProvinciasApiController.cs" />
@@ -3550,6 +3551,7 @@
     <Content Include="Views\Inmuebles\_inmuebles.cshtml" />
     <Content Include="Views\Inmuebles\_direccion.cshtml" />
     <Content Include="Views\Inmuebles\_general.cshtml" />
+    <Content Include="Views\ListadoInformeMargen\InformeMargen.cshtml" />
     <None Include="Web.Azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

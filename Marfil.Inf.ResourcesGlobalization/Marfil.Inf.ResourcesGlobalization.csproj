@@ -305,6 +305,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Incidencias.resx</DependentUpon>
     </Compile>
+    <Compile Include="Textos\Entidades\InformeMargen.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InformeMargen.resx</DependentUpon>
+    </Compile>
     <Compile Include="Textos\Entidades\Inmuebles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -880,6 +885,10 @@
     <EmbeddedResource Include="Textos\Entidades\Incidencias.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Incidencias.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Textos\Entidades\InformeMargen.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InformeMargen.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Textos\Entidades\Inmuebles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
